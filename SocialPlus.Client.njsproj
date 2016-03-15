@@ -1,154 +1,154 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{57144b52-38fb-449b-881a-c4e24f27977e}</ProjectGuid>
-    <ProjectHome />
-    <ProjectView>ShowAllFiles</ProjectView>
-    <StartupFile>socialPlusClient.js</StartupFile>
-    <WorkingDirectory>.</WorkingDirectory>
-    <OutputPath>.</OutputPath>
-    <ProjectTypeGuids>{3AF33F2E-1136-4D97-BBB7-1795711AC8B8};{349c5851-65df-11da-9384-00065b846f21};{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}</ProjectTypeGuids>
-    <TypeScriptSourceMap>true</TypeScriptSourceMap>
-    <TypeScriptModuleKind>CommonJS</TypeScriptModuleKind>
-    <EnableTypeScript>true</EnableTypeScript>
-    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
-    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
-  <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
-  <ItemGroup>
-    <Content Include="Microsoft.licenseheader" />
-    <Content Include="swagger.json" />
-    <TypeScriptCompile Include="socialPlusClient.d.ts" />
-    <Compile Include="socialPlusClient.js" />
-    <TypeScriptCompile Include="models\index.d.ts" />
-    <Compile Include="models\activityView.js" />
-    <Compile Include="models\appCompactView.js" />
-    <Compile Include="models\buildsCurrentResponse.js" />
-    <Compile Include="models\commentView.js" />
-    <Compile Include="models\contentCompactView.js" />
-    <Compile Include="models\countResponse.js" />
-    <Compile Include="models\feedResponseActivityView.js" />
-    <Compile Include="models\feedResponseCommentView.js" />
-    <Compile Include="models\feedResponseReplyView.js" />
-    <Compile Include="models\feedResponseTopicView.js" />
-    <Compile Include="models\feedResponseUserCompactView.js" />
-    <Compile Include="models\feedResponseUserProfileView.js" />
-    <Compile Include="models\getRequestTokenResponse.js" />
-    <Compile Include="models\index.js" />
-    <Compile Include="models\linkedAccountView.js" />
-    <Compile Include="models\postBlobResponse.js" />
-    <Compile Include="models\postBlockedUserRequest.js" />
-    <Compile Include="models\postCommentRequest.js" />
-    <Compile Include="models\postCommentResponse.js" />
-    <Compile Include="models\postFollowerRequest.js" />
-    <Compile Include="models\postFollowingRequest.js" />
-    <Compile Include="models\postImageResponse.js" />
-    <Compile Include="models\postLinkedAccountRequest.js" />
-    <Compile Include="models\postPinRequest.js" />
-    <Compile Include="models\postReplyRequest.js" />
-    <Compile Include="models\postReplyResponse.js" />
-    <Compile Include="models\postReportRequest.js" />
-    <Compile Include="models\postSessionRequest.js" />
-    <Compile Include="models\postSessionResponse.js" />
-    <Compile Include="models\postTopicRequest.js" />
-    <Compile Include="models\postTopicResponse.js" />
-    <Compile Include="models\postUserRequest.js" />
-    <Compile Include="models\postUserResponse.js" />
-    <Compile Include="models\putNotificationsStatusRequest.js" />
-    <Compile Include="models\putPushRegistrationRequest.js" />
-    <Compile Include="models\putTopicRequest.js" />
-    <Compile Include="models\putUserInfoRequest.js" />
-    <Compile Include="models\putUserPhotoRequest.js" />
-    <Compile Include="models\putUserVisibilityRequest.js" />
-    <Compile Include="models\replyView.js" />
-    <Compile Include="models\topicView.js" />
-    <Compile Include="models\userCompactView.js" />
-    <Compile Include="models\userProfileView.js" />
-    <TypeScriptCompile Include="operations\index.d.ts" />
-    <Compile Include="operations\blobs.js" />
-    <Compile Include="operations\builds.js" />
-    <Compile Include="operations\commentLikes.js" />
-    <Compile Include="operations\commentReplies.js" />
-    <Compile Include="operations\commentReports.js" />
-    <Compile Include="operations\comments.js" />
-    <Compile Include="operations\hashtags.js" />
-    <Compile Include="operations\images.js" />
-    <Compile Include="operations\index.js" />
-    <Compile Include="operations\myAppFollowing.js" />
-    <Compile Include="operations\myApps.js" />
-    <Compile Include="operations\myBlockedUsers.js" />
-    <Compile Include="operations\myFollowers.js" />
-    <Compile Include="operations\myFollowing.js" />
-    <Compile Include="operations\myLikes.js" />
-    <Compile Include="operations\myLinkedAccounts.js" />
-    <Compile Include="operations\myNotifications.js" />
-    <Compile Include="operations\myPendingUsers.js" />
-    <Compile Include="operations\myPins.js" />
-    <Compile Include="operations\myPushRegistrations.js" />
-    <Compile Include="operations\myTopics.js" />
-    <Compile Include="operations\replies.js" />
-    <Compile Include="operations\replyLikes.js" />
-    <Compile Include="operations\replyReports.js" />
-    <Compile Include="operations\requestTokens.js" />
-    <Compile Include="operations\search.js" />
-    <Compile Include="operations\sessions.js" />
-    <Compile Include="operations\topicComments.js" />
-    <Compile Include="operations\topicLikes.js" />
-    <Compile Include="operations\topicReports.js" />
-    <Compile Include="operations\topics.js" />
-    <Compile Include="operations\userFollowers.js" />
-    <Compile Include="operations\userFollowing.js" />
-    <Compile Include="operations\userReports.js" />
-    <Compile Include="operations\users.js" />
-    <Compile Include="operations\userTopics.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="models" />
-    <Folder Include="operations" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <!--Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them.-->
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="False" />
-  <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsTools.targets" />
-  <ProjectExtensions>
-    <VisualStudio>
-      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
-        <WebProjectProperties>
-          <UseIIS>False</UseIIS>
-          <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>0</DevelopmentServerPort>
-          <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:48022/</IISUrl>
-          <NTLMAuthentication>False</NTLMAuthentication>
-          <UseCustomServer>True</UseCustomServer>
-          <CustomServerUrl>http://localhost:1337</CustomServerUrl>
-          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
-        </WebProjectProperties>
-      </FlavorProperties>
-      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}" User="">
-        <WebProjectProperties>
-          <StartPageUrl>
-          </StartPageUrl>
-          <StartAction>CurrentPage</StartAction>
-          <AspNetDebugging>True</AspNetDebugging>
-          <SilverlightDebugging>False</SilverlightDebugging>
-          <NativeDebugging>False</NativeDebugging>
-          <SQLDebugging>False</SQLDebugging>
-          <ExternalProgram>
-          </ExternalProgram>
-          <StartExternalURL>
-          </StartExternalURL>
-          <StartCmdLineArguments>
-          </StartCmdLineArguments>
-          <StartWorkingDirectory>
-          </StartWorkingDirectory>
-          <EnableENC>False</EnableENC>
-          <AlwaysStartWebServerOnDebug>False</AlwaysStartWebServerOnDebug>
-        </WebProjectProperties>
-      </FlavorProperties>
-    </VisualStudio>
-  </ProjectExtensions>
+    <PropertyGroup>
+        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+        <SchemaVersion>2.0</SchemaVersion>
+        <ProjectGuid>{57144b52-38fb-449b-881a-c4e24f27977e}</ProjectGuid>
+        <ProjectHome />
+        <ProjectView>ShowAllFiles</ProjectView>
+        <StartupFile>socialPlusClient.js</StartupFile>
+        <WorkingDirectory>.</WorkingDirectory>
+        <OutputPath>.</OutputPath>
+        <ProjectTypeGuids>{3AF33F2E-1136-4D97-BBB7-1795711AC8B8};{349c5851-65df-11da-9384-00065b846f21};{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}</ProjectTypeGuids>
+        <TypeScriptSourceMap>true</TypeScriptSourceMap>
+        <TypeScriptModuleKind>CommonJS</TypeScriptModuleKind>
+        <EnableTypeScript>true</EnableTypeScript>
+        <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+        <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
+    <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
+    <ItemGroup>
+        <Content Include="swagger.json" />
+        <Content Include="swagger2.json" />
+        <TypeScriptCompile Include="socialPlusClient.d.ts" />
+        <Compile Include="socialPlusClient.js" />
+        <TypeScriptCompile Include="models\index.d.ts" />
+        <Compile Include="models\activityView.js" />
+        <Compile Include="models\appCompactView.js" />
+        <Compile Include="models\buildsCurrentResponse.js" />
+        <Compile Include="models\commentView.js" />
+        <Compile Include="models\contentCompactView.js" />
+        <Compile Include="models\countResponse.js" />
+        <Compile Include="models\feedResponseActivityView.js" />
+        <Compile Include="models\feedResponseCommentView.js" />
+        <Compile Include="models\feedResponseReplyView.js" />
+        <Compile Include="models\feedResponseTopicView.js" />
+        <Compile Include="models\feedResponseUserCompactView.js" />
+        <Compile Include="models\feedResponseUserProfileView.js" />
+        <Compile Include="models\getRequestTokenResponse.js" />
+        <Compile Include="models\index.js" />
+        <Compile Include="models\linkedAccountView.js" />
+        <Compile Include="models\postBlobResponse.js" />
+        <Compile Include="models\postBlockedUserRequest.js" />
+        <Compile Include="models\postCommentRequest.js" />
+        <Compile Include="models\postCommentResponse.js" />
+        <Compile Include="models\postFollowerRequest.js" />
+        <Compile Include="models\postFollowingRequest.js" />
+        <Compile Include="models\postImageResponse.js" />
+        <Compile Include="models\postLinkedAccountRequest.js" />
+        <Compile Include="models\postPinRequest.js" />
+        <Compile Include="models\postReplyRequest.js" />
+        <Compile Include="models\postReplyResponse.js" />
+        <Compile Include="models\postReportRequest.js" />
+        <Compile Include="models\postSessionRequest.js" />
+        <Compile Include="models\postSessionResponse.js" />
+        <Compile Include="models\postTopicRequest.js" />
+        <Compile Include="models\postTopicResponse.js" />
+        <Compile Include="models\postUserRequest.js" />
+        <Compile Include="models\postUserResponse.js" />
+        <Compile Include="models\putNotificationsStatusRequest.js" />
+        <Compile Include="models\putPushRegistrationRequest.js" />
+        <Compile Include="models\putTopicRequest.js" />
+        <Compile Include="models\putUserInfoRequest.js" />
+        <Compile Include="models\putUserPhotoRequest.js" />
+        <Compile Include="models\putUserVisibilityRequest.js" />
+        <Compile Include="models\replyView.js" />
+        <Compile Include="models\topicView.js" />
+        <Compile Include="models\userCompactView.js" />
+        <Compile Include="models\userProfileView.js" />
+        <TypeScriptCompile Include="operations\index.d.ts" />
+        <Compile Include="operations\blobs.js" />
+        <Compile Include="operations\builds.js" />
+        <Compile Include="operations\commentLikes.js" />
+        <Compile Include="operations\commentReplies.js" />
+        <Compile Include="operations\commentReports.js" />
+        <Compile Include="operations\comments.js" />
+        <Compile Include="operations\hashtags.js" />
+        <Compile Include="operations\images.js" />
+        <Compile Include="operations\index.js" />
+        <Compile Include="operations\myAppFollowing.js" />
+        <Compile Include="operations\myApps.js" />
+        <Compile Include="operations\myBlockedUsers.js" />
+        <Compile Include="operations\myFollowers.js" />
+        <Compile Include="operations\myFollowing.js" />
+        <Compile Include="operations\myLikes.js" />
+        <Compile Include="operations\myLinkedAccounts.js" />
+        <Compile Include="operations\myNotifications.js" />
+        <Compile Include="operations\myPendingUsers.js" />
+        <Compile Include="operations\myPins.js" />
+        <Compile Include="operations\myPushRegistrations.js" />
+        <Compile Include="operations\myTopics.js" />
+        <Compile Include="operations\replies.js" />
+        <Compile Include="operations\replyLikes.js" />
+        <Compile Include="operations\replyReports.js" />
+        <Compile Include="operations\requestTokens.js" />
+        <Compile Include="operations\search.js" />
+        <Compile Include="operations\sessions.js" />
+        <Compile Include="operations\topicComments.js" />
+        <Compile Include="operations\topicLikes.js" />
+        <Compile Include="operations\topicReports.js" />
+        <Compile Include="operations\topics.js" />
+        <Compile Include="operations\userFollowers.js" />
+        <Compile Include="operations\userFollowing.js" />
+        <Compile Include="operations\userReports.js" />
+        <Compile Include="operations\users.js" />
+        <Compile Include="operations\userTopics.js" />
+    </ItemGroup>
+    <ItemGroup>
+        <Folder Include="models" />
+        <Folder Include="operations" />
+    </ItemGroup>
+    <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+    <!--Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them.-->
+    <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="False" />
+    <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsTools.targets" />
+    <ProjectExtensions>
+        <VisualStudio>
+          <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+            <WebProjectProperties>
+              <UseIIS>False</UseIIS>
+              <AutoAssignPort>True</AutoAssignPort>
+              <DevelopmentServerPort>0</DevelopmentServerPort>
+              <DevelopmentServerVPath>/</DevelopmentServerVPath>
+              <IISUrl>http://localhost:48022/</IISUrl>
+              <NTLMAuthentication>False</NTLMAuthentication>
+              <UseCustomServer>True</UseCustomServer>
+              <CustomServerUrl>http://localhost:1337</CustomServerUrl>
+              <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+            </WebProjectProperties>
+          </FlavorProperties>
+          <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}" User="">
+            <WebProjectProperties>
+              <StartPageUrl>
+              </StartPageUrl>
+              <StartAction>CurrentPage</StartAction>
+              <AspNetDebugging>True</AspNetDebugging>
+              <SilverlightDebugging>False</SilverlightDebugging>
+              <NativeDebugging>False</NativeDebugging>
+              <SQLDebugging>False</SQLDebugging>
+              <ExternalProgram>
+              </ExternalProgram>
+              <StartExternalURL>
+              </StartExternalURL>
+              <StartCmdLineArguments>
+              </StartCmdLineArguments>
+              <StartWorkingDirectory>
+              </StartWorkingDirectory>
+              <EnableENC>False</EnableENC>
+              <AlwaysStartWebServerOnDebug>False</AlwaysStartWebServerOnDebug>
+            </WebProjectProperties>
+          </FlavorProperties>
+        </VisualStudio>
+    </ProjectExtensions>
 </Project>
