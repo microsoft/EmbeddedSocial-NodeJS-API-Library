@@ -1,6 +1,7 @@
 /*
  * Copyright (c) Microsoft Corporation. All rights reserved. Licensed under
  * the MIT License. See LICENSE in the project root for license information.
+ * This file was generated using AutoRest.
  */
 
 'use strict';
@@ -11,7 +12,8 @@
  * @constructor
  * Request to post (create) user
  * @member {string} identityProvider Gets or sets identity provider type.
- * Possible values include: 'Facebook', 'Microsoft', 'Google', 'Twitter'
+ * Possible values include: 'Facebook', 'Microsoft', 'Google', 'Twitter',
+ * 'Beihai'
  * 
  * @member {string} [accessToken] Gets or sets access or authentication token
  * obtained from third-party provider.
@@ -58,7 +60,7 @@ PostUserRequest.prototype.mapper = function () {
           serializedName: 'identityProvider',
           type: {
             name: 'Enum',
-            allowedValues: [ 'Facebook', 'Microsoft', 'Google', 'Twitter' ]
+            allowedValues: [ 'Facebook', 'Microsoft', 'Google', 'Twitter', 'Beihai' ]
           }
         },
         accessToken: {

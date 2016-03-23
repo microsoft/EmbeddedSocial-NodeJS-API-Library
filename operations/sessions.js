@@ -1,6 +1,7 @@
 /*
  * Copyright (c) Microsoft Corporation. All rights reserved. Licensed under
  * the MIT License. See LICENSE in the project root for license information.
+ * This file was generated using AutoRest.
  */
 
 'use strict';
@@ -29,7 +30,8 @@ function Sessions(client) {
  * @param {object} request Post session request
  * 
  * @param {string} [request.identityProvider] Gets or sets identity provider
- * type. Possible values include: 'Facebook', 'Microsoft', 'Google', 'Twitter'
+ * type. Possible values include: 'Facebook', 'Microsoft', 'Google',
+ * 'Twitter', 'Beihai'
  * 
  * @param {string} [request.accessToken] Gets or sets access or authentication
  * token, user code, or verifier obtained from third-party provider.

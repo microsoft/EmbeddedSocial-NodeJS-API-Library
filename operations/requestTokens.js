@@ -1,6 +1,7 @@
 /*
  * Copyright (c) Microsoft Corporation. All rights reserved. Licensed under
  * the MIT License. See LICENSE in the project root for license information.
+ * This file was generated using AutoRest.
  */
 
 'use strict';
@@ -27,7 +28,7 @@ function RequestTokens(client) {
  * @summary Get request token
  *
  * @param {string} identityProvider Identity provider type. Possible values
- * include: 'Facebook', 'Microsoft', 'Google', 'Twitter'
+ * include: 'Facebook', 'Microsoft', 'Google', 'Twitter', 'Beihai'
  * 
  * @param {object} [options] Optional Parameters.
  * 
@@ -67,7 +68,7 @@ RequestTokens.prototype.getRequestToken = function (identityProvider, options, c
   // Validate
   try {
     if (identityProvider) {
-      var allowedValues = [ 'Facebook', 'Microsoft', 'Google', 'Twitter' ];
+      var allowedValues = [ 'Facebook', 'Microsoft', 'Google', 'Twitter', 'Beihai' ];
       if (!allowedValues.some( function(item) { return item === identityProvider; })) {
         throw new Error(identityProvider + ' is not a valid value. The valid values are: ' + allowedValues);
       }

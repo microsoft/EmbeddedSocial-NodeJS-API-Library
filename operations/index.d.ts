@@ -1,6 +1,7 @@
 /*
  * Copyright (c) Microsoft Corporation. All rights reserved. Licensed under
  * the MIT License. See LICENSE in the project root for license information.
+ * This file was generated using AutoRest.
 */
 
 import { ServiceClientOptions, RequestOptions, ServiceCallback } from 'ms-rest';
@@ -1050,7 +1051,8 @@ export interface Sessions {
      * @param {object} request Post session request
      * 
      * @param {string} [request.identityProvider] Gets or sets identity provider
-     * type. Possible values include: 'Facebook', 'Microsoft', 'Google', 'Twitter'
+     * type. Possible values include: 'Facebook', 'Microsoft', 'Google',
+     * 'Twitter', 'Beihai'
      * 
      * @param {string} [request.accessToken] Gets or sets access or authentication
      * token, user code, or verifier obtained from third-party provider.
@@ -1115,7 +1117,7 @@ export interface RequestTokens {
      * @summary Get request token
      *
      * @param {string} identityProvider Identity provider type. Possible values
-     * include: 'Facebook', 'Microsoft', 'Google', 'Twitter'
+     * include: 'Facebook', 'Microsoft', 'Google', 'Twitter', 'Beihai'
      * 
      * @param {object} [options] Optional Parameters.
      * 
@@ -1841,12 +1843,30 @@ export interface MyApps {
 export interface Users {
 
     /**
-     * @summary Create a new user
+     * @summary Create a new user using the following flow:
+     * 1. Validate and parse the identity provider access token to
+     * construct an identity provider user
+     * 2. If identity provider user present in linked account
+     * table, read user profile for this specific application from user profile
+     * table
+     * 3.    If user profile exists, return user conflict
+     * 4.    Otherwise, it means that the user does not have a
+     * profile for this particular application. Create one.
+     * 5. Otherwise, the identity provider user is not present.
+     * Create the user, and its user profile.
+     * 6. Generate session token, and return
+     * The purpose of steps 2-4 is to ensure that if the user has
+     * already registered with us using the same identity provider
+     * but for a different SocialPlus application, we reuse his
+     * user-handle and just resume to create a new profile for this specific
+     * SocialPlus application. The end result is that we know it is
+     * the same user in both apps.
      *
      * @param {object} request Post user request
      * 
      * @param {string} [request.identityProvider] Gets or sets identity provider
-     * type. Possible values include: 'Facebook', 'Microsoft', 'Google', 'Twitter'
+     * type. Possible values include: 'Facebook', 'Microsoft', 'Google',
+     * 'Twitter', 'Beihai'
      * 
      * @param {string} [request.accessToken] Gets or sets access or authentication
      * token obtained from third-party provider.
@@ -2094,7 +2114,8 @@ export interface MyLinkedAccounts {
      * @param {object} request Post linked account request
      * 
      * @param {string} [request.identityProvider] Gets or sets identity provider
-     * type. Possible values include: 'Facebook', 'Microsoft', 'Google', 'Twitter'
+     * type. Possible values include: 'Facebook', 'Microsoft', 'Google',
+     * 'Twitter', 'Beihai'
      * 
      * @param {string} [request.accessToken] Gets or sets access or authentication
      * token, user code, or verifier obtained from third-party provider.
@@ -2125,7 +2146,7 @@ export interface MyLinkedAccounts {
      * @summary Delete linked account
      *
      * @param {string} identityProvider Identity provider type. Possible values
-     * include: 'Facebook', 'Microsoft', 'Google', 'Twitter'
+     * include: 'Facebook', 'Microsoft', 'Google', 'Twitter', 'Beihai'
      * 
      * @param {string} authorization Authenication (must begin with string "Bearer
      * ")
