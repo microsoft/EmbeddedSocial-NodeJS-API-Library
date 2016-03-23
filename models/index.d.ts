@@ -1,6 +1,7 @@
 /*
  * Copyright (c) Microsoft Corporation. All rights reserved. Licensed under
  * the MIT License. See LICENSE in the project root for license information.
+ * This file was generated using AutoRest.
  */
 
 
@@ -690,7 +691,8 @@ export interface PostReportRequest {
  * @constructor
  * Request to post (create) session
  * @member {string} identityProvider Gets or sets identity provider type.
- * Possible values include: 'Facebook', 'Microsoft', 'Google', 'Twitter'
+ * Possible values include: 'Facebook', 'Microsoft', 'Google', 'Twitter',
+ * 'Beihai'
  * 
  * @member {string} [accessToken] Gets or sets access or authentication token,
  * user code, or verifier obtained from third-party provider.
@@ -862,7 +864,8 @@ export interface PutTopicRequest {
  * @constructor
  * Request to post (create) user
  * @member {string} identityProvider Gets or sets identity provider type.
- * Possible values include: 'Facebook', 'Microsoft', 'Google', 'Twitter'
+ * Possible values include: 'Facebook', 'Microsoft', 'Google', 'Twitter',
+ * 'Beihai'
  * 
  * @member {string} [accessToken] Gets or sets access or authentication token
  * obtained from third-party provider.
@@ -1037,7 +1040,8 @@ export interface FeedResponseUserProfileView {
  * @constructor
  * Request to post (create) linked account
  * @member {string} identityProvider Gets or sets identity provider type.
- * Possible values include: 'Facebook', 'Microsoft', 'Google', 'Twitter'
+ * Possible values include: 'Facebook', 'Microsoft', 'Google', 'Twitter',
+ * 'Beihai'
  * 
  * @member {string} [accessToken] Gets or sets access or authentication token,
  * user code, or verifier obtained from third-party provider.
@@ -1063,7 +1067,8 @@ export interface PostLinkedAccountRequest {
  * @constructor
  * Linked account view
  * @member {string} identityProvider Gets or sets identity provider type.
- * Possible values include: 'Facebook', 'Microsoft', 'Google', 'Twitter'
+ * Possible values include: 'Facebook', 'Microsoft', 'Google', 'Twitter',
+ * 'Beihai'
  * 
  * @member {string} accountId Gets or sets third party account id -- Unique
  * user id provided by the third-party identity provider

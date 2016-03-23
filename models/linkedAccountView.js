@@ -1,6 +1,7 @@
 /*
  * Copyright (c) Microsoft Corporation. All rights reserved. Licensed under
  * the MIT License. See LICENSE in the project root for license information.
+ * This file was generated using AutoRest.
  */
 
 'use strict';
@@ -11,7 +12,8 @@
  * @constructor
  * Linked account view
  * @member {string} identityProvider Gets or sets identity provider type.
- * Possible values include: 'Facebook', 'Microsoft', 'Google', 'Twitter'
+ * Possible values include: 'Facebook', 'Microsoft', 'Google', 'Twitter',
+ * 'Beihai'
  * 
  * @member {string} accountId Gets or sets third party account id -- Unique
  * user id provided by the third-party identity provider
@@ -39,7 +41,7 @@ LinkedAccountView.prototype.mapper = function () {
           serializedName: 'identityProvider',
           type: {
             name: 'Enum',
-            allowedValues: [ 'Facebook', 'Microsoft', 'Google', 'Twitter' ]
+            allowedValues: [ 'Facebook', 'Microsoft', 'Google', 'Twitter', 'Beihai' ]
           }
         },
         accountId: {

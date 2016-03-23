@@ -1,6 +1,7 @@
 /*
  * Copyright (c) Microsoft Corporation. All rights reserved. Licensed under
  * the MIT License. See LICENSE in the project root for license information.
+ * This file was generated using AutoRest.
  */
 
 'use strict';
@@ -119,7 +120,7 @@ Images.prototype.postImage = function (imageType, authorization, image, options,
       }
     }
   }
-  httpRequest.headers['Content-Type'] = 'image';
+  httpRequest.headers['Content-Type'] = 'image/gif';
   // Serialize Request  
   var requestContent = image;
   httpRequest.body = requestContent;
