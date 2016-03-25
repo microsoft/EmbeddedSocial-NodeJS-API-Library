@@ -111,8 +111,8 @@ UserReports.prototype.postReport = function (userHandle, postReportRequest, auth
     if (postReportRequest !== null && postReportRequest !== undefined) {
       var requestModelMapper = new client.models['PostReportRequest']().mapper();
       requestModel = client.serialize(requestModelMapper, postReportRequest, 'postReportRequest');
+      requestContent = JSON.stringify(requestModel);
     }
-    requestContent = JSON.stringify(requestModel);
   } catch (error) {
     var serializationError = new Error(util.format('Error "%s" occurred in serializing the ' + 
         'payload - "%s"', error.message, util.inspect(postReportRequest, {depth: null})));

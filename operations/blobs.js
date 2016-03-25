@@ -227,7 +227,7 @@ Blobs.prototype.getBlob = function (blobHandle, authorization, options, callback
   httpRequest.body = null;
   // Send Request
   httpRequest.streamedResponse = true;
-  return client.pipeline(httpRequest, function (err, response) {
+  return client.pipeline(httpRequest, function (err, response, responseBody) {
     if (err) {
       return callback(err);
     }
@@ -236,8 +236,22 @@ Blobs.prototype.getBlob = function (blobHandle, authorization, options, callback
     if (statusCode !== 200 && statusCode !== 400 && statusCode !== 401 && statusCode !== 404 && statusCode !== 500) {
       var error = new Error(util.format('Unexpected status code: %s', statusCode));
       error.statusCode = response.statusCode;
-      error.request = httpRequest;
-      error.response = response;
+      error.request = msRest.stripRequest(httpRequest);
+      error.response = msRest.stripResponse(response);
+      if (responseBody === '') responseBody = null;
+      var parsedErrorResponse;
+      try {
+        if (responseBody !== undefined) parsedErrorResponse = JSON.parse(responseBody);
+        if (parsedErrorResponse) {
+          if (parsedErrorResponse.error) parsedErrorResponse = parsedErrorResponse.error;
+          if (parsedErrorResponse.code) error.code = parsedErrorResponse.code;
+          if (parsedErrorResponse.message) error.message = parsedErrorResponse.message;
+        }
+      } catch (defaultError) {
+        error.message = util.format('Error "%s" occurred in deserializing the responseBody ' + 
+                         '- "%s" for the default response.', defaultError.message, responseBody);
+        return callback(error);
+      }
       return callback(error);
     }
 
