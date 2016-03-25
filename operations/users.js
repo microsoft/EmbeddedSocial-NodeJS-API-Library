@@ -155,8 +155,8 @@ Users.prototype.postUser = function (request, options, callback) {
     if (request !== null && request !== undefined) {
       var requestModelMapper = new client.models['PostUserRequest']().mapper();
       requestModel = client.serialize(requestModelMapper, request, 'request');
+      requestContent = JSON.stringify(requestModel);
     }
-    requestContent = JSON.stringify(requestModel);
   } catch (error) {
     var serializationError = new Error(util.format('Error "%s" occurred in serializing the ' + 
         'payload - "%s"', error.message, util.inspect(request, {depth: null})));
@@ -541,8 +541,8 @@ Users.prototype.putUserInfo = function (request, authorization, options, callbac
     if (request !== null && request !== undefined) {
       var requestModelMapper = new client.models['PutUserInfoRequest']().mapper();
       requestModel = client.serialize(requestModelMapper, request, 'request');
+      requestContent = JSON.stringify(requestModel);
     }
-    requestContent = JSON.stringify(requestModel);
   } catch (error) {
     var serializationError = new Error(util.format('Error "%s" occurred in serializing the ' + 
         'payload - "%s"', error.message, util.inspect(request, {depth: null})));
@@ -686,8 +686,8 @@ Users.prototype.putUserPhoto = function (request, authorization, options, callba
     if (request !== null && request !== undefined) {
       var requestModelMapper = new client.models['PutUserPhotoRequest']().mapper();
       requestModel = client.serialize(requestModelMapper, request, 'request');
+      requestContent = JSON.stringify(requestModel);
     }
-    requestContent = JSON.stringify(requestModel);
   } catch (error) {
     var serializationError = new Error(util.format('Error "%s" occurred in serializing the ' + 
         'payload - "%s"', error.message, util.inspect(request, {depth: null})));
@@ -832,8 +832,8 @@ Users.prototype.putUserVisibility = function (request, authorization, options, c
     if (request !== null && request !== undefined) {
       var requestModelMapper = new client.models['PutUserVisibilityRequest']().mapper();
       requestModel = client.serialize(requestModelMapper, request, 'request');
+      requestContent = JSON.stringify(requestModel);
     }
-    requestContent = JSON.stringify(requestModel);
   } catch (error) {
     var serializationError = new Error(util.format('Error "%s" occurred in serializing the ' + 
         'payload - "%s"', error.message, util.inspect(request, {depth: null})));

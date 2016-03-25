@@ -245,8 +245,8 @@ MyBlockedUsers.prototype.postBlockedUser = function (request, authorization, opt
     if (request !== null && request !== undefined) {
       var requestModelMapper = new client.models['PostBlockedUserRequest']().mapper();
       requestModel = client.serialize(requestModelMapper, request, 'request');
+      requestContent = JSON.stringify(requestModel);
     }
-    requestContent = JSON.stringify(requestModel);
   } catch (error) {
     var serializationError = new Error(util.format('Error "%s" occurred in serializing the ' + 
         'payload - "%s"', error.message, util.inspect(request, {depth: null})));
