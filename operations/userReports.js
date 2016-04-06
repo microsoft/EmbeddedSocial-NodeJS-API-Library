@@ -35,10 +35,20 @@ function UserReports(client) {
  * Possible values include: 'Spam', 'Cyberbullying', 'ChildEndangerment',
  * 'Offensive', 'ContentInfringement', 'Other'
  * 
- * @param {string} authorization Authenication (must begin with string "Bearer
- * ")
+ * @param {string} authorization Authentication (must begin with string
+ * "Bearer "). Possible values are:
+ * 
+ * -sessionToken for client auth
+ * 
+ * -AAD token for service auth
  * 
  * @param {object} [options] Optional Parameters.
+ * 
+ * @param {string} [options.appkey] App key must be filled in when using AAD
+ * tokens for Authentication.
+ * 
+ * @param {string} [options.userHandle1] User handle must be filled when using
+ * AAD tokens for Authentication.
  * 
  * @param {object} [options.customHeaders] Headers that will be added to the
  * request
@@ -64,6 +74,8 @@ UserReports.prototype.postReport = function (userHandle, postReportRequest, auth
   if (!callback) {
     throw new Error('callback cannot be null.');
   }
+  var appkey = (options && options.appkey !== undefined) ? options.appkey : undefined;
+  var userHandle1 = (options && options.userHandle1 !== undefined) ? options.userHandle1 : undefined;
   // Validate
   try {
     if (userHandle === null || userHandle === undefined || typeof userHandle.valueOf() !== 'string') {
@@ -72,8 +84,14 @@ UserReports.prototype.postReport = function (userHandle, postReportRequest, auth
     if (postReportRequest === null || postReportRequest === undefined) {
       throw new Error('postReportRequest cannot be null or undefined.');
     }
+    if (appkey !== null && appkey !== undefined && typeof appkey.valueOf() !== 'string') {
+      throw new Error('appkey must be of type string.');
+    }
     if (authorization === null || authorization === undefined || typeof authorization.valueOf() !== 'string') {
       throw new Error('authorization cannot be null or undefined and it must be of type string.');
+    }
+    if (userHandle1 !== null && userHandle1 !== undefined && typeof userHandle1.valueOf() !== 'string') {
+      throw new Error('userHandle1 must be of type string.');
     }
   } catch (error) {
     return callback(error);
@@ -81,7 +99,7 @@ UserReports.prototype.postReport = function (userHandle, postReportRequest, auth
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.2/users/{userHandle}/reports';
+                   '//v0.3/users/{userHandle}/reports';
   requestUrl = requestUrl.replace('{userHandle}', encodeURIComponent(userHandle));
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
@@ -93,8 +111,14 @@ UserReports.prototype.postReport = function (userHandle, postReportRequest, auth
   httpRequest.headers = {};
   httpRequest.url = requestUrl;
   // Set Headers
+  if (appkey !== undefined && appkey !== null) {
+    httpRequest.headers['appkey'] = appkey;
+  }
   if (authorization !== undefined && authorization !== null) {
     httpRequest.headers['Authorization'] = authorization;
+  }
+  if (userHandle1 !== undefined && userHandle1 !== null) {
+    httpRequest.headers['UserHandle'] = userHandle1;
   }
   if(options) {
     for(var headerName in options['customHeaders']) {

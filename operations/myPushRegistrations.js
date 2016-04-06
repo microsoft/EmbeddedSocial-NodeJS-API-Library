@@ -30,8 +30,9 @@ function MyPushRegistrations(client) {
  * @param {string} platform Platform type. Possible values include: 'Windows',
  * 'Android', 'IOS'
  * 
- * @param {string} registrationId Unique registration id provided by the
+ * @param {string} registrationId Unique registration ID provided by the
  * mobile OS.
+ * You must URL encode the registration ID.
  * For Android, this is the GCM registration ID.
  * For Windows, this is the PushNotificationChannel URI.
  * For iOS, this is the device token.
@@ -45,10 +46,20 @@ function MyPushRegistrations(client) {
  * 
  * @param {string} [request.language] Gets or sets language of the user
  * 
- * @param {string} authorization Authenication (must begin with string "Bearer
- * ")
+ * @param {string} authorization Authentication (must begin with string
+ * "Bearer "). Possible values are:
+ * 
+ * -sessionToken for client auth
+ * 
+ * -AAD token for service auth
  * 
  * @param {object} [options] Optional Parameters.
+ * 
+ * @param {string} [options.appkey] App key must be filled in when using AAD
+ * tokens for Authentication.
+ * 
+ * @param {string} [options.userHandle] User handle must be filled when using
+ * AAD tokens for Authentication.
  * 
  * @param {object} [options.customHeaders] Headers that will be added to the
  * request
@@ -74,6 +85,8 @@ MyPushRegistrations.prototype.putPushRegistration = function (platform, registra
   if (!callback) {
     throw new Error('callback cannot be null.');
   }
+  var appkey = (options && options.appkey !== undefined) ? options.appkey : undefined;
+  var userHandle = (options && options.userHandle !== undefined) ? options.userHandle : undefined;
   // Validate
   try {
     if (platform) {
@@ -90,8 +103,14 @@ MyPushRegistrations.prototype.putPushRegistration = function (platform, registra
     if (request === null || request === undefined) {
       throw new Error('request cannot be null or undefined.');
     }
+    if (appkey !== null && appkey !== undefined && typeof appkey.valueOf() !== 'string') {
+      throw new Error('appkey must be of type string.');
+    }
     if (authorization === null || authorization === undefined || typeof authorization.valueOf() !== 'string') {
       throw new Error('authorization cannot be null or undefined and it must be of type string.');
+    }
+    if (userHandle !== null && userHandle !== undefined && typeof userHandle.valueOf() !== 'string') {
+      throw new Error('userHandle must be of type string.');
     }
   } catch (error) {
     return callback(error);
@@ -99,7 +118,7 @@ MyPushRegistrations.prototype.putPushRegistration = function (platform, registra
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.2/users/me/push_registrations/{platform}/{registrationId}';
+                   '//v0.3/users/me/push_registrations/{platform}/{registrationId}';
   requestUrl = requestUrl.replace('{platform}', encodeURIComponent(platform));
   requestUrl = requestUrl.replace('{registrationId}', encodeURIComponent(registrationId));
   // trim all duplicate forward slashes in the url
@@ -112,8 +131,14 @@ MyPushRegistrations.prototype.putPushRegistration = function (platform, registra
   httpRequest.headers = {};
   httpRequest.url = requestUrl;
   // Set Headers
+  if (appkey !== undefined && appkey !== null) {
+    httpRequest.headers['appkey'] = appkey;
+  }
   if (authorization !== undefined && authorization !== null) {
     httpRequest.headers['Authorization'] = authorization;
+  }
+  if (userHandle !== undefined && userHandle !== null) {
+    httpRequest.headers['UserHandle'] = userHandle;
   }
   if(options) {
     for(var headerName in options['customHeaders']) {
@@ -202,16 +227,27 @@ MyPushRegistrations.prototype.putPushRegistration = function (platform, registra
  * @param {string} platform Platform type. Possible values include: 'Windows',
  * 'Android', 'IOS'
  * 
- * @param {string} registrationId Unique registration id provided by the
+ * @param {string} registrationId Unique registration ID provided by the
  * mobile OS.
+ * You must URL encode the registration ID.
  * For Android, this is the GCM registration ID.
  * For Windows, this is the PushNotificationChannel URI.
  * For iOS, this is the device token.
  * 
- * @param {string} authorization Authenication (must begin with string "Bearer
- * ")
+ * @param {string} authorization Authentication (must begin with string
+ * "Bearer "). Possible values are:
+ * 
+ * -sessionToken for client auth
+ * 
+ * -AAD token for service auth
  * 
  * @param {object} [options] Optional Parameters.
+ * 
+ * @param {string} [options.appkey] App key must be filled in when using AAD
+ * tokens for Authentication.
+ * 
+ * @param {string} [options.userHandle] User handle must be filled when using
+ * AAD tokens for Authentication.
  * 
  * @param {object} [options.customHeaders] Headers that will be added to the
  * request
@@ -237,6 +273,8 @@ MyPushRegistrations.prototype.deletePushRegistration = function (platform, regis
   if (!callback) {
     throw new Error('callback cannot be null.');
   }
+  var appkey = (options && options.appkey !== undefined) ? options.appkey : undefined;
+  var userHandle = (options && options.userHandle !== undefined) ? options.userHandle : undefined;
   // Validate
   try {
     if (platform) {
@@ -250,8 +288,14 @@ MyPushRegistrations.prototype.deletePushRegistration = function (platform, regis
     if (registrationId === null || registrationId === undefined || typeof registrationId.valueOf() !== 'string') {
       throw new Error('registrationId cannot be null or undefined and it must be of type string.');
     }
+    if (appkey !== null && appkey !== undefined && typeof appkey.valueOf() !== 'string') {
+      throw new Error('appkey must be of type string.');
+    }
     if (authorization === null || authorization === undefined || typeof authorization.valueOf() !== 'string') {
       throw new Error('authorization cannot be null or undefined and it must be of type string.');
+    }
+    if (userHandle !== null && userHandle !== undefined && typeof userHandle.valueOf() !== 'string') {
+      throw new Error('userHandle must be of type string.');
     }
   } catch (error) {
     return callback(error);
@@ -259,7 +303,7 @@ MyPushRegistrations.prototype.deletePushRegistration = function (platform, regis
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.2/users/me/push_registrations/{platform}/{registrationId}';
+                   '//v0.3/users/me/push_registrations/{platform}/{registrationId}';
   requestUrl = requestUrl.replace('{platform}', encodeURIComponent(platform));
   requestUrl = requestUrl.replace('{registrationId}', encodeURIComponent(registrationId));
   // trim all duplicate forward slashes in the url
@@ -272,8 +316,14 @@ MyPushRegistrations.prototype.deletePushRegistration = function (platform, regis
   httpRequest.headers = {};
   httpRequest.url = requestUrl;
   // Set Headers
+  if (appkey !== undefined && appkey !== null) {
+    httpRequest.headers['appkey'] = appkey;
+  }
   if (authorization !== undefined && authorization !== null) {
     httpRequest.headers['Authorization'] = authorization;
+  }
+  if (userHandle !== undefined && userHandle !== null) {
+    httpRequest.headers['UserHandle'] = userHandle;
   }
   if(options) {
     for(var headerName in options['customHeaders']) {

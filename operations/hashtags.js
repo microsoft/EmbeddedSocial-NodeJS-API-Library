@@ -29,10 +29,18 @@ function Hashtags(client) {
  *
  * @param {object} [options] Optional Parameters.
  * 
- * @param {string} [options.appkey] App Key Authentication
+ * @param {string} [options.appkey] App key must be filled in when using AAD
+ * tokens for Authentication.
  * 
- * @param {string} [options.authorization] Authenication (must begin with
- * string "Bearer ")
+ * @param {string} [options.authorization] Authentication (must begin with
+ * string "Bearer "). Possible values are:
+ * 
+ * -sessionToken for client auth
+ * 
+ * -AAD token for service auth
+ * 
+ * @param {string} [options.userHandle] User handle must be filled when using
+ * AAD tokens for Authentication.
  * 
  * @param {object} [options.customHeaders] Headers that will be added to the
  * request
@@ -60,6 +68,7 @@ Hashtags.prototype.getTrendingHashtags = function (options, callback) {
   }
   var appkey = (options && options.appkey !== undefined) ? options.appkey : undefined;
   var authorization = (options && options.authorization !== undefined) ? options.authorization : undefined;
+  var userHandle = (options && options.userHandle !== undefined) ? options.userHandle : undefined;
   // Validate
   try {
     if (appkey !== null && appkey !== undefined && typeof appkey.valueOf() !== 'string') {
@@ -68,13 +77,16 @@ Hashtags.prototype.getTrendingHashtags = function (options, callback) {
     if (authorization !== null && authorization !== undefined && typeof authorization.valueOf() !== 'string') {
       throw new Error('authorization must be of type string.');
     }
+    if (userHandle !== null && userHandle !== undefined && typeof userHandle.valueOf() !== 'string') {
+      throw new Error('userHandle must be of type string.');
+    }
   } catch (error) {
     return callback(error);
   }
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.2/hashtags/trending';
+                   '//v0.3/hashtags/trending';
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
   requestUrl = requestUrl.replace(regex, '$1');
@@ -90,6 +102,9 @@ Hashtags.prototype.getTrendingHashtags = function (options, callback) {
   }
   if (authorization !== undefined && authorization !== null) {
     httpRequest.headers['Authorization'] = authorization;
+  }
+  if (userHandle !== undefined && userHandle !== null) {
+    httpRequest.headers['UserHandle'] = userHandle;
   }
   if(options) {
     for(var headerName in options['customHeaders']) {
@@ -172,10 +187,18 @@ Hashtags.prototype.getTrendingHashtags = function (options, callback) {
  * 
  * @param {object} [options] Optional Parameters.
  * 
- * @param {string} [options.appkey] App Key Authentication
+ * @param {string} [options.appkey] App key must be filled in when using AAD
+ * tokens for Authentication.
  * 
- * @param {string} [options.authorization] Authenication (must begin with
- * string "Bearer ")
+ * @param {string} [options.authorization] Authentication (must begin with
+ * string "Bearer "). Possible values are:
+ * 
+ * -sessionToken for client auth
+ * 
+ * -AAD token for service auth
+ * 
+ * @param {string} [options.userHandle] User handle must be filled when using
+ * AAD tokens for Authentication.
  * 
  * @param {object} [options.customHeaders] Headers that will be added to the
  * request
@@ -203,6 +226,7 @@ Hashtags.prototype.getAutocompletedHashtags = function (query, options, callback
   }
   var appkey = (options && options.appkey !== undefined) ? options.appkey : undefined;
   var authorization = (options && options.authorization !== undefined) ? options.authorization : undefined;
+  var userHandle = (options && options.userHandle !== undefined) ? options.userHandle : undefined;
   // Validate
   try {
     if (query === null || query === undefined || typeof query.valueOf() !== 'string') {
@@ -214,13 +238,16 @@ Hashtags.prototype.getAutocompletedHashtags = function (query, options, callback
     if (authorization !== null && authorization !== undefined && typeof authorization.valueOf() !== 'string') {
       throw new Error('authorization must be of type string.');
     }
+    if (userHandle !== null && userHandle !== undefined && typeof userHandle.valueOf() !== 'string') {
+      throw new Error('userHandle must be of type string.');
+    }
   } catch (error) {
     return callback(error);
   }
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.2/hashtags/autocomplete';
+                   '//v0.3/hashtags/autocomplete';
   var queryParameters = [];
   queryParameters.push('query=' + encodeURIComponent(query));
   if (queryParameters.length > 0) {
@@ -241,6 +268,9 @@ Hashtags.prototype.getAutocompletedHashtags = function (query, options, callback
   }
   if (authorization !== undefined && authorization !== null) {
     httpRequest.headers['Authorization'] = authorization;
+  }
+  if (userHandle !== undefined && userHandle !== null) {
+    httpRequest.headers['UserHandle'] = userHandle;
   }
   if(options) {
     for(var headerName in options['customHeaders']) {

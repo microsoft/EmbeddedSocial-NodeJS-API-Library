@@ -74,10 +74,18 @@ function Users(client) {
  * 
  * @param {object} [options] Optional Parameters.
  * 
- * @param {string} [options.appkey] App Key Authentication
+ * @param {string} [options.appkey] App key must be filled in when using AAD
+ * tokens for Authentication.
  * 
- * @param {string} [options.authorization] Authenication (must begin with
- * string "Bearer ")
+ * @param {string} [options.authorization] Authentication (must begin with
+ * string "Bearer "). Possible values are:
+ * 
+ * -sessionToken for client auth
+ * 
+ * -AAD token for service auth
+ * 
+ * @param {string} [options.userHandle] User handle must be filled when using
+ * AAD tokens for Authentication.
  * 
  * @param {object} [options.customHeaders] Headers that will be added to the
  * request
@@ -106,6 +114,7 @@ Users.prototype.postUser = function (request, options, callback) {
   }
   var appkey = (options && options.appkey !== undefined) ? options.appkey : undefined;
   var authorization = (options && options.authorization !== undefined) ? options.authorization : undefined;
+  var userHandle = (options && options.userHandle !== undefined) ? options.userHandle : undefined;
   // Validate
   try {
     if (request === null || request === undefined) {
@@ -117,13 +126,16 @@ Users.prototype.postUser = function (request, options, callback) {
     if (authorization !== null && authorization !== undefined && typeof authorization.valueOf() !== 'string') {
       throw new Error('authorization must be of type string.');
     }
+    if (userHandle !== null && userHandle !== undefined && typeof userHandle.valueOf() !== 'string') {
+      throw new Error('userHandle must be of type string.');
+    }
   } catch (error) {
     return callback(error);
   }
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.2/users';
+                   '//v0.3/users';
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
   requestUrl = requestUrl.replace(regex, '$1');
@@ -139,6 +151,9 @@ Users.prototype.postUser = function (request, options, callback) {
   }
   if (authorization !== undefined && authorization !== null) {
     httpRequest.headers['Authorization'] = authorization;
+  }
+  if (userHandle !== undefined && userHandle !== null) {
+    httpRequest.headers['UserHandle'] = userHandle;
   }
   if(options) {
     for(var headerName in options['customHeaders']) {
@@ -218,10 +233,20 @@ Users.prototype.postUser = function (request, options, callback) {
 /**
  * @summary Get my profile
  *
- * @param {string} authorization Authenication (must begin with string "Bearer
- * ")
+ * @param {string} authorization Authentication (must begin with string
+ * "Bearer "). Possible values are:
+ * 
+ * -sessionToken for client auth
+ * 
+ * -AAD token for service auth
  * 
  * @param {object} [options] Optional Parameters.
+ * 
+ * @param {string} [options.appkey] App key must be filled in when using AAD
+ * tokens for Authentication.
+ * 
+ * @param {string} [options.userHandle] User handle must be filled when using
+ * AAD tokens for Authentication.
  * 
  * @param {object} [options.customHeaders] Headers that will be added to the
  * request
@@ -248,10 +273,18 @@ Users.prototype.getMyProfile = function (authorization, options, callback) {
   if (!callback) {
     throw new Error('callback cannot be null.');
   }
+  var appkey = (options && options.appkey !== undefined) ? options.appkey : undefined;
+  var userHandle = (options && options.userHandle !== undefined) ? options.userHandle : undefined;
   // Validate
   try {
+    if (appkey !== null && appkey !== undefined && typeof appkey.valueOf() !== 'string') {
+      throw new Error('appkey must be of type string.');
+    }
     if (authorization === null || authorization === undefined || typeof authorization.valueOf() !== 'string') {
       throw new Error('authorization cannot be null or undefined and it must be of type string.');
+    }
+    if (userHandle !== null && userHandle !== undefined && typeof userHandle.valueOf() !== 'string') {
+      throw new Error('userHandle must be of type string.');
     }
   } catch (error) {
     return callback(error);
@@ -259,7 +292,7 @@ Users.prototype.getMyProfile = function (authorization, options, callback) {
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.2/users/me';
+                   '//v0.3/users/me';
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
   requestUrl = requestUrl.replace(regex, '$1');
@@ -270,8 +303,14 @@ Users.prototype.getMyProfile = function (authorization, options, callback) {
   httpRequest.headers = {};
   httpRequest.url = requestUrl;
   // Set Headers
+  if (appkey !== undefined && appkey !== null) {
+    httpRequest.headers['appkey'] = appkey;
+  }
   if (authorization !== undefined && authorization !== null) {
     httpRequest.headers['Authorization'] = authorization;
+  }
+  if (userHandle !== undefined && userHandle !== null) {
+    httpRequest.headers['UserHandle'] = userHandle;
   }
   if(options) {
     for(var headerName in options['customHeaders']) {
@@ -337,10 +376,20 @@ Users.prototype.getMyProfile = function (authorization, options, callback) {
 /**
  * @summary Delete user
  *
- * @param {string} authorization Authenication (must begin with string "Bearer
- * ")
+ * @param {string} authorization Authentication (must begin with string
+ * "Bearer "). Possible values are:
+ * 
+ * -sessionToken for client auth
+ * 
+ * -AAD token for service auth
  * 
  * @param {object} [options] Optional Parameters.
+ * 
+ * @param {string} [options.appkey] App key must be filled in when using AAD
+ * tokens for Authentication.
+ * 
+ * @param {string} [options.userHandle] User handle must be filled when using
+ * AAD tokens for Authentication.
  * 
  * @param {object} [options.customHeaders] Headers that will be added to the
  * request
@@ -366,10 +415,18 @@ Users.prototype.deleteUser = function (authorization, options, callback) {
   if (!callback) {
     throw new Error('callback cannot be null.');
   }
+  var appkey = (options && options.appkey !== undefined) ? options.appkey : undefined;
+  var userHandle = (options && options.userHandle !== undefined) ? options.userHandle : undefined;
   // Validate
   try {
+    if (appkey !== null && appkey !== undefined && typeof appkey.valueOf() !== 'string') {
+      throw new Error('appkey must be of type string.');
+    }
     if (authorization === null || authorization === undefined || typeof authorization.valueOf() !== 'string') {
       throw new Error('authorization cannot be null or undefined and it must be of type string.');
+    }
+    if (userHandle !== null && userHandle !== undefined && typeof userHandle.valueOf() !== 'string') {
+      throw new Error('userHandle must be of type string.');
     }
   } catch (error) {
     return callback(error);
@@ -377,7 +434,7 @@ Users.prototype.deleteUser = function (authorization, options, callback) {
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.2/users/me';
+                   '//v0.3/users/me';
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
   requestUrl = requestUrl.replace(regex, '$1');
@@ -388,8 +445,14 @@ Users.prototype.deleteUser = function (authorization, options, callback) {
   httpRequest.headers = {};
   httpRequest.url = requestUrl;
   // Set Headers
+  if (appkey !== undefined && appkey !== null) {
+    httpRequest.headers['appkey'] = appkey;
+  }
   if (authorization !== undefined && authorization !== null) {
     httpRequest.headers['Authorization'] = authorization;
+  }
+  if (userHandle !== undefined && userHandle !== null) {
+    httpRequest.headers['UserHandle'] = userHandle;
   }
   if(options) {
     for(var headerName in options['customHeaders']) {
@@ -469,10 +532,20 @@ Users.prototype.deleteUser = function (authorization, options, callback) {
  * 
  * @param {string} [request.bio] Gets or sets short bio of the user
  * 
- * @param {string} authorization Authenication (must begin with string "Bearer
- * ")
+ * @param {string} authorization Authentication (must begin with string
+ * "Bearer "). Possible values are:
+ * 
+ * -sessionToken for client auth
+ * 
+ * -AAD token for service auth
  * 
  * @param {object} [options] Optional Parameters.
+ * 
+ * @param {string} [options.appkey] App key must be filled in when using AAD
+ * tokens for Authentication.
+ * 
+ * @param {string} [options.userHandle] User handle must be filled when using
+ * AAD tokens for Authentication.
  * 
  * @param {object} [options.customHeaders] Headers that will be added to the
  * request
@@ -498,13 +571,21 @@ Users.prototype.putUserInfo = function (request, authorization, options, callbac
   if (!callback) {
     throw new Error('callback cannot be null.');
   }
+  var appkey = (options && options.appkey !== undefined) ? options.appkey : undefined;
+  var userHandle = (options && options.userHandle !== undefined) ? options.userHandle : undefined;
   // Validate
   try {
     if (request === null || request === undefined) {
       throw new Error('request cannot be null or undefined.');
     }
+    if (appkey !== null && appkey !== undefined && typeof appkey.valueOf() !== 'string') {
+      throw new Error('appkey must be of type string.');
+    }
     if (authorization === null || authorization === undefined || typeof authorization.valueOf() !== 'string') {
       throw new Error('authorization cannot be null or undefined and it must be of type string.');
+    }
+    if (userHandle !== null && userHandle !== undefined && typeof userHandle.valueOf() !== 'string') {
+      throw new Error('userHandle must be of type string.');
     }
   } catch (error) {
     return callback(error);
@@ -512,7 +593,7 @@ Users.prototype.putUserInfo = function (request, authorization, options, callbac
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.2/users/me/info';
+                   '//v0.3/users/me/info';
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
   requestUrl = requestUrl.replace(regex, '$1');
@@ -523,8 +604,14 @@ Users.prototype.putUserInfo = function (request, authorization, options, callbac
   httpRequest.headers = {};
   httpRequest.url = requestUrl;
   // Set Headers
+  if (appkey !== undefined && appkey !== null) {
+    httpRequest.headers['appkey'] = appkey;
+  }
   if (authorization !== undefined && authorization !== null) {
     httpRequest.headers['Authorization'] = authorization;
+  }
+  if (userHandle !== undefined && userHandle !== null) {
+    httpRequest.headers['UserHandle'] = userHandle;
   }
   if(options) {
     for(var headerName in options['customHeaders']) {
@@ -614,10 +701,20 @@ Users.prototype.putUserInfo = function (request, authorization, options, callbac
  * 
  * @param {string} [request.photoHandle] Gets or sets photo handle of the user
  * 
- * @param {string} authorization Authenication (must begin with string "Bearer
- * ")
+ * @param {string} authorization Authentication (must begin with string
+ * "Bearer "). Possible values are:
+ * 
+ * -sessionToken for client auth
+ * 
+ * -AAD token for service auth
  * 
  * @param {object} [options] Optional Parameters.
+ * 
+ * @param {string} [options.appkey] App key must be filled in when using AAD
+ * tokens for Authentication.
+ * 
+ * @param {string} [options.userHandle] User handle must be filled when using
+ * AAD tokens for Authentication.
  * 
  * @param {object} [options.customHeaders] Headers that will be added to the
  * request
@@ -643,13 +740,21 @@ Users.prototype.putUserPhoto = function (request, authorization, options, callba
   if (!callback) {
     throw new Error('callback cannot be null.');
   }
+  var appkey = (options && options.appkey !== undefined) ? options.appkey : undefined;
+  var userHandle = (options && options.userHandle !== undefined) ? options.userHandle : undefined;
   // Validate
   try {
     if (request === null || request === undefined) {
       throw new Error('request cannot be null or undefined.');
     }
+    if (appkey !== null && appkey !== undefined && typeof appkey.valueOf() !== 'string') {
+      throw new Error('appkey must be of type string.');
+    }
     if (authorization === null || authorization === undefined || typeof authorization.valueOf() !== 'string') {
       throw new Error('authorization cannot be null or undefined and it must be of type string.');
+    }
+    if (userHandle !== null && userHandle !== undefined && typeof userHandle.valueOf() !== 'string') {
+      throw new Error('userHandle must be of type string.');
     }
   } catch (error) {
     return callback(error);
@@ -657,7 +762,7 @@ Users.prototype.putUserPhoto = function (request, authorization, options, callba
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.2/users/me/photo';
+                   '//v0.3/users/me/photo';
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
   requestUrl = requestUrl.replace(regex, '$1');
@@ -668,8 +773,14 @@ Users.prototype.putUserPhoto = function (request, authorization, options, callba
   httpRequest.headers = {};
   httpRequest.url = requestUrl;
   // Set Headers
+  if (appkey !== undefined && appkey !== null) {
+    httpRequest.headers['appkey'] = appkey;
+  }
   if (authorization !== undefined && authorization !== null) {
     httpRequest.headers['Authorization'] = authorization;
+  }
+  if (userHandle !== undefined && userHandle !== null) {
+    httpRequest.headers['UserHandle'] = userHandle;
   }
   if(options) {
     for(var headerName in options['customHeaders']) {
@@ -760,10 +871,20 @@ Users.prototype.putUserPhoto = function (request, authorization, options, callba
  * @param {string} [request.visibility] Gets or sets visibility of the user.
  * Possible values include: 'Public', 'Private'
  * 
- * @param {string} authorization Authenication (must begin with string "Bearer
- * ")
+ * @param {string} authorization Authentication (must begin with string
+ * "Bearer "). Possible values are:
+ * 
+ * -sessionToken for client auth
+ * 
+ * -AAD token for service auth
  * 
  * @param {object} [options] Optional Parameters.
+ * 
+ * @param {string} [options.appkey] App key must be filled in when using AAD
+ * tokens for Authentication.
+ * 
+ * @param {string} [options.userHandle] User handle must be filled when using
+ * AAD tokens for Authentication.
  * 
  * @param {object} [options.customHeaders] Headers that will be added to the
  * request
@@ -789,13 +910,21 @@ Users.prototype.putUserVisibility = function (request, authorization, options, c
   if (!callback) {
     throw new Error('callback cannot be null.');
   }
+  var appkey = (options && options.appkey !== undefined) ? options.appkey : undefined;
+  var userHandle = (options && options.userHandle !== undefined) ? options.userHandle : undefined;
   // Validate
   try {
     if (request === null || request === undefined) {
       throw new Error('request cannot be null or undefined.');
     }
+    if (appkey !== null && appkey !== undefined && typeof appkey.valueOf() !== 'string') {
+      throw new Error('appkey must be of type string.');
+    }
     if (authorization === null || authorization === undefined || typeof authorization.valueOf() !== 'string') {
       throw new Error('authorization cannot be null or undefined and it must be of type string.');
+    }
+    if (userHandle !== null && userHandle !== undefined && typeof userHandle.valueOf() !== 'string') {
+      throw new Error('userHandle must be of type string.');
     }
   } catch (error) {
     return callback(error);
@@ -803,7 +932,7 @@ Users.prototype.putUserVisibility = function (request, authorization, options, c
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.2/users/me/visibility';
+                   '//v0.3/users/me/visibility';
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
   requestUrl = requestUrl.replace(regex, '$1');
@@ -814,8 +943,14 @@ Users.prototype.putUserVisibility = function (request, authorization, options, c
   httpRequest.headers = {};
   httpRequest.url = requestUrl;
   // Set Headers
+  if (appkey !== undefined && appkey !== null) {
+    httpRequest.headers['appkey'] = appkey;
+  }
   if (authorization !== undefined && authorization !== null) {
     httpRequest.headers['Authorization'] = authorization;
+  }
+  if (userHandle !== undefined && userHandle !== null) {
+    httpRequest.headers['UserHandle'] = userHandle;
   }
   if(options) {
     for(var headerName in options['customHeaders']) {
@@ -905,10 +1040,18 @@ Users.prototype.putUserVisibility = function (request, authorization, options, c
  * 
  * @param {object} [options] Optional Parameters.
  * 
- * @param {string} [options.appkey] App Key Authentication
+ * @param {string} [options.appkey] App key must be filled in when using AAD
+ * tokens for Authentication.
  * 
- * @param {string} [options.authorization] Authenication (must begin with
- * string "Bearer ")
+ * @param {string} [options.authorization] Authentication (must begin with
+ * string "Bearer "). Possible values are:
+ * 
+ * -sessionToken for client auth
+ * 
+ * -AAD token for service auth
+ * 
+ * @param {string} [options.userHandle1] User handle must be filled when using
+ * AAD tokens for Authentication.
  * 
  * @param {object} [options.customHeaders] Headers that will be added to the
  * request
@@ -937,6 +1080,7 @@ Users.prototype.getUser = function (userHandle, options, callback) {
   }
   var appkey = (options && options.appkey !== undefined) ? options.appkey : undefined;
   var authorization = (options && options.authorization !== undefined) ? options.authorization : undefined;
+  var userHandle1 = (options && options.userHandle1 !== undefined) ? options.userHandle1 : undefined;
   // Validate
   try {
     if (userHandle === null || userHandle === undefined || typeof userHandle.valueOf() !== 'string') {
@@ -948,13 +1092,16 @@ Users.prototype.getUser = function (userHandle, options, callback) {
     if (authorization !== null && authorization !== undefined && typeof authorization.valueOf() !== 'string') {
       throw new Error('authorization must be of type string.');
     }
+    if (userHandle1 !== null && userHandle1 !== undefined && typeof userHandle1.valueOf() !== 'string') {
+      throw new Error('userHandle1 must be of type string.');
+    }
   } catch (error) {
     return callback(error);
   }
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.2/users/{userHandle}';
+                   '//v0.3/users/{userHandle}';
   requestUrl = requestUrl.replace('{userHandle}', encodeURIComponent(userHandle));
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
@@ -971,6 +1118,9 @@ Users.prototype.getUser = function (userHandle, options, callback) {
   }
   if (authorization !== undefined && authorization !== null) {
     httpRequest.headers['Authorization'] = authorization;
+  }
+  if (userHandle1 !== undefined && userHandle1 !== null) {
+    httpRequest.headers['UserHandle'] = userHandle1;
   }
   if(options) {
     for(var headerName in options['customHeaders']) {
@@ -1042,10 +1192,18 @@ Users.prototype.getUser = function (userHandle, options, callback) {
  * 
  * @param {number} [options.limit] Number of items to return
  * 
- * @param {string} [options.appkey] App Key Authentication
+ * @param {string} [options.appkey] App key must be filled in when using AAD
+ * tokens for Authentication.
  * 
- * @param {string} [options.authorization] Authenication (must begin with
- * string "Bearer ")
+ * @param {string} [options.authorization] Authentication (must begin with
+ * string "Bearer "). Possible values are:
+ * 
+ * -sessionToken for client auth
+ * 
+ * -AAD token for service auth
+ * 
+ * @param {string} [options.userHandle] User handle must be filled when using
+ * AAD tokens for Authentication.
  * 
  * @param {object} [options.customHeaders] Headers that will be added to the
  * request
@@ -1077,6 +1235,7 @@ Users.prototype.getPopularUsers = function (options, callback) {
   var limit = (options && options.limit !== undefined) ? options.limit : undefined;
   var appkey = (options && options.appkey !== undefined) ? options.appkey : undefined;
   var authorization = (options && options.authorization !== undefined) ? options.authorization : undefined;
+  var userHandle = (options && options.userHandle !== undefined) ? options.userHandle : undefined;
   // Validate
   try {
     if (cursor !== null && cursor !== undefined && typeof cursor !== 'number') {
@@ -1091,13 +1250,16 @@ Users.prototype.getPopularUsers = function (options, callback) {
     if (authorization !== null && authorization !== undefined && typeof authorization.valueOf() !== 'string') {
       throw new Error('authorization must be of type string.');
     }
+    if (userHandle !== null && userHandle !== undefined && typeof userHandle.valueOf() !== 'string') {
+      throw new Error('userHandle must be of type string.');
+    }
   } catch (error) {
     return callback(error);
   }
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.2/users/popular';
+                   '//v0.3/users/popular';
   var queryParameters = [];
   if (cursor !== null && cursor !== undefined) {
     queryParameters.push('cursor=' + encodeURIComponent(cursor.toString()));
@@ -1123,6 +1285,9 @@ Users.prototype.getPopularUsers = function (options, callback) {
   }
   if (authorization !== undefined && authorization !== null) {
     httpRequest.headers['Authorization'] = authorization;
+  }
+  if (userHandle !== undefined && userHandle !== null) {
+    httpRequest.headers['UserHandle'] = userHandle;
   }
   if(options) {
     for(var headerName in options['customHeaders']) {

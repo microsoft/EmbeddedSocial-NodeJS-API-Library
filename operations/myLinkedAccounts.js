@@ -27,10 +27,20 @@ function MyLinkedAccounts(client) {
 /**
  * @summary Get linked accounts
  *
- * @param {string} authorization Authenication (must begin with string "Bearer
- * ")
+ * @param {string} authorization Authentication (must begin with string
+ * "Bearer "). Possible values are:
+ * 
+ * -sessionToken for client auth
+ * 
+ * -AAD token for service auth
  * 
  * @param {object} [options] Optional Parameters.
+ * 
+ * @param {string} [options.appkey] App key must be filled in when using AAD
+ * tokens for Authentication.
+ * 
+ * @param {string} [options.userHandle] User handle must be filled when using
+ * AAD tokens for Authentication.
  * 
  * @param {object} [options.customHeaders] Headers that will be added to the
  * request
@@ -56,10 +66,18 @@ MyLinkedAccounts.prototype.getLinkedAccounts = function (authorization, options,
   if (!callback) {
     throw new Error('callback cannot be null.');
   }
+  var appkey = (options && options.appkey !== undefined) ? options.appkey : undefined;
+  var userHandle = (options && options.userHandle !== undefined) ? options.userHandle : undefined;
   // Validate
   try {
+    if (appkey !== null && appkey !== undefined && typeof appkey.valueOf() !== 'string') {
+      throw new Error('appkey must be of type string.');
+    }
     if (authorization === null || authorization === undefined || typeof authorization.valueOf() !== 'string') {
       throw new Error('authorization cannot be null or undefined and it must be of type string.');
+    }
+    if (userHandle !== null && userHandle !== undefined && typeof userHandle.valueOf() !== 'string') {
+      throw new Error('userHandle must be of type string.');
     }
   } catch (error) {
     return callback(error);
@@ -67,7 +85,7 @@ MyLinkedAccounts.prototype.getLinkedAccounts = function (authorization, options,
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.2/users/me/linked_accounts';
+                   '//v0.3/users/me/linked_accounts';
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
   requestUrl = requestUrl.replace(regex, '$1');
@@ -78,8 +96,14 @@ MyLinkedAccounts.prototype.getLinkedAccounts = function (authorization, options,
   httpRequest.headers = {};
   httpRequest.url = requestUrl;
   // Set Headers
+  if (appkey !== undefined && appkey !== null) {
+    httpRequest.headers['appkey'] = appkey;
+  }
   if (authorization !== undefined && authorization !== null) {
     httpRequest.headers['Authorization'] = authorization;
+  }
+  if (userHandle !== undefined && userHandle !== null) {
+    httpRequest.headers['UserHandle'] = userHandle;
   }
   if(options) {
     for(var headerName in options['customHeaders']) {
@@ -176,10 +200,20 @@ MyLinkedAccounts.prototype.getLinkedAccounts = function (authorization, options,
  * but they issue request tokens
  * and verifiers.
  * 
- * @param {string} authorization Authenication (must begin with string "Bearer
- * ")
+ * @param {string} authorization Authentication (must begin with string
+ * "Bearer "). Possible values are:
+ * 
+ * -sessionToken for client auth
+ * 
+ * -AAD token for service auth
  * 
  * @param {object} [options] Optional Parameters.
+ * 
+ * @param {string} [options.appkey] App key must be filled in when using AAD
+ * tokens for Authentication.
+ * 
+ * @param {string} [options.userHandle] User handle must be filled when using
+ * AAD tokens for Authentication.
  * 
  * @param {object} [options.customHeaders] Headers that will be added to the
  * request
@@ -205,13 +239,21 @@ MyLinkedAccounts.prototype.postLinkedAccount = function (request, authorization,
   if (!callback) {
     throw new Error('callback cannot be null.');
   }
+  var appkey = (options && options.appkey !== undefined) ? options.appkey : undefined;
+  var userHandle = (options && options.userHandle !== undefined) ? options.userHandle : undefined;
   // Validate
   try {
     if (request === null || request === undefined) {
       throw new Error('request cannot be null or undefined.');
     }
+    if (appkey !== null && appkey !== undefined && typeof appkey.valueOf() !== 'string') {
+      throw new Error('appkey must be of type string.');
+    }
     if (authorization === null || authorization === undefined || typeof authorization.valueOf() !== 'string') {
       throw new Error('authorization cannot be null or undefined and it must be of type string.');
+    }
+    if (userHandle !== null && userHandle !== undefined && typeof userHandle.valueOf() !== 'string') {
+      throw new Error('userHandle must be of type string.');
     }
   } catch (error) {
     return callback(error);
@@ -219,7 +261,7 @@ MyLinkedAccounts.prototype.postLinkedAccount = function (request, authorization,
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.2/users/me/linked_accounts';
+                   '//v0.3/users/me/linked_accounts';
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
   requestUrl = requestUrl.replace(regex, '$1');
@@ -230,8 +272,14 @@ MyLinkedAccounts.prototype.postLinkedAccount = function (request, authorization,
   httpRequest.headers = {};
   httpRequest.url = requestUrl;
   // Set Headers
+  if (appkey !== undefined && appkey !== null) {
+    httpRequest.headers['appkey'] = appkey;
+  }
   if (authorization !== undefined && authorization !== null) {
     httpRequest.headers['Authorization'] = authorization;
+  }
+  if (userHandle !== undefined && userHandle !== null) {
+    httpRequest.headers['UserHandle'] = userHandle;
   }
   if(options) {
     for(var headerName in options['customHeaders']) {
@@ -320,10 +368,20 @@ MyLinkedAccounts.prototype.postLinkedAccount = function (request, authorization,
  * @param {string} identityProvider Identity provider type. Possible values
  * include: 'Facebook', 'Microsoft', 'Google', 'Twitter', 'Beihai'
  * 
- * @param {string} authorization Authenication (must begin with string "Bearer
- * ")
+ * @param {string} authorization Authentication (must begin with string
+ * "Bearer "). Possible values are:
+ * 
+ * -sessionToken for client auth
+ * 
+ * -AAD token for service auth
  * 
  * @param {object} [options] Optional Parameters.
+ * 
+ * @param {string} [options.appkey] App key must be filled in when using AAD
+ * tokens for Authentication.
+ * 
+ * @param {string} [options.userHandle] User handle must be filled when using
+ * AAD tokens for Authentication.
  * 
  * @param {object} [options.customHeaders] Headers that will be added to the
  * request
@@ -349,6 +407,8 @@ MyLinkedAccounts.prototype.deleteLinkedAccount = function (identityProvider, aut
   if (!callback) {
     throw new Error('callback cannot be null.');
   }
+  var appkey = (options && options.appkey !== undefined) ? options.appkey : undefined;
+  var userHandle = (options && options.userHandle !== undefined) ? options.userHandle : undefined;
   // Validate
   try {
     if (identityProvider) {
@@ -359,8 +419,14 @@ MyLinkedAccounts.prototype.deleteLinkedAccount = function (identityProvider, aut
     } else {
       throw new Error('identityProvider cannot be null or undefined.');
     }
+    if (appkey !== null && appkey !== undefined && typeof appkey.valueOf() !== 'string') {
+      throw new Error('appkey must be of type string.');
+    }
     if (authorization === null || authorization === undefined || typeof authorization.valueOf() !== 'string') {
       throw new Error('authorization cannot be null or undefined and it must be of type string.');
+    }
+    if (userHandle !== null && userHandle !== undefined && typeof userHandle.valueOf() !== 'string') {
+      throw new Error('userHandle must be of type string.');
     }
   } catch (error) {
     return callback(error);
@@ -368,7 +434,7 @@ MyLinkedAccounts.prototype.deleteLinkedAccount = function (identityProvider, aut
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.2/users/me/linked_accounts/{identityProvider}';
+                   '//v0.3/users/me/linked_accounts/{identityProvider}';
   requestUrl = requestUrl.replace('{identityProvider}', encodeURIComponent(identityProvider));
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
@@ -380,8 +446,14 @@ MyLinkedAccounts.prototype.deleteLinkedAccount = function (identityProvider, aut
   httpRequest.headers = {};
   httpRequest.url = requestUrl;
   // Set Headers
+  if (appkey !== undefined && appkey !== null) {
+    httpRequest.headers['appkey'] = appkey;
+  }
   if (authorization !== undefined && authorization !== null) {
     httpRequest.headers['Authorization'] = authorization;
+  }
+  if (userHandle !== undefined && userHandle !== null) {
+    httpRequest.headers['UserHandle'] = userHandle;
   }
   if(options) {
     for(var headerName in options['customHeaders']) {
