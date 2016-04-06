@@ -44,12 +44,22 @@ function Images(client) {
  * @param {string} imageType Image type. Possible values include: 'UserPhoto',
  * 'ContentBlob', 'AppIcon'
  * 
- * @param {string} authorization Authenication (must begin with string "Bearer
- * ")
+ * @param {string} authorization Authentication (must begin with string
+ * "Bearer "). Possible values are:
+ * 
+ * -sessionToken for client auth
+ * 
+ * -AAD token for service auth
  * 
  * @param {object} image MIME encoded contents of the image
  * 
  * @param {object} [options] Optional Parameters.
+ * 
+ * @param {string} [options.appkey] App key must be filled in when using AAD
+ * tokens for Authentication.
+ * 
+ * @param {string} [options.userHandle] User handle must be filled when using
+ * AAD tokens for Authentication.
  * 
  * @param {object} [options.customHeaders] Headers that will be added to the
  * request
@@ -76,6 +86,8 @@ Images.prototype.postImage = function (imageType, authorization, image, options,
   if (!callback) {
     throw new Error('callback cannot be null.');
   }
+  var appkey = (options && options.appkey !== undefined) ? options.appkey : undefined;
+  var userHandle = (options && options.userHandle !== undefined) ? options.userHandle : undefined;
   // Validate
   try {
     if (imageType) {
@@ -86,8 +98,14 @@ Images.prototype.postImage = function (imageType, authorization, image, options,
     } else {
       throw new Error('imageType cannot be null or undefined.');
     }
+    if (appkey !== null && appkey !== undefined && typeof appkey.valueOf() !== 'string') {
+      throw new Error('appkey must be of type string.');
+    }
     if (authorization === null || authorization === undefined || typeof authorization.valueOf() !== 'string') {
       throw new Error('authorization cannot be null or undefined and it must be of type string.');
+    }
+    if (userHandle !== null && userHandle !== undefined && typeof userHandle.valueOf() !== 'string') {
+      throw new Error('userHandle must be of type string.');
     }
     if (image === null || image === undefined) {
       throw new Error('image cannot be null or undefined and it must be of type object.');
@@ -98,7 +116,7 @@ Images.prototype.postImage = function (imageType, authorization, image, options,
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.2/images/{imageType}';
+                   '//v0.3/images/{imageType}';
   requestUrl = requestUrl.replace('{imageType}', encodeURIComponent(imageType));
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
@@ -110,8 +128,14 @@ Images.prototype.postImage = function (imageType, authorization, image, options,
   httpRequest.headers = {};
   httpRequest.url = requestUrl;
   // Set Headers
+  if (appkey !== undefined && appkey !== null) {
+    httpRequest.headers['appkey'] = appkey;
+  }
   if (authorization !== undefined && authorization !== null) {
     httpRequest.headers['Authorization'] = authorization;
+  }
+  if (userHandle !== undefined && userHandle !== null) {
+    httpRequest.headers['UserHandle'] = userHandle;
   }
   if(options) {
     for(var headerName in options['customHeaders']) {
@@ -183,10 +207,18 @@ Images.prototype.postImage = function (imageType, authorization, image, options,
  * 
  * @param {object} [options] Optional Parameters.
  * 
- * @param {string} [options.appkey] App Key Authentication
+ * @param {string} [options.appkey] App key must be filled in when using AAD
+ * tokens for Authentication.
  * 
- * @param {string} [options.authorization] Authenication (must begin with
- * string "Bearer ")
+ * @param {string} [options.authorization] Authentication (must begin with
+ * string "Bearer "). Possible values are:
+ * 
+ * -sessionToken for client auth
+ * 
+ * -AAD token for service auth
+ * 
+ * @param {string} [options.userHandle] User handle must be filled when using
+ * AAD tokens for Authentication.
  * 
  * @param {object} [options.customHeaders] Headers that will be added to the
  * request
@@ -214,6 +246,7 @@ Images.prototype.getImage = function (blobHandle, options, callback) {
   }
   var appkey = (options && options.appkey !== undefined) ? options.appkey : undefined;
   var authorization = (options && options.authorization !== undefined) ? options.authorization : undefined;
+  var userHandle = (options && options.userHandle !== undefined) ? options.userHandle : undefined;
   // Validate
   try {
     if (blobHandle === null || blobHandle === undefined || typeof blobHandle.valueOf() !== 'string') {
@@ -225,13 +258,16 @@ Images.prototype.getImage = function (blobHandle, options, callback) {
     if (authorization !== null && authorization !== undefined && typeof authorization.valueOf() !== 'string') {
       throw new Error('authorization must be of type string.');
     }
+    if (userHandle !== null && userHandle !== undefined && typeof userHandle.valueOf() !== 'string') {
+      throw new Error('userHandle must be of type string.');
+    }
   } catch (error) {
     return callback(error);
   }
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.2/images/{blobHandle}';
+                   '//v0.3/images/{blobHandle}';
   requestUrl = requestUrl.replace('{blobHandle}', encodeURIComponent(blobHandle));
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
@@ -248,6 +284,9 @@ Images.prototype.getImage = function (blobHandle, options, callback) {
   }
   if (authorization !== undefined && authorization !== null) {
     httpRequest.headers['Authorization'] = authorization;
+  }
+  if (userHandle !== undefined && userHandle !== null) {
+    httpRequest.headers['UserHandle'] = userHandle;
   }
   if(options) {
     for(var headerName in options['customHeaders']) {

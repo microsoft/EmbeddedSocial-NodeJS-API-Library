@@ -23,12 +23,22 @@ export interface Blobs {
      * If your blob is an image, use image APIs. For all other blob types, use
      * this API.
      *
-     * @param {string} authorization Authenication (must begin with string "Bearer
-     * ")
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
      * 
      * @param {object} blob MIME encoded contents of the blob
      * 
      * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -36,7 +46,7 @@ export interface Blobs {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    postBlob(authorization: string, blob: stream.Readable, options: { customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.PostBlobResponse>): void;
+    postBlob(authorization: string, blob: stream.Readable, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.PostBlobResponse>): void;
     postBlob(authorization: string, blob: stream.Readable, callback: ServiceCallback<models.PostBlobResponse>): void;
 
     /**
@@ -44,10 +54,20 @@ export interface Blobs {
      *
      * @param {string} blobHandle Blob handle
      * 
-     * @param {string} authorization Authenication (must begin with string "Bearer
-     * ")
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
      * 
      * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -55,7 +75,7 @@ export interface Blobs {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    getBlob(blobHandle: string, authorization: string, options: { customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<stream.Readable>): void;
+    getBlob(blobHandle: string, authorization: string, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<stream.Readable>): void;
     getBlob(blobHandle: string, authorization: string, callback: ServiceCallback<stream.Readable>): void;
 }
 
@@ -74,10 +94,18 @@ export interface Builds {
      *
      * @param {object} [options] Optional Parameters.
      * 
-     * @param {string} [options.appkey] App Key Authentication
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
      * 
-     * @param {string} [options.authorization] Authenication (must begin with
-     * string "Bearer ")
+     * @param {string} [options.authorization] Authentication (must begin with
+     * string "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -85,7 +113,7 @@ export interface Builds {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    getBuildsCurrent(options: { appkey? : string, authorization? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.BuildsCurrentResponse>): void;
+    getBuildsCurrent(options: { appkey? : string, authorization? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.BuildsCurrentResponse>): void;
     getBuildsCurrent(callback: ServiceCallback<models.BuildsCurrentResponse>): void;
 }
 
@@ -102,8 +130,12 @@ export interface TopicComments {
      *
      * @param {string} topicHandle Topic handle
      * 
-     * @param {string} authorization Authenication (must begin with string "Bearer
-     * ")
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
      * 
      * @param {object} [options] Optional Parameters.
      * 
@@ -111,13 +143,19 @@ export interface TopicComments {
      * 
      * @param {number} [options.limit] Number of items to return
      * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
+     * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
      * 
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    getTopicComments(topicHandle: string, authorization: string, options: { cursor? : string, limit? : number, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseCommentView>): void;
+    getTopicComments(topicHandle: string, authorization: string, options: { cursor? : string, limit? : number, appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseCommentView>): void;
     getTopicComments(topicHandle: string, authorization: string, callback: ServiceCallback<models.FeedResponseCommentView>): void;
 
     /**
@@ -136,10 +174,20 @@ export interface TopicComments {
      * 
      * @param {string} [request.language] Gets or sets comment language
      * 
-     * @param {string} authorization Authenication (must begin with string "Bearer
-     * ")
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
      * 
      * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -147,7 +195,7 @@ export interface TopicComments {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    postComment(topicHandle: string, request: models.PostCommentRequest, authorization: string, options: { customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.PostCommentResponse>): void;
+    postComment(topicHandle: string, request: models.PostCommentRequest, authorization: string, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.PostCommentResponse>): void;
     postComment(topicHandle: string, request: models.PostCommentRequest, authorization: string, callback: ServiceCallback<models.PostCommentResponse>): void;
 }
 
@@ -164,10 +212,20 @@ export interface Comments {
      *
      * @param {string} commentHandle Comment handle
      * 
-     * @param {string} authorization Authenication (must begin with string "Bearer
-     * ")
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
      * 
      * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -175,7 +233,7 @@ export interface Comments {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    getComment(commentHandle: string, authorization: string, options: { customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.CommentView>): void;
+    getComment(commentHandle: string, authorization: string, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.CommentView>): void;
     getComment(commentHandle: string, authorization: string, callback: ServiceCallback<models.CommentView>): void;
 
     /**
@@ -183,10 +241,20 @@ export interface Comments {
      *
      * @param {string} commentHandle Comment handle
      * 
-     * @param {string} authorization Authenication (must begin with string "Bearer
-     * ")
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
      * 
      * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -194,7 +262,7 @@ export interface Comments {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    deleteComment(commentHandle: string, authorization: string, options: { customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
+    deleteComment(commentHandle: string, authorization: string, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
     deleteComment(commentHandle: string, authorization: string, callback: ServiceCallback<any>): void;
 }
 
@@ -211,10 +279,18 @@ export interface Hashtags {
      *
      * @param {object} [options] Optional Parameters.
      * 
-     * @param {string} [options.appkey] App Key Authentication
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
      * 
-     * @param {string} [options.authorization] Authenication (must begin with
-     * string "Bearer ")
+     * @param {string} [options.authorization] Authentication (must begin with
+     * string "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -222,7 +298,7 @@ export interface Hashtags {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    getTrendingHashtags(options: { appkey? : string, authorization? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<string[]>): void;
+    getTrendingHashtags(options: { appkey? : string, authorization? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<string[]>): void;
     getTrendingHashtags(callback: ServiceCallback<string[]>): void;
 
     /**
@@ -232,10 +308,18 @@ export interface Hashtags {
      * 
      * @param {object} [options] Optional Parameters.
      * 
-     * @param {string} [options.appkey] App Key Authentication
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
      * 
-     * @param {string} [options.authorization] Authenication (must begin with
-     * string "Bearer ")
+     * @param {string} [options.authorization] Authentication (must begin with
+     * string "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -243,7 +327,7 @@ export interface Hashtags {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    getAutocompletedHashtags(query: string, options: { appkey? : string, authorization? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<string[]>): void;
+    getAutocompletedHashtags(query: string, options: { appkey? : string, authorization? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<string[]>): void;
     getAutocompletedHashtags(query: string, callback: ServiceCallback<string[]>): void;
 }
 
@@ -275,12 +359,22 @@ export interface Images {
      * @param {string} imageType Image type. Possible values include: 'UserPhoto',
      * 'ContentBlob', 'AppIcon'
      * 
-     * @param {string} authorization Authenication (must begin with string "Bearer
-     * ")
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
      * 
      * @param {object} image MIME encoded contents of the image
      * 
      * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -288,7 +382,7 @@ export interface Images {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    postImage(imageType: string, authorization: string, image: stream.Readable, options: { customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.PostImageResponse>): void;
+    postImage(imageType: string, authorization: string, image: stream.Readable, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.PostImageResponse>): void;
     postImage(imageType: string, authorization: string, image: stream.Readable, callback: ServiceCallback<models.PostImageResponse>): void;
 
     /**
@@ -298,10 +392,18 @@ export interface Images {
      * 
      * @param {object} [options] Optional Parameters.
      * 
-     * @param {string} [options.appkey] App Key Authentication
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
      * 
-     * @param {string} [options.authorization] Authenication (must begin with
-     * string "Bearer ")
+     * @param {string} [options.authorization] Authentication (must begin with
+     * string "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -309,7 +411,7 @@ export interface Images {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    getImage(blobHandle: string, options: { appkey? : string, authorization? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<stream.Readable>): void;
+    getImage(blobHandle: string, options: { appkey? : string, authorization? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<stream.Readable>): void;
     getImage(blobHandle: string, callback: ServiceCallback<stream.Readable>): void;
 }
 
@@ -332,10 +434,18 @@ export interface CommentLikes {
      * 
      * @param {number} [options.limit] Number of items to return
      * 
-     * @param {string} [options.appkey] App Key Authentication
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
      * 
-     * @param {string} [options.authorization] Authenication (must begin with
-     * string "Bearer ")
+     * @param {string} [options.authorization] Authentication (must begin with
+     * string "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -343,7 +453,7 @@ export interface CommentLikes {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    getLikes(commentHandle: string, options: { cursor? : string, limit? : number, appkey? : string, authorization? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseUserCompactView>): void;
+    getLikes(commentHandle: string, options: { cursor? : string, limit? : number, appkey? : string, authorization? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseUserCompactView>): void;
     getLikes(commentHandle: string, callback: ServiceCallback<models.FeedResponseUserCompactView>): void;
 
     /**
@@ -351,10 +461,20 @@ export interface CommentLikes {
      *
      * @param {string} commentHandle Comment handle
      * 
-     * @param {string} authorization Authenication (must begin with string "Bearer
-     * ")
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
      * 
      * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -362,7 +482,7 @@ export interface CommentLikes {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    postLike(commentHandle: string, authorization: string, options: { customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
+    postLike(commentHandle: string, authorization: string, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
     postLike(commentHandle: string, authorization: string, callback: ServiceCallback<any>): void;
 
     /**
@@ -370,10 +490,20 @@ export interface CommentLikes {
      *
      * @param {string} commentHandle Comment handle
      * 
-     * @param {string} authorization Authenication (must begin with string "Bearer
-     * ")
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
      * 
      * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -381,7 +511,7 @@ export interface CommentLikes {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    deleteLike(commentHandle: string, authorization: string, options: { customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
+    deleteLike(commentHandle: string, authorization: string, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
     deleteLike(commentHandle: string, authorization: string, callback: ServiceCallback<any>): void;
 }
 
@@ -404,10 +534,18 @@ export interface ReplyLikes {
      * 
      * @param {number} [options.limit] Number of items to return
      * 
-     * @param {string} [options.appkey] App Key Authentication
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
      * 
-     * @param {string} [options.authorization] Authenication (must begin with
-     * string "Bearer ")
+     * @param {string} [options.authorization] Authentication (must begin with
+     * string "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -415,7 +553,7 @@ export interface ReplyLikes {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    getLikes(replyHandle: string, options: { cursor? : string, limit? : number, appkey? : string, authorization? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseUserCompactView>): void;
+    getLikes(replyHandle: string, options: { cursor? : string, limit? : number, appkey? : string, authorization? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseUserCompactView>): void;
     getLikes(replyHandle: string, callback: ServiceCallback<models.FeedResponseUserCompactView>): void;
 
     /**
@@ -423,10 +561,20 @@ export interface ReplyLikes {
      *
      * @param {string} replyHandle Reply handle
      * 
-     * @param {string} authorization Authenication (must begin with string "Bearer
-     * ")
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
      * 
      * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -434,7 +582,7 @@ export interface ReplyLikes {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    postLike(replyHandle: string, authorization: string, options: { customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
+    postLike(replyHandle: string, authorization: string, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
     postLike(replyHandle: string, authorization: string, callback: ServiceCallback<any>): void;
 
     /**
@@ -442,10 +590,20 @@ export interface ReplyLikes {
      *
      * @param {string} replyHandle Reply handle
      * 
-     * @param {string} authorization Authenication (must begin with string "Bearer
-     * ")
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
      * 
      * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -453,7 +611,7 @@ export interface ReplyLikes {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    deleteLike(replyHandle: string, authorization: string, options: { customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
+    deleteLike(replyHandle: string, authorization: string, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
     deleteLike(replyHandle: string, authorization: string, callback: ServiceCallback<any>): void;
 }
 
@@ -476,10 +634,18 @@ export interface TopicLikes {
      * 
      * @param {number} [options.limit] Number of items to return
      * 
-     * @param {string} [options.appkey] App Key Authentication
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
      * 
-     * @param {string} [options.authorization] Authenication (must begin with
-     * string "Bearer ")
+     * @param {string} [options.authorization] Authentication (must begin with
+     * string "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -487,7 +653,7 @@ export interface TopicLikes {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    getLikes(topicHandle: string, options: { cursor? : string, limit? : number, appkey? : string, authorization? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseUserCompactView>): void;
+    getLikes(topicHandle: string, options: { cursor? : string, limit? : number, appkey? : string, authorization? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseUserCompactView>): void;
     getLikes(topicHandle: string, callback: ServiceCallback<models.FeedResponseUserCompactView>): void;
 
     /**
@@ -495,10 +661,20 @@ export interface TopicLikes {
      *
      * @param {string} topicHandle Topic handle
      * 
-     * @param {string} authorization Authenication (must begin with string "Bearer
-     * ")
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
      * 
      * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -506,7 +682,7 @@ export interface TopicLikes {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    postLike(topicHandle: string, authorization: string, options: { customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
+    postLike(topicHandle: string, authorization: string, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
     postLike(topicHandle: string, authorization: string, callback: ServiceCallback<any>): void;
 
     /**
@@ -514,10 +690,20 @@ export interface TopicLikes {
      *
      * @param {string} topicHandle Topic handle
      * 
-     * @param {string} authorization Authenication (must begin with string "Bearer
-     * ")
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
      * 
      * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -525,7 +711,7 @@ export interface TopicLikes {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    deleteLike(topicHandle: string, authorization: string, options: { customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
+    deleteLike(topicHandle: string, authorization: string, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
     deleteLike(topicHandle: string, authorization: string, callback: ServiceCallback<any>): void;
 }
 
@@ -545,10 +731,20 @@ export interface MyNotifications {
      * @param {string} [request.readActivityHandle] Gets or sets last read
      * activity handle
      * 
-     * @param {string} authorization Authenication (must begin with string "Bearer
-     * ")
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
      * 
      * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -556,14 +752,18 @@ export interface MyNotifications {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    putNotificationsStatus(request: models.PutNotificationsStatusRequest, authorization: string, options: { customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
+    putNotificationsStatus(request: models.PutNotificationsStatusRequest, authorization: string, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
     putNotificationsStatus(request: models.PutNotificationsStatusRequest, authorization: string, callback: ServiceCallback<any>): void;
 
     /**
      * @summary Get notifications
      *
-     * @param {string} authorization Authenication (must begin with string "Bearer
-     * ")
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
      * 
      * @param {object} [options] Optional Parameters.
      * 
@@ -571,22 +771,38 @@ export interface MyNotifications {
      * 
      * @param {number} [options.limit] Number of items to return
      * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
+     * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
      * 
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    getNotifications(authorization: string, options: { cursor? : string, limit? : number, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseActivityView>): void;
+    getNotifications(authorization: string, options: { cursor? : string, limit? : number, appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseActivityView>): void;
     getNotifications(authorization: string, callback: ServiceCallback<models.FeedResponseActivityView>): void;
 
     /**
      * @summary Get unread notifications count
      *
-     * @param {string} authorization Authenication (must begin with string "Bearer
-     * ")
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
      * 
      * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -594,7 +810,7 @@ export interface MyNotifications {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    getNotificationsCount(authorization: string, options: { customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.CountResponse>): void;
+    getNotificationsCount(authorization: string, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.CountResponse>): void;
     getNotificationsCount(authorization: string, callback: ServiceCallback<models.CountResponse>): void;
 }
 
@@ -609,8 +825,12 @@ export interface MyPins {
     /**
      * @summary Get my pins
      *
-     * @param {string} authorization Authenication (must begin with string "Bearer
-     * ")
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
      * 
      * @param {object} [options] Optional Parameters.
      * 
@@ -618,13 +838,19 @@ export interface MyPins {
      * 
      * @param {number} [options.limit] Number of items to return
      * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
+     * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
      * 
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    getPins(authorization: string, options: { cursor? : string, limit? : number, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseTopicView>): void;
+    getPins(authorization: string, options: { cursor? : string, limit? : number, appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseTopicView>): void;
     getPins(authorization: string, callback: ServiceCallback<models.FeedResponseTopicView>): void;
 
     /**
@@ -634,10 +860,20 @@ export interface MyPins {
      * 
      * @param {string} [request.topicHandle] Gets or sets topic handle
      * 
-     * @param {string} authorization Authenication (must begin with string "Bearer
-     * ")
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
      * 
      * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -645,7 +881,7 @@ export interface MyPins {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    postPin(request: models.PostPinRequest, authorization: string, options: { customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
+    postPin(request: models.PostPinRequest, authorization: string, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
     postPin(request: models.PostPinRequest, authorization: string, callback: ServiceCallback<any>): void;
 
     /**
@@ -653,10 +889,20 @@ export interface MyPins {
      *
      * @param {string} topicHandle Topic handle
      * 
-     * @param {string} authorization Authenication (must begin with string "Bearer
-     * ")
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
      * 
      * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -664,7 +910,7 @@ export interface MyPins {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    deletePin(topicHandle: string, authorization: string, options: { customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
+    deletePin(topicHandle: string, authorization: string, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
     deletePin(topicHandle: string, authorization: string, callback: ServiceCallback<any>): void;
 }
 
@@ -682,8 +928,9 @@ export interface MyPushRegistrations {
      * @param {string} platform Platform type. Possible values include: 'Windows',
      * 'Android', 'IOS'
      * 
-     * @param {string} registrationId Unique registration id provided by the
+     * @param {string} registrationId Unique registration ID provided by the
      * mobile OS.
+     * You must URL encode the registration ID.
      * For Android, this is the GCM registration ID.
      * For Windows, this is the PushNotificationChannel URI.
      * For iOS, this is the device token.
@@ -697,10 +944,20 @@ export interface MyPushRegistrations {
      * 
      * @param {string} [request.language] Gets or sets language of the user
      * 
-     * @param {string} authorization Authenication (must begin with string "Bearer
-     * ")
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
      * 
      * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -708,7 +965,7 @@ export interface MyPushRegistrations {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    putPushRegistration(platform: string, registrationId: string, request: models.PutPushRegistrationRequest, authorization: string, options: { customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
+    putPushRegistration(platform: string, registrationId: string, request: models.PutPushRegistrationRequest, authorization: string, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
     putPushRegistration(platform: string, registrationId: string, request: models.PutPushRegistrationRequest, authorization: string, callback: ServiceCallback<any>): void;
 
     /**
@@ -717,16 +974,27 @@ export interface MyPushRegistrations {
      * @param {string} platform Platform type. Possible values include: 'Windows',
      * 'Android', 'IOS'
      * 
-     * @param {string} registrationId Unique registration id provided by the
+     * @param {string} registrationId Unique registration ID provided by the
      * mobile OS.
+     * You must URL encode the registration ID.
      * For Android, this is the GCM registration ID.
      * For Windows, this is the PushNotificationChannel URI.
      * For iOS, this is the device token.
      * 
-     * @param {string} authorization Authenication (must begin with string "Bearer
-     * ")
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
      * 
      * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -734,7 +1002,7 @@ export interface MyPushRegistrations {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    deletePushRegistration(platform: string, registrationId: string, authorization: string, options: { customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
+    deletePushRegistration(platform: string, registrationId: string, authorization: string, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
     deletePushRegistration(platform: string, registrationId: string, authorization: string, callback: ServiceCallback<any>): void;
 }
 
@@ -751,8 +1019,12 @@ export interface CommentReplies {
      *
      * @param {string} commentHandle Comment handle
      * 
-     * @param {string} authorization Authenication (must begin with string "Bearer
-     * ")
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
      * 
      * @param {object} [options] Optional Parameters.
      * 
@@ -760,13 +1032,19 @@ export interface CommentReplies {
      * 
      * @param {number} [options.limit] Number of items to return
      * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
+     * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
      * 
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    getReplies(commentHandle: string, authorization: string, options: { cursor? : string, limit? : number, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseReplyView>): void;
+    getReplies(commentHandle: string, authorization: string, options: { cursor? : string, limit? : number, appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseReplyView>): void;
     getReplies(commentHandle: string, authorization: string, callback: ServiceCallback<models.FeedResponseReplyView>): void;
 
     /**
@@ -780,10 +1058,20 @@ export interface CommentReplies {
      * 
      * @param {string} [request.language] Gets or sets reply language
      * 
-     * @param {string} authorization Authenication (must begin with string "Bearer
-     * ")
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
      * 
      * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -791,7 +1079,7 @@ export interface CommentReplies {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    postReply(commentHandle: string, request: models.PostReplyRequest, authorization: string, options: { customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.PostReplyResponse>): void;
+    postReply(commentHandle: string, request: models.PostReplyRequest, authorization: string, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.PostReplyResponse>): void;
     postReply(commentHandle: string, request: models.PostReplyRequest, authorization: string, callback: ServiceCallback<models.PostReplyResponse>): void;
 }
 
@@ -808,10 +1096,20 @@ export interface Replies {
      *
      * @param {string} replyHandle Reply handle
      * 
-     * @param {string} authorization Authenication (must begin with string "Bearer
-     * ")
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
      * 
      * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -819,7 +1117,7 @@ export interface Replies {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    getReply(replyHandle: string, authorization: string, options: { customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.ReplyView>): void;
+    getReply(replyHandle: string, authorization: string, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.ReplyView>): void;
     getReply(replyHandle: string, authorization: string, callback: ServiceCallback<models.ReplyView>): void;
 
     /**
@@ -827,10 +1125,20 @@ export interface Replies {
      *
      * @param {string} replyHandle Reply handle
      * 
-     * @param {string} authorization Authenication (must begin with string "Bearer
-     * ")
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
      * 
      * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -838,7 +1146,7 @@ export interface Replies {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    deleteReply(replyHandle: string, authorization: string, options: { customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
+    deleteReply(replyHandle: string, authorization: string, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
     deleteReply(replyHandle: string, authorization: string, callback: ServiceCallback<any>): void;
 }
 
@@ -861,10 +1169,20 @@ export interface UserReports {
      * Possible values include: 'Spam', 'Cyberbullying', 'ChildEndangerment',
      * 'Offensive', 'ContentInfringement', 'Other'
      * 
-     * @param {string} authorization Authenication (must begin with string "Bearer
-     * ")
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
      * 
      * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle1] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -872,7 +1190,7 @@ export interface UserReports {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    postReport(userHandle: string, postReportRequest: models.PostReportRequest, authorization: string, options: { customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
+    postReport(userHandle: string, postReportRequest: models.PostReportRequest, authorization: string, options: { appkey? : string, userHandle1? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
     postReport(userHandle: string, postReportRequest: models.PostReportRequest, authorization: string, callback: ServiceCallback<any>): void;
 }
 
@@ -895,10 +1213,20 @@ export interface ReplyReports {
      * Possible values include: 'Spam', 'Cyberbullying', 'ChildEndangerment',
      * 'Offensive', 'ContentInfringement', 'Other'
      * 
-     * @param {string} authorization Authenication (must begin with string "Bearer
-     * ")
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
      * 
      * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -906,7 +1234,7 @@ export interface ReplyReports {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    postReport(replyHandle: string, postReportRequest: models.PostReportRequest, authorization: string, options: { customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
+    postReport(replyHandle: string, postReportRequest: models.PostReportRequest, authorization: string, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
     postReport(replyHandle: string, postReportRequest: models.PostReportRequest, authorization: string, callback: ServiceCallback<any>): void;
 }
 
@@ -929,10 +1257,20 @@ export interface CommentReports {
      * Possible values include: 'Spam', 'Cyberbullying', 'ChildEndangerment',
      * 'Offensive', 'ContentInfringement', 'Other'
      * 
-     * @param {string} authorization Authenication (must begin with string "Bearer
-     * ")
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
      * 
      * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -940,7 +1278,7 @@ export interface CommentReports {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    postReport(commentHandle: string, postReportRequest: models.PostReportRequest, authorization: string, options: { customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
+    postReport(commentHandle: string, postReportRequest: models.PostReportRequest, authorization: string, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
     postReport(commentHandle: string, postReportRequest: models.PostReportRequest, authorization: string, callback: ServiceCallback<any>): void;
 }
 
@@ -963,10 +1301,20 @@ export interface TopicReports {
      * Possible values include: 'Spam', 'Cyberbullying', 'ChildEndangerment',
      * 'Offensive', 'ContentInfringement', 'Other'
      * 
-     * @param {string} authorization Authenication (must begin with string "Bearer
-     * ")
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
      * 
      * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -974,7 +1322,7 @@ export interface TopicReports {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    postReport(topicHandle: string, postReportRequest: models.PostReportRequest, authorization: string, options: { customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
+    postReport(topicHandle: string, postReportRequest: models.PostReportRequest, authorization: string, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
     postReport(topicHandle: string, postReportRequest: models.PostReportRequest, authorization: string, callback: ServiceCallback<any>): void;
 }
 
@@ -997,10 +1345,18 @@ export interface Search {
      * 
      * @param {number} [options.limit] Number of items to return
      * 
-     * @param {string} [options.appkey] App Key Authentication
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
      * 
-     * @param {string} [options.authorization] Authenication (must begin with
-     * string "Bearer ")
+     * @param {string} [options.authorization] Authentication (must begin with
+     * string "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -1008,7 +1364,7 @@ export interface Search {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    getTopics(query: string, options: { cursor? : number, limit? : number, appkey? : string, authorization? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseTopicView>): void;
+    getTopics(query: string, options: { cursor? : number, limit? : number, appkey? : string, authorization? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseTopicView>): void;
     getTopics(query: string, callback: ServiceCallback<models.FeedResponseTopicView>): void;
 
     /**
@@ -1022,10 +1378,18 @@ export interface Search {
      * 
      * @param {number} [options.limit] Number of items to return
      * 
-     * @param {string} [options.appkey] App Key Authentication
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
      * 
-     * @param {string} [options.authorization] Authenication (must begin with
-     * string "Bearer ")
+     * @param {string} [options.authorization] Authentication (must begin with
+     * string "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -1033,7 +1397,7 @@ export interface Search {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    getUsers(query: string, options: { cursor? : number, limit? : number, appkey? : string, authorization? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseUserCompactView>): void;
+    getUsers(query: string, options: { cursor? : number, limit? : number, appkey? : string, authorization? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseUserCompactView>): void;
     getUsers(query: string, callback: ServiceCallback<models.FeedResponseUserCompactView>): void;
 }
 
@@ -1073,10 +1437,18 @@ export interface Sessions {
      * 
      * @param {object} [options] Optional Parameters.
      * 
-     * @param {string} [options.appkey] App Key Authentication
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
      * 
-     * @param {string} [options.authorization] Authenication (must begin with
-     * string "Bearer ")
+     * @param {string} [options.authorization] Authentication (must begin with
+     * string "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -1084,16 +1456,26 @@ export interface Sessions {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    postSession(request: models.PostSessionRequest, options: { appkey? : string, authorization? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.PostSessionResponse>): void;
+    postSession(request: models.PostSessionRequest, options: { appkey? : string, authorization? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.PostSessionResponse>): void;
     postSession(request: models.PostSessionRequest, callback: ServiceCallback<models.PostSessionResponse>): void;
 
     /**
      * @summary Delete the current session (sign out)
      *
-     * @param {string} authorization Authenication (must begin with string "Bearer
-     * ")
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
      * 
      * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -1101,7 +1483,7 @@ export interface Sessions {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    deleteSession(authorization: string, options: { customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
+    deleteSession(authorization: string, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
     deleteSession(authorization: string, callback: ServiceCallback<any>): void;
 }
 
@@ -1121,10 +1503,18 @@ export interface RequestTokens {
      * 
      * @param {object} [options] Optional Parameters.
      * 
-     * @param {string} [options.appkey] App Key Authentication
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
      * 
-     * @param {string} [options.authorization] Authenication (must begin with
-     * string "Bearer ")
+     * @param {string} [options.authorization] Authentication (must begin with
+     * string "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -1132,7 +1522,7 @@ export interface RequestTokens {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    getRequestToken(identityProvider: string, options: { appkey? : string, authorization? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.GetRequestTokenResponse>): void;
+    getRequestToken(identityProvider: string, options: { appkey? : string, authorization? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.GetRequestTokenResponse>): void;
     getRequestToken(identityProvider: string, callback: ServiceCallback<models.GetRequestTokenResponse>): void;
 }
 
@@ -1147,8 +1537,12 @@ export interface MyFollowing {
     /**
      * @summary Get my following
      *
-     * @param {string} authorization Authenication (must begin with string "Bearer
-     * ")
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
      * 
      * @param {object} [options] Optional Parameters.
      * 
@@ -1156,13 +1550,19 @@ export interface MyFollowing {
      * 
      * @param {number} [options.limit] Number of items to return
      * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
+     * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
      * 
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    getFollowing(authorization: string, options: { cursor? : string, limit? : number, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseUserCompactView>): void;
+    getFollowing(authorization: string, options: { cursor? : string, limit? : number, appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseUserCompactView>): void;
     getFollowing(authorization: string, callback: ServiceCallback<models.FeedResponseUserCompactView>): void;
 
     /**
@@ -1172,10 +1572,20 @@ export interface MyFollowing {
      * 
      * @param {string} [request.userHandle] Gets or sets user handle
      * 
-     * @param {string} authorization Authenication (must begin with string "Bearer
-     * ")
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
      * 
      * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -1183,7 +1593,7 @@ export interface MyFollowing {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    postFollowing(request: models.PostFollowingRequest, authorization: string, options: { customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
+    postFollowing(request: models.PostFollowingRequest, authorization: string, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
     postFollowing(request: models.PostFollowingRequest, authorization: string, callback: ServiceCallback<any>): void;
 
     /**
@@ -1191,10 +1601,20 @@ export interface MyFollowing {
      *
      * @param {string} userHandle User handle
      * 
-     * @param {string} authorization Authenication (must begin with string "Bearer
-     * ")
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
      * 
      * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle1] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -1202,7 +1622,7 @@ export interface MyFollowing {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    deleteFollowing(userHandle: string, authorization: string, options: { customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
+    deleteFollowing(userHandle: string, authorization: string, options: { appkey? : string, userHandle1? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
     deleteFollowing(userHandle: string, authorization: string, callback: ServiceCallback<any>): void;
 
     /**
@@ -1210,10 +1630,20 @@ export interface MyFollowing {
      *
      * @param {string} topicHandle Topic handle
      * 
-     * @param {string} authorization Authenication (must begin with string "Bearer
-     * ")
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
      * 
      * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -1221,14 +1651,18 @@ export interface MyFollowing {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    deleteTopic(topicHandle: string, authorization: string, options: { customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
+    deleteTopic(topicHandle: string, authorization: string, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
     deleteTopic(topicHandle: string, authorization: string, callback: ServiceCallback<any>): void;
 
     /**
      * @summary Get my following topic feed
      *
-     * @param {string} authorization Authenication (must begin with string "Bearer
-     * ")
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
      * 
      * @param {object} [options] Optional Parameters.
      * 
@@ -1236,20 +1670,30 @@ export interface MyFollowing {
      * 
      * @param {number} [options.limit] Number of items to return
      * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
+     * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
      * 
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    getTopics(authorization: string, options: { cursor? : string, limit? : number, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseTopicView>): void;
+    getTopics(authorization: string, options: { cursor? : string, limit? : number, appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseTopicView>): void;
     getTopics(authorization: string, callback: ServiceCallback<models.FeedResponseTopicView>): void;
 
     /**
      * @summary Get my following activity feed
      *
-     * @param {string} authorization Authenication (must begin with string "Bearer
-     * ")
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
      * 
      * @param {object} [options] Optional Parameters.
      * 
@@ -1257,13 +1701,19 @@ export interface MyFollowing {
      * 
      * @param {number} [options.limit] Number of items to return
      * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
+     * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
      * 
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    getActivities(authorization: string, options: { cursor? : string, limit? : number, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseActivityView>): void;
+    getActivities(authorization: string, options: { cursor? : string, limit? : number, appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseActivityView>): void;
     getActivities(authorization: string, callback: ServiceCallback<models.FeedResponseActivityView>): void;
 }
 
@@ -1280,8 +1730,12 @@ export interface UserFollowers {
      *
      * @param {string} userHandle User handle
      * 
-     * @param {string} authorization Authenication (must begin with string "Bearer
-     * ")
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
      * 
      * @param {object} [options] Optional Parameters.
      * 
@@ -1289,13 +1743,19 @@ export interface UserFollowers {
      * 
      * @param {number} [options.limit] Number of items to return
      * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle1] User handle must be filled when using
+     * AAD tokens for Authentication.
+     * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
      * 
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    getFollowers(userHandle: string, authorization: string, options: { cursor? : string, limit? : number, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseUserCompactView>): void;
+    getFollowers(userHandle: string, authorization: string, options: { cursor? : string, limit? : number, appkey? : string, userHandle1? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseUserCompactView>): void;
     getFollowers(userHandle: string, authorization: string, callback: ServiceCallback<models.FeedResponseUserCompactView>): void;
 }
 
@@ -1310,8 +1770,12 @@ export interface MyFollowers {
     /**
      * @summary Get my followers
      *
-     * @param {string} authorization Authenication (must begin with string "Bearer
-     * ")
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
      * 
      * @param {object} [options] Optional Parameters.
      * 
@@ -1319,13 +1783,19 @@ export interface MyFollowers {
      * 
      * @param {number} [options.limit] Number of items to return
      * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
+     * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
      * 
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    getFollowers(authorization: string, options: { cursor? : string, limit? : number, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseUserCompactView>): void;
+    getFollowers(authorization: string, options: { cursor? : string, limit? : number, appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseUserCompactView>): void;
     getFollowers(authorization: string, callback: ServiceCallback<models.FeedResponseUserCompactView>): void;
 
     /**
@@ -1335,10 +1805,20 @@ export interface MyFollowers {
      * 
      * @param {string} [request.userHandle] Gets or sets user handle
      * 
-     * @param {string} authorization Authenication (must begin with string "Bearer
-     * ")
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
      * 
      * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -1346,7 +1826,7 @@ export interface MyFollowers {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    postFollower(request: models.PostFollowerRequest, authorization: string, options: { customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
+    postFollower(request: models.PostFollowerRequest, authorization: string, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
     postFollower(request: models.PostFollowerRequest, authorization: string, callback: ServiceCallback<any>): void;
 
     /**
@@ -1354,10 +1834,20 @@ export interface MyFollowers {
      *
      * @param {string} userHandle User handle
      * 
-     * @param {string} authorization Authenication (must begin with string "Bearer
-     * ")
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
      * 
      * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle1] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -1365,7 +1855,7 @@ export interface MyFollowers {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    deleteFollower(userHandle: string, authorization: string, options: { customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
+    deleteFollower(userHandle: string, authorization: string, options: { appkey? : string, userHandle1? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
     deleteFollower(userHandle: string, authorization: string, callback: ServiceCallback<any>): void;
 }
 
@@ -1382,8 +1872,12 @@ export interface UserFollowing {
      *
      * @param {string} userHandle User handle
      * 
-     * @param {string} authorization Authenication (must begin with string "Bearer
-     * ")
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
      * 
      * @param {object} [options] Optional Parameters.
      * 
@@ -1391,13 +1885,19 @@ export interface UserFollowing {
      * 
      * @param {number} [options.limit] Number of items to return
      * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle1] User handle must be filled when using
+     * AAD tokens for Authentication.
+     * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
      * 
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    getFollowing(userHandle: string, authorization: string, options: { cursor? : string, limit? : number, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseUserCompactView>): void;
+    getFollowing(userHandle: string, authorization: string, options: { cursor? : string, limit? : number, appkey? : string, userHandle1? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseUserCompactView>): void;
     getFollowing(userHandle: string, authorization: string, callback: ServiceCallback<models.FeedResponseUserCompactView>): void;
 }
 
@@ -1414,10 +1914,20 @@ export interface MyPendingUsers {
      *
      * @param {string} userHandle User handle
      * 
-     * @param {string} authorization Authenication (must begin with string "Bearer
-     * ")
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
      * 
      * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle1] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -1425,14 +1935,18 @@ export interface MyPendingUsers {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    deletePendingUser(userHandle: string, authorization: string, options: { customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
+    deletePendingUser(userHandle: string, authorization: string, options: { appkey? : string, userHandle1? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
     deletePendingUser(userHandle: string, authorization: string, callback: ServiceCallback<any>): void;
 
     /**
      * @summary Get my pending users
      *
-     * @param {string} authorization Authenication (must begin with string "Bearer
-     * ")
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
      * 
      * @param {object} [options] Optional Parameters.
      * 
@@ -1440,22 +1954,38 @@ export interface MyPendingUsers {
      * 
      * @param {number} [options.limit] Number of items to return
      * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
+     * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
      * 
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    getPendingUsers(authorization: string, options: { cursor? : string, limit? : number, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseUserCompactView>): void;
+    getPendingUsers(authorization: string, options: { cursor? : string, limit? : number, appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseUserCompactView>): void;
     getPendingUsers(authorization: string, callback: ServiceCallback<models.FeedResponseUserCompactView>): void;
 
     /**
      * @summary Get my pending users count
      *
-     * @param {string} authorization Authenication (must begin with string "Bearer
-     * ")
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
      * 
      * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -1463,7 +1993,7 @@ export interface MyPendingUsers {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    getPendingUsersCount(authorization: string, options: { customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.CountResponse>): void;
+    getPendingUsersCount(authorization: string, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.CountResponse>): void;
     getPendingUsersCount(authorization: string, callback: ServiceCallback<models.CountResponse>): void;
 }
 
@@ -1478,8 +2008,12 @@ export interface MyBlockedUsers {
     /**
      * @summary Get my blocked users
      *
-     * @param {string} authorization Authenication (must begin with string "Bearer
-     * ")
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
      * 
      * @param {object} [options] Optional Parameters.
      * 
@@ -1487,13 +2021,19 @@ export interface MyBlockedUsers {
      * 
      * @param {number} [options.limit] Number of items to return
      * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
+     * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
      * 
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    getBlockedUsers(authorization: string, options: { cursor? : string, limit? : number, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseUserCompactView>): void;
+    getBlockedUsers(authorization: string, options: { cursor? : string, limit? : number, appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseUserCompactView>): void;
     getBlockedUsers(authorization: string, callback: ServiceCallback<models.FeedResponseUserCompactView>): void;
 
     /**
@@ -1503,10 +2043,20 @@ export interface MyBlockedUsers {
      * 
      * @param {string} [request.userHandle] Gets or sets user handle
      * 
-     * @param {string} authorization Authenication (must begin with string "Bearer
-     * ")
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
      * 
      * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -1514,7 +2064,7 @@ export interface MyBlockedUsers {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    postBlockedUser(request: models.PostBlockedUserRequest, authorization: string, options: { customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
+    postBlockedUser(request: models.PostBlockedUserRequest, authorization: string, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
     postBlockedUser(request: models.PostBlockedUserRequest, authorization: string, callback: ServiceCallback<any>): void;
 
     /**
@@ -1522,10 +2072,20 @@ export interface MyBlockedUsers {
      *
      * @param {string} userHandle User handle
      * 
-     * @param {string} authorization Authenication (must begin with string "Bearer
-     * ")
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
      * 
      * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle1] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -1533,7 +2093,7 @@ export interface MyBlockedUsers {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    deleteBlockedUser(userHandle: string, authorization: string, options: { customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
+    deleteBlockedUser(userHandle: string, authorization: string, options: { appkey? : string, userHandle1? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
     deleteBlockedUser(userHandle: string, authorization: string, callback: ServiceCallback<any>): void;
 }
 
@@ -1554,10 +2114,18 @@ export interface Topics {
      * 
      * @param {number} [options.limit] Number of items to return
      * 
-     * @param {string} [options.appkey] App Key Authentication
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
      * 
-     * @param {string} [options.authorization] Authenication (must begin with
-     * string "Bearer ")
+     * @param {string} [options.authorization] Authentication (must begin with
+     * string "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -1565,7 +2133,7 @@ export interface Topics {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    getTopics(options: { cursor? : string, limit? : number, appkey? : string, authorization? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseTopicView>): void;
+    getTopics(options: { cursor? : string, limit? : number, appkey? : string, authorization? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseTopicView>): void;
     getTopics(callback: ServiceCallback<models.FeedResponseTopicView>): void;
 
     /**
@@ -1595,10 +2163,20 @@ export interface Topics {
      * 
      * @param {string} [request.group] Gets or sets topic group
      * 
-     * @param {string} authorization Authenication (must begin with string "Bearer
-     * ")
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
      * 
      * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -1606,7 +2184,7 @@ export interface Topics {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    postTopic(request: models.PostTopicRequest, authorization: string, options: { customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.PostTopicResponse>): void;
+    postTopic(request: models.PostTopicRequest, authorization: string, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.PostTopicResponse>): void;
     postTopic(request: models.PostTopicRequest, authorization: string, callback: ServiceCallback<models.PostTopicResponse>): void;
 
     /**
@@ -1616,10 +2194,18 @@ export interface Topics {
      * 
      * @param {object} [options] Optional Parameters.
      * 
-     * @param {string} [options.appkey] App Key Authentication
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
      * 
-     * @param {string} [options.authorization] Authenication (must begin with
-     * string "Bearer ")
+     * @param {string} [options.authorization] Authentication (must begin with
+     * string "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -1627,7 +2213,7 @@ export interface Topics {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    getTopic(topicHandle: string, options: { appkey? : string, authorization? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.TopicView>): void;
+    getTopic(topicHandle: string, options: { appkey? : string, authorization? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.TopicView>): void;
     getTopic(topicHandle: string, callback: ServiceCallback<models.TopicView>): void;
 
     /**
@@ -1643,10 +2229,20 @@ export interface Topics {
      * 
      * @param {string} [request.categories] Gets or sets topic categories
      * 
-     * @param {string} authorization Authenication (must begin with string "Bearer
-     * ")
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
      * 
      * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -1654,7 +2250,7 @@ export interface Topics {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    putTopic(topicHandle: string, request: models.PutTopicRequest, authorization: string, options: { customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
+    putTopic(topicHandle: string, request: models.PutTopicRequest, authorization: string, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
     putTopic(topicHandle: string, request: models.PutTopicRequest, authorization: string, callback: ServiceCallback<any>): void;
 
     /**
@@ -1662,10 +2258,20 @@ export interface Topics {
      *
      * @param {string} topicHandle Topic handle
      * 
-     * @param {string} authorization Authenication (must begin with string "Bearer
-     * ")
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
      * 
      * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -1673,7 +2279,7 @@ export interface Topics {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    deleteTopic(topicHandle: string, authorization: string, options: { customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
+    deleteTopic(topicHandle: string, authorization: string, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
     deleteTopic(topicHandle: string, authorization: string, callback: ServiceCallback<any>): void;
 
     /**
@@ -1688,10 +2294,18 @@ export interface Topics {
      * 
      * @param {number} [options.limit] Number of items to return
      * 
-     * @param {string} [options.appkey] App Key Authentication
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
      * 
-     * @param {string} [options.authorization] Authenication (must begin with
-     * string "Bearer ")
+     * @param {string} [options.authorization] Authentication (must begin with
+     * string "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -1699,7 +2313,7 @@ export interface Topics {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    getPopularTopics(timeRange: string, options: { cursor? : number, limit? : number, appkey? : string, authorization? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseTopicView>): void;
+    getPopularTopics(timeRange: string, options: { cursor? : number, limit? : number, appkey? : string, authorization? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseTopicView>): void;
     getPopularTopics(timeRange: string, callback: ServiceCallback<models.FeedResponseTopicView>): void;
 
     /**
@@ -1711,10 +2325,18 @@ export interface Topics {
      * 
      * @param {number} [options.limit] Number of items to return
      * 
-     * @param {string} [options.appkey] App Key Authentication
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
      * 
-     * @param {string} [options.authorization] Authenication (must begin with
-     * string "Bearer ")
+     * @param {string} [options.authorization] Authentication (must begin with
+     * string "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -1722,7 +2344,7 @@ export interface Topics {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    getFeaturedTopics(options: { cursor? : string, limit? : number, appkey? : string, authorization? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseTopicView>): void;
+    getFeaturedTopics(options: { cursor? : string, limit? : number, appkey? : string, authorization? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseTopicView>): void;
     getFeaturedTopics(callback: ServiceCallback<models.FeedResponseTopicView>): void;
 }
 
@@ -1740,12 +2362,22 @@ export interface MyAppFollowing {
      *
      * @param {string} appHandle App handle
      * 
-     * @param {string} authorization Authenication (must begin with string "Bearer
-     * ")
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
      * 
      * @param {object} [options] Optional Parameters.
      * 
      * @param {string} [options.cursor] Current read cursor
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -1753,7 +2385,7 @@ export interface MyAppFollowing {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    getUsers(appHandle: string, authorization: string, options: { cursor? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseUserCompactView>): void;
+    getUsers(appHandle: string, authorization: string, options: { cursor? : string, appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseUserCompactView>): void;
     getUsers(appHandle: string, authorization: string, callback: ServiceCallback<models.FeedResponseUserCompactView>): void;
 }
 
@@ -1768,8 +2400,12 @@ export interface MyTopics {
     /**
      * @summary Get my topics sorted by creation time
      *
-     * @param {string} authorization Authenication (must begin with string "Bearer
-     * ")
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
      * 
      * @param {object} [options] Optional Parameters.
      * 
@@ -1777,20 +2413,30 @@ export interface MyTopics {
      * 
      * @param {number} [options.limit] Number of items to return
      * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
+     * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
      * 
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    getTopics(authorization: string, options: { cursor? : string, limit? : number, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseTopicView>): void;
+    getTopics(authorization: string, options: { cursor? : string, limit? : number, appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseTopicView>): void;
     getTopics(authorization: string, callback: ServiceCallback<models.FeedResponseTopicView>): void;
 
     /**
      * @summary Get my topics sorted by popularity
      *
-     * @param {string} authorization Authenication (must begin with string "Bearer
-     * ")
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
      * 
      * @param {object} [options] Optional Parameters.
      * 
@@ -1798,13 +2444,19 @@ export interface MyTopics {
      * 
      * @param {number} [options.limit] Number of items to return
      * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
+     * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
      * 
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    getPopularTopics(authorization: string, options: { cursor? : number, limit? : number, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseTopicView>): void;
+    getPopularTopics(authorization: string, options: { cursor? : number, limit? : number, appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseTopicView>): void;
     getPopularTopics(authorization: string, callback: ServiceCallback<models.FeedResponseTopicView>): void;
 }
 
@@ -1819,10 +2471,20 @@ export interface MyApps {
     /**
      * @summary Get my list of Social Plus apps
      *
-     * @param {string} authorization Authenication (must begin with string "Bearer
-     * ")
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
      * 
      * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -1830,7 +2492,7 @@ export interface MyApps {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    getApps(authorization: string, options: { customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.AppCompactView[]>): void;
+    getApps(authorization: string, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.AppCompactView[]>): void;
     getApps(authorization: string, callback: ServiceCallback<models.AppCompactView[]>): void;
 }
 
@@ -1892,10 +2554,18 @@ export interface Users {
      * 
      * @param {object} [options] Optional Parameters.
      * 
-     * @param {string} [options.appkey] App Key Authentication
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
      * 
-     * @param {string} [options.authorization] Authenication (must begin with
-     * string "Bearer ")
+     * @param {string} [options.authorization] Authentication (must begin with
+     * string "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -1903,16 +2573,26 @@ export interface Users {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    postUser(request: models.PostUserRequest, options: { appkey? : string, authorization? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.PostUserResponse>): void;
+    postUser(request: models.PostUserRequest, options: { appkey? : string, authorization? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.PostUserResponse>): void;
     postUser(request: models.PostUserRequest, callback: ServiceCallback<models.PostUserResponse>): void;
 
     /**
      * @summary Get my profile
      *
-     * @param {string} authorization Authenication (must begin with string "Bearer
-     * ")
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
      * 
      * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -1920,16 +2600,26 @@ export interface Users {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    getMyProfile(authorization: string, options: { customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.UserProfileView>): void;
+    getMyProfile(authorization: string, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.UserProfileView>): void;
     getMyProfile(authorization: string, callback: ServiceCallback<models.UserProfileView>): void;
 
     /**
      * @summary Delete user
      *
-     * @param {string} authorization Authenication (must begin with string "Bearer
-     * ")
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
      * 
      * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -1937,7 +2627,7 @@ export interface Users {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    deleteUser(authorization: string, options: { customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
+    deleteUser(authorization: string, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
     deleteUser(authorization: string, callback: ServiceCallback<any>): void;
 
     /**
@@ -1951,10 +2641,20 @@ export interface Users {
      * 
      * @param {string} [request.bio] Gets or sets short bio of the user
      * 
-     * @param {string} authorization Authenication (must begin with string "Bearer
-     * ")
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
      * 
      * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -1962,7 +2662,7 @@ export interface Users {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    putUserInfo(request: models.PutUserInfoRequest, authorization: string, options: { customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
+    putUserInfo(request: models.PutUserInfoRequest, authorization: string, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
     putUserInfo(request: models.PutUserInfoRequest, authorization: string, callback: ServiceCallback<any>): void;
 
     /**
@@ -1972,10 +2672,20 @@ export interface Users {
      * 
      * @param {string} [request.photoHandle] Gets or sets photo handle of the user
      * 
-     * @param {string} authorization Authenication (must begin with string "Bearer
-     * ")
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
      * 
      * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -1983,7 +2693,7 @@ export interface Users {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    putUserPhoto(request: models.PutUserPhotoRequest, authorization: string, options: { customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
+    putUserPhoto(request: models.PutUserPhotoRequest, authorization: string, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
     putUserPhoto(request: models.PutUserPhotoRequest, authorization: string, callback: ServiceCallback<any>): void;
 
     /**
@@ -1994,10 +2704,20 @@ export interface Users {
      * @param {string} [request.visibility] Gets or sets visibility of the user.
      * Possible values include: 'Public', 'Private'
      * 
-     * @param {string} authorization Authenication (must begin with string "Bearer
-     * ")
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
      * 
      * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -2005,7 +2725,7 @@ export interface Users {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    putUserVisibility(request: models.PutUserVisibilityRequest, authorization: string, options: { customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
+    putUserVisibility(request: models.PutUserVisibilityRequest, authorization: string, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
     putUserVisibility(request: models.PutUserVisibilityRequest, authorization: string, callback: ServiceCallback<any>): void;
 
     /**
@@ -2015,10 +2735,18 @@ export interface Users {
      * 
      * @param {object} [options] Optional Parameters.
      * 
-     * @param {string} [options.appkey] App Key Authentication
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
      * 
-     * @param {string} [options.authorization] Authenication (must begin with
-     * string "Bearer ")
+     * @param {string} [options.authorization] Authentication (must begin with
+     * string "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
+     * 
+     * @param {string} [options.userHandle1] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -2026,7 +2754,7 @@ export interface Users {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    getUser(userHandle: string, options: { appkey? : string, authorization? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.UserProfileView>): void;
+    getUser(userHandle: string, options: { appkey? : string, authorization? : string, userHandle1? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.UserProfileView>): void;
     getUser(userHandle: string, callback: ServiceCallback<models.UserProfileView>): void;
 
     /**
@@ -2038,10 +2766,18 @@ export interface Users {
      * 
      * @param {number} [options.limit] Number of items to return
      * 
-     * @param {string} [options.appkey] App Key Authentication
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
      * 
-     * @param {string} [options.authorization] Authenication (must begin with
-     * string "Bearer ")
+     * @param {string} [options.authorization] Authentication (must begin with
+     * string "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -2049,7 +2785,7 @@ export interface Users {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    getPopularUsers(options: { cursor? : number, limit? : number, appkey? : string, authorization? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseUserProfileView>): void;
+    getPopularUsers(options: { cursor? : number, limit? : number, appkey? : string, authorization? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseUserProfileView>): void;
     getPopularUsers(callback: ServiceCallback<models.FeedResponseUserProfileView>): void;
 }
 
@@ -2064,8 +2800,12 @@ export interface MyLikes {
     /**
      * @summary Get my liked topics
      *
-     * @param {string} authorization Authenication (must begin with string "Bearer
-     * ")
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
      * 
      * @param {object} [options] Optional Parameters.
      * 
@@ -2073,13 +2813,19 @@ export interface MyLikes {
      * 
      * @param {number} [options.limit] Number of items to return
      * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
+     * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
      * 
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    getLikedTopics(authorization: string, options: { cursor? : string, limit? : number, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseTopicView>): void;
+    getLikedTopics(authorization: string, options: { cursor? : string, limit? : number, appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseTopicView>): void;
     getLikedTopics(authorization: string, callback: ServiceCallback<models.FeedResponseTopicView>): void;
 }
 
@@ -2094,10 +2840,20 @@ export interface MyLinkedAccounts {
     /**
      * @summary Get linked accounts
      *
-     * @param {string} authorization Authenication (must begin with string "Bearer
-     * ")
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
      * 
      * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -2105,7 +2861,7 @@ export interface MyLinkedAccounts {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    getLinkedAccounts(authorization: string, options: { customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.LinkedAccountView[]>): void;
+    getLinkedAccounts(authorization: string, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.LinkedAccountView[]>): void;
     getLinkedAccounts(authorization: string, callback: ServiceCallback<models.LinkedAccountView[]>): void;
 
     /**
@@ -2128,10 +2884,20 @@ export interface MyLinkedAccounts {
      * but they issue request tokens
      * and verifiers.
      * 
-     * @param {string} authorization Authenication (must begin with string "Bearer
-     * ")
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
      * 
      * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -2139,7 +2905,7 @@ export interface MyLinkedAccounts {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    postLinkedAccount(request: models.PostLinkedAccountRequest, authorization: string, options: { customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
+    postLinkedAccount(request: models.PostLinkedAccountRequest, authorization: string, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
     postLinkedAccount(request: models.PostLinkedAccountRequest, authorization: string, callback: ServiceCallback<any>): void;
 
     /**
@@ -2148,10 +2914,20 @@ export interface MyLinkedAccounts {
      * @param {string} identityProvider Identity provider type. Possible values
      * include: 'Facebook', 'Microsoft', 'Google', 'Twitter', 'Beihai'
      * 
-     * @param {string} authorization Authenication (must begin with string "Bearer
-     * ")
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
      * 
      * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -2159,7 +2935,7 @@ export interface MyLinkedAccounts {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    deleteLinkedAccount(identityProvider: string, authorization: string, options: { customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
+    deleteLinkedAccount(identityProvider: string, authorization: string, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
     deleteLinkedAccount(identityProvider: string, authorization: string, callback: ServiceCallback<any>): void;
 }
 
@@ -2182,10 +2958,18 @@ export interface UserTopics {
      * 
      * @param {number} [options.limit] Number of items to return
      * 
-     * @param {string} [options.appkey] App Key Authentication
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
      * 
-     * @param {string} [options.authorization] Authenication (must begin with
-     * string "Bearer ")
+     * @param {string} [options.authorization] Authentication (must begin with
+     * string "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
+     * 
+     * @param {string} [options.userHandle1] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -2193,7 +2977,7 @@ export interface UserTopics {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    getTopics(userHandle: string, options: { cursor? : string, limit? : number, appkey? : string, authorization? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseTopicView>): void;
+    getTopics(userHandle: string, options: { cursor? : string, limit? : number, appkey? : string, authorization? : string, userHandle1? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseTopicView>): void;
     getTopics(userHandle: string, callback: ServiceCallback<models.FeedResponseTopicView>): void;
 
     /**
@@ -2207,10 +2991,18 @@ export interface UserTopics {
      * 
      * @param {number} [options.limit] Number of items to return
      * 
-     * @param {string} [options.appkey] App Key Authentication
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
      * 
-     * @param {string} [options.authorization] Authenication (must begin with
-     * string "Bearer ")
+     * @param {string} [options.authorization] Authentication (must begin with
+     * string "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
+     * 
+     * @param {string} [options.userHandle1] User handle must be filled when using
+     * AAD tokens for Authentication.
      * 
      * @param {object} [options.customHeaders] Headers that will be added to the
      * request
@@ -2218,6 +3010,6 @@ export interface UserTopics {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    getPopularTopics(userHandle: string, options: { cursor? : number, limit? : number, appkey? : string, authorization? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseTopicView>): void;
+    getPopularTopics(userHandle: string, options: { cursor? : number, limit? : number, appkey? : string, authorization? : string, userHandle1? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseTopicView>): void;
     getPopularTopics(userHandle: string, callback: ServiceCallback<models.FeedResponseTopicView>): void;
 }

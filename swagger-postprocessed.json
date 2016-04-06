@@ -1,7 +1,10 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "v0_2",
+	"x-ms-code-generation-settings": {
+	  "header": "Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT License. See LICENSE in the project root for license information. This file was generated using AutoRest."
+	},
+    "version": "v0_3",
     "title": "SocialPlus",
     "description": "The SocialPlus interface to clients is a HTTP API which is documented here.",
     "termsOfService": "ToS TBD",
@@ -12,17 +15,14 @@
     "license": {
       "name": "License TBD",
       "url": "http://research.microsoft.com"
-    },
-    "x-ms-code-generation-settings": {
-      "header": "Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT License. See LICENSE in the project root for license information. This file was generated using AutoRest."
     }
   },
-  "host": "localhost:1324",
+  "host": "sp-ppe.cloudapp.net",
   "schemes": [
     "http"
   ],
   "paths": {
-    "/v0.2/blobs": {
+    "/v0.3/blobs": {
       "post": {
         "tags": [
           "Blobs"
@@ -41,10 +41,24 @@
         ],
         "parameters": [
           {
+            "name": "appkey",
+            "in": "header",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
+            "required": false,
             "type": "string"
           },
           {
@@ -78,7 +92,7 @@
         "deprecated": false
       }
     },
-    "/v0.2/blobs/{blobHandle}": {
+    "/v0.3/blobs/{blobHandle}": {
       "get": {
         "tags": [
           "Blobs"
@@ -98,10 +112,24 @@
             "type": "string"
           },
           {
+            "name": "appkey",
+            "in": "header",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
+            "required": false,
             "type": "string"
           }
         ],
@@ -129,7 +157,7 @@
         "deprecated": false
       }
     },
-    "/v0.2/builds/current": {
+    "/v0.3/builds/current": {
       "get": {
         "tags": [
           "Builds"
@@ -148,14 +176,21 @@
           {
             "name": "appkey",
             "in": "header",
-            "description": "App Key Authentication",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
             "required": false,
             "type": "string"
           },
           {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
             "required": false,
             "type": "string"
           }
@@ -171,7 +206,7 @@
         "deprecated": false
       }
     },
-    "/v0.2/topics/{topicHandle}/comments": {
+    "/v0.3/topics/{topicHandle}/comments": {
       "get": {
         "tags": [
           "Comments"
@@ -209,10 +244,24 @@
             "format": "int32"
           },
           {
+            "name": "appkey",
+            "in": "header",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
+            "required": false,
             "type": "string"
           }
         ],
@@ -275,10 +324,24 @@
             }
           },
           {
+            "name": "appkey",
+            "in": "header",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
+            "required": false,
             "type": "string"
           }
         ],
@@ -305,7 +368,7 @@
         "deprecated": false
       }
     },
-    "/v0.2/comments/{commentHandle}": {
+    "/v0.3/comments/{commentHandle}": {
       "get": {
         "tags": [
           "Comments"
@@ -328,10 +391,24 @@
             "type": "string"
           },
           {
+            "name": "appkey",
+            "in": "header",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
+            "required": false,
             "type": "string"
           }
         ],
@@ -379,10 +456,24 @@
             "type": "string"
           },
           {
+            "name": "appkey",
+            "in": "header",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
+            "required": false,
             "type": "string"
           }
         ],
@@ -409,7 +500,7 @@
         "deprecated": false
       }
     },
-    "/v0.2/hashtags/trending": {
+    "/v0.3/hashtags/trending": {
       "get": {
         "tags": [
           "Hashtags"
@@ -427,14 +518,21 @@
           {
             "name": "appkey",
             "in": "header",
-            "description": "App Key Authentication",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
             "required": false,
             "type": "string"
           },
           {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
             "required": false,
             "type": "string"
           }
@@ -462,7 +560,7 @@
         "deprecated": false
       }
     },
-    "/v0.2/hashtags/autocomplete": {
+    "/v0.3/hashtags/autocomplete": {
       "get": {
         "tags": [
           "Hashtags"
@@ -487,14 +585,21 @@
           {
             "name": "appkey",
             "in": "header",
-            "description": "App Key Authentication",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
             "required": false,
             "type": "string"
           },
           {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
             "required": false,
             "type": "string"
           }
@@ -522,7 +627,7 @@
         "deprecated": false
       }
     },
-    "/v0.2/images/{imageType}": {
+    "/v0.3/images/{imageType}": {
       "post": {
         "tags": [
           "Images"
@@ -558,10 +663,24 @@
             }
           },
           {
+            "name": "appkey",
+            "in": "header",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
+            "required": false,
             "type": "string"
           },
           {
@@ -595,7 +714,7 @@
         "deprecated": false
       }
     },
-    "/v0.2/images/{blobHandle}": {
+    "/v0.3/images/{blobHandle}": {
       "get": {
         "tags": [
           "Images"
@@ -619,14 +738,21 @@
           {
             "name": "appkey",
             "in": "header",
-            "description": "App Key Authentication",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
             "required": false,
             "type": "string"
           },
           {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
             "required": false,
             "type": "string"
           }
@@ -655,7 +781,7 @@
         "deprecated": false
       }
     },
-    "/v0.2/comments/{commentHandle}/likes": {
+    "/v0.3/comments/{commentHandle}/likes": {
       "get": {
         "tags": [
           "Likes"
@@ -695,14 +821,21 @@
           {
             "name": "appkey",
             "in": "header",
-            "description": "App Key Authentication",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
             "required": false,
             "type": "string"
           },
           {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
             "required": false,
             "type": "string"
           }
@@ -751,10 +884,24 @@
             "type": "string"
           },
           {
+            "name": "appkey",
+            "in": "header",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
+            "required": false,
             "type": "string"
           }
         ],
@@ -784,7 +931,7 @@
         "deprecated": false
       }
     },
-    "/v0.2/comments/{commentHandle}/likes/me": {
+    "/v0.3/comments/{commentHandle}/likes/me": {
       "delete": {
         "tags": [
           "Likes"
@@ -807,10 +954,24 @@
             "type": "string"
           },
           {
+            "name": "appkey",
+            "in": "header",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
+            "required": false,
             "type": "string"
           }
         ],
@@ -840,7 +1001,7 @@
         "deprecated": false
       }
     },
-    "/v0.2/replies/{replyHandle}/likes": {
+    "/v0.3/replies/{replyHandle}/likes": {
       "get": {
         "tags": [
           "Likes"
@@ -880,14 +1041,21 @@
           {
             "name": "appkey",
             "in": "header",
-            "description": "App Key Authentication",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
             "required": false,
             "type": "string"
           },
           {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
             "required": false,
             "type": "string"
           }
@@ -936,10 +1104,24 @@
             "type": "string"
           },
           {
+            "name": "appkey",
+            "in": "header",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
+            "required": false,
             "type": "string"
           }
         ],
@@ -969,7 +1151,7 @@
         "deprecated": false
       }
     },
-    "/v0.2/replies/{replyHandle}/likes/me": {
+    "/v0.3/replies/{replyHandle}/likes/me": {
       "delete": {
         "tags": [
           "Likes"
@@ -992,10 +1174,24 @@
             "type": "string"
           },
           {
+            "name": "appkey",
+            "in": "header",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
+            "required": false,
             "type": "string"
           }
         ],
@@ -1025,7 +1221,7 @@
         "deprecated": false
       }
     },
-    "/v0.2/topics/{topicHandle}/likes": {
+    "/v0.3/topics/{topicHandle}/likes": {
       "get": {
         "tags": [
           "Likes"
@@ -1065,14 +1261,21 @@
           {
             "name": "appkey",
             "in": "header",
-            "description": "App Key Authentication",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
             "required": false,
             "type": "string"
           },
           {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
             "required": false,
             "type": "string"
           }
@@ -1121,10 +1324,24 @@
             "type": "string"
           },
           {
+            "name": "appkey",
+            "in": "header",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
+            "required": false,
             "type": "string"
           }
         ],
@@ -1154,7 +1371,7 @@
         "deprecated": false
       }
     },
-    "/v0.2/topics/{topicHandle}/likes/me": {
+    "/v0.3/topics/{topicHandle}/likes/me": {
       "delete": {
         "tags": [
           "Likes"
@@ -1177,10 +1394,24 @@
             "type": "string"
           },
           {
+            "name": "appkey",
+            "in": "header",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
+            "required": false,
             "type": "string"
           }
         ],
@@ -1210,7 +1441,7 @@
         "deprecated": false
       }
     },
-    "/v0.2/users/me/notifications/status": {
+    "/v0.3/users/me/notifications/status": {
       "put": {
         "tags": [
           "Notifications"
@@ -1241,10 +1472,24 @@
             }
           },
           {
+            "name": "appkey",
+            "in": "header",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
+            "required": false,
             "type": "string"
           }
         ],
@@ -1271,7 +1516,7 @@
         "deprecated": false
       }
     },
-    "/v0.2/users/me/notifications": {
+    "/v0.3/users/me/notifications": {
       "get": {
         "tags": [
           "Notifications"
@@ -1302,10 +1547,24 @@
             "format": "int32"
           },
           {
+            "name": "appkey",
+            "in": "header",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
+            "required": false,
             "type": "string"
           }
         ],
@@ -1329,7 +1588,7 @@
         "deprecated": false
       }
     },
-    "/v0.2/users/me/notifications/count": {
+    "/v0.3/users/me/notifications/count": {
       "get": {
         "tags": [
           "Notifications"
@@ -1345,10 +1604,24 @@
         ],
         "parameters": [
           {
+            "name": "appkey",
+            "in": "header",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
+            "required": false,
             "type": "string"
           }
         ],
@@ -1372,7 +1645,7 @@
         "deprecated": false
       }
     },
-    "/v0.2/users/me/pins": {
+    "/v0.3/users/me/pins": {
       "get": {
         "tags": [
           "Pins"
@@ -1403,10 +1676,24 @@
             "format": "int32"
           },
           {
+            "name": "appkey",
+            "in": "header",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
+            "required": false,
             "type": "string"
           }
         ],
@@ -1459,10 +1746,24 @@
             }
           },
           {
+            "name": "appkey",
+            "in": "header",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
+            "required": false,
             "type": "string"
           }
         ],
@@ -1492,7 +1793,7 @@
         "deprecated": false
       }
     },
-    "/v0.2/users/me/pins/{topicHandle}": {
+    "/v0.3/users/me/pins/{topicHandle}": {
       "delete": {
         "tags": [
           "Pins"
@@ -1515,10 +1816,24 @@
             "type": "string"
           },
           {
+            "name": "appkey",
+            "in": "header",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
+            "required": false,
             "type": "string"
           }
         ],
@@ -1548,7 +1863,7 @@
         "deprecated": false
       }
     },
-    "/v0.2/users/me/push_registrations/{platform}/{registrationId}": {
+    "/v0.3/users/me/push_registrations/{platform}/{registrationId}": {
       "put": {
         "tags": [
           "Push Notifications"
@@ -1587,7 +1902,7 @@
           {
             "name": "registrationId",
             "in": "path",
-            "description": "Unique registration id provided by the mobile OS.\r\n            For Android, this is the GCM registration ID.\r\n            For Windows, this is the PushNotificationChannel URI.\r\n            For iOS, this is the device token.",
+            "description": "Unique registration ID provided by the mobile OS.\r\n            You must URL encode the registration ID.\r\n            For Android, this is the GCM registration ID.\r\n            For Windows, this is the PushNotificationChannel URI.\r\n            For iOS, this is the device token.",
             "required": true,
             "type": "string"
           },
@@ -1601,10 +1916,24 @@
             }
           },
           {
+            "name": "appkey",
+            "in": "header",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
+            "required": false,
             "type": "string"
           }
         ],
@@ -1659,15 +1988,29 @@
           {
             "name": "registrationId",
             "in": "path",
-            "description": "Unique registration id provided by the mobile OS.\r\n            For Android, this is the GCM registration ID.\r\n            For Windows, this is the PushNotificationChannel URI.\r\n            For iOS, this is the device token.",
+            "description": "Unique registration ID provided by the mobile OS.\r\n            You must URL encode the registration ID.\r\n            For Android, this is the GCM registration ID.\r\n            For Windows, this is the PushNotificationChannel URI.\r\n            For iOS, this is the device token.",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "appkey",
+            "in": "header",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
+            "required": false,
             "type": "string"
           },
           {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
+            "required": false,
             "type": "string"
           }
         ],
@@ -1691,7 +2034,7 @@
         "deprecated": false
       }
     },
-    "/v0.2/comments/{commentHandle}/replies": {
+    "/v0.3/comments/{commentHandle}/replies": {
       "get": {
         "tags": [
           "Replies"
@@ -1729,10 +2072,24 @@
             "format": "int32"
           },
           {
+            "name": "appkey",
+            "in": "header",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
+            "required": false,
             "type": "string"
           }
         ],
@@ -1795,10 +2152,24 @@
             }
           },
           {
+            "name": "appkey",
+            "in": "header",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
+            "required": false,
             "type": "string"
           }
         ],
@@ -1825,7 +2196,7 @@
         "deprecated": false
       }
     },
-    "/v0.2/replies/{replyHandle}": {
+    "/v0.3/replies/{replyHandle}": {
       "get": {
         "tags": [
           "Replies"
@@ -1848,10 +2219,24 @@
             "type": "string"
           },
           {
+            "name": "appkey",
+            "in": "header",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
+            "required": false,
             "type": "string"
           }
         ],
@@ -1899,10 +2284,24 @@
             "type": "string"
           },
           {
+            "name": "appkey",
+            "in": "header",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
+            "required": false,
             "type": "string"
           }
         ],
@@ -1929,7 +2328,7 @@
         "deprecated": false
       }
     },
-    "/v0.2/users/{userHandle}/reports": {
+    "/v0.3/users/{userHandle}/reports": {
       "post": {
         "tags": [
           "Reporting"
@@ -1967,10 +2366,24 @@
             }
           },
           {
+            "name": "appkey",
+            "in": "header",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
+            "required": false,
             "type": "string"
           }
         ],
@@ -1997,7 +2410,7 @@
         "deprecated": false
       }
     },
-    "/v0.2/replies/{replyHandle}/reports": {
+    "/v0.3/replies/{replyHandle}/reports": {
       "post": {
         "tags": [
           "Reporting"
@@ -2035,10 +2448,24 @@
             }
           },
           {
+            "name": "appkey",
+            "in": "header",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
+            "required": false,
             "type": "string"
           }
         ],
@@ -2065,7 +2492,7 @@
         "deprecated": false
       }
     },
-    "/v0.2/comments/{commentHandle}/reports": {
+    "/v0.3/comments/{commentHandle}/reports": {
       "post": {
         "tags": [
           "Reporting"
@@ -2103,10 +2530,24 @@
             }
           },
           {
+            "name": "appkey",
+            "in": "header",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
+            "required": false,
             "type": "string"
           }
         ],
@@ -2133,7 +2574,7 @@
         "deprecated": false
       }
     },
-    "/v0.2/topics/{topicHandle}/reports": {
+    "/v0.3/topics/{topicHandle}/reports": {
       "post": {
         "tags": [
           "Reporting"
@@ -2171,10 +2612,24 @@
             }
           },
           {
+            "name": "appkey",
+            "in": "header",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
+            "required": false,
             "type": "string"
           }
         ],
@@ -2201,7 +2656,7 @@
         "deprecated": false
       }
     },
-    "/v0.2/search/topics": {
+    "/v0.3/search/topics": {
       "get": {
         "tags": [
           "Search"
@@ -2242,14 +2697,21 @@
           {
             "name": "appkey",
             "in": "header",
-            "description": "App Key Authentication",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
             "required": false,
             "type": "string"
           },
           {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
             "required": false,
             "type": "string"
           }
@@ -2274,7 +2736,7 @@
         "deprecated": false
       }
     },
-    "/v0.2/search/users": {
+    "/v0.3/search/users": {
       "get": {
         "tags": [
           "Search"
@@ -2315,14 +2777,21 @@
           {
             "name": "appkey",
             "in": "header",
-            "description": "App Key Authentication",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
             "required": false,
             "type": "string"
           },
           {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
             "required": false,
             "type": "string"
           }
@@ -2347,7 +2816,7 @@
         "deprecated": false
       }
     },
-    "/v0.2/sessions": {
+    "/v0.3/sessions": {
       "post": {
         "tags": [
           "Sessions"
@@ -2380,14 +2849,21 @@
           {
             "name": "appkey",
             "in": "header",
-            "description": "App Key Authentication",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
             "required": false,
             "type": "string"
           },
           {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
             "required": false,
             "type": "string"
           }
@@ -2415,7 +2891,7 @@
         "deprecated": false
       }
     },
-    "/v0.2/sessions/current": {
+    "/v0.3/sessions/current": {
       "delete": {
         "tags": [
           "Sessions"
@@ -2431,10 +2907,24 @@
         ],
         "parameters": [
           {
+            "name": "appkey",
+            "in": "header",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
+            "required": false,
             "type": "string"
           }
         ],
@@ -2458,7 +2948,7 @@
         "deprecated": false
       }
     },
-    "/v0.2/request_tokens/{identityProvider}": {
+    "/v0.3/request_tokens/{identityProvider}": {
       "get": {
         "tags": [
           "Sessions"
@@ -2493,14 +2983,21 @@
           {
             "name": "appkey",
             "in": "header",
-            "description": "App Key Authentication",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
             "required": false,
             "type": "string"
           },
           {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
             "required": false,
             "type": "string"
           }
@@ -2525,7 +3022,7 @@
         "deprecated": false
       }
     },
-    "/v0.2/users/me/following": {
+    "/v0.3/users/me/following": {
       "get": {
         "tags": [
           "Social"
@@ -2556,10 +3053,24 @@
             "format": "int32"
           },
           {
+            "name": "appkey",
+            "in": "header",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
+            "required": false,
             "type": "string"
           }
         ],
@@ -2612,10 +3123,24 @@
             }
           },
           {
+            "name": "appkey",
+            "in": "header",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
+            "required": false,
             "type": "string"
           }
         ],
@@ -2645,7 +3170,7 @@
         "deprecated": false
       }
     },
-    "/v0.2/users/me/following/{userHandle}": {
+    "/v0.3/users/me/following/{userHandle}": {
       "delete": {
         "tags": [
           "Social"
@@ -2668,10 +3193,24 @@
             "type": "string"
           },
           {
+            "name": "appkey",
+            "in": "header",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
+            "required": false,
             "type": "string"
           }
         ],
@@ -2701,7 +3240,7 @@
         "deprecated": false
       }
     },
-    "/v0.2/users/me/following/topics/{topicHandle}": {
+    "/v0.3/users/me/following/topics/{topicHandle}": {
       "delete": {
         "tags": [
           "Social"
@@ -2724,10 +3263,24 @@
             "type": "string"
           },
           {
+            "name": "appkey",
+            "in": "header",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
+            "required": false,
             "type": "string"
           }
         ],
@@ -2754,7 +3307,7 @@
         "deprecated": false
       }
     },
-    "/v0.2/users/me/following/topics": {
+    "/v0.3/users/me/following/topics": {
       "get": {
         "tags": [
           "Social"
@@ -2785,10 +3338,24 @@
             "format": "int32"
           },
           {
+            "name": "appkey",
+            "in": "header",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
+            "required": false,
             "type": "string"
           }
         ],
@@ -2812,7 +3379,7 @@
         "deprecated": false
       }
     },
-    "/v0.2/users/me/following/activities": {
+    "/v0.3/users/me/following/activities": {
       "get": {
         "tags": [
           "Social"
@@ -2843,10 +3410,24 @@
             "format": "int32"
           },
           {
+            "name": "appkey",
+            "in": "header",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
+            "required": false,
             "type": "string"
           }
         ],
@@ -2870,7 +3451,7 @@
         "deprecated": false
       }
     },
-    "/v0.2/users/{userHandle}/followers": {
+    "/v0.3/users/{userHandle}/followers": {
       "get": {
         "tags": [
           "Social"
@@ -2908,10 +3489,24 @@
             "format": "int32"
           },
           {
+            "name": "appkey",
+            "in": "header",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
+            "required": false,
             "type": "string"
           }
         ],
@@ -2938,7 +3533,7 @@
         "deprecated": false
       }
     },
-    "/v0.2/users/me/followers": {
+    "/v0.3/users/me/followers": {
       "get": {
         "tags": [
           "Social"
@@ -2969,10 +3564,24 @@
             "format": "int32"
           },
           {
+            "name": "appkey",
+            "in": "header",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
+            "required": false,
             "type": "string"
           }
         ],
@@ -3025,10 +3634,24 @@
             }
           },
           {
+            "name": "appkey",
+            "in": "header",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
+            "required": false,
             "type": "string"
           }
         ],
@@ -3061,7 +3684,7 @@
         "deprecated": false
       }
     },
-    "/v0.2/users/me/followers/{userHandle}": {
+    "/v0.3/users/me/followers/{userHandle}": {
       "delete": {
         "tags": [
           "Social"
@@ -3084,10 +3707,24 @@
             "type": "string"
           },
           {
+            "name": "appkey",
+            "in": "header",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
+            "required": false,
             "type": "string"
           }
         ],
@@ -3117,7 +3754,7 @@
         "deprecated": false
       }
     },
-    "/v0.2/users/{userHandle}/following": {
+    "/v0.3/users/{userHandle}/following": {
       "get": {
         "tags": [
           "Social"
@@ -3155,10 +3792,24 @@
             "format": "int32"
           },
           {
+            "name": "appkey",
+            "in": "header",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
+            "required": false,
             "type": "string"
           }
         ],
@@ -3185,7 +3836,7 @@
         "deprecated": false
       }
     },
-    "/v0.2/users/me/pending_users/{userHandle}": {
+    "/v0.3/users/me/pending_users/{userHandle}": {
       "delete": {
         "tags": [
           "Social"
@@ -3208,10 +3859,24 @@
             "type": "string"
           },
           {
+            "name": "appkey",
+            "in": "header",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
+            "required": false,
             "type": "string"
           }
         ],
@@ -3241,7 +3906,7 @@
         "deprecated": false
       }
     },
-    "/v0.2/users/me/pending_users": {
+    "/v0.3/users/me/pending_users": {
       "get": {
         "tags": [
           "Social"
@@ -3272,10 +3937,24 @@
             "format": "int32"
           },
           {
+            "name": "appkey",
+            "in": "header",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
+            "required": false,
             "type": "string"
           }
         ],
@@ -3299,7 +3978,7 @@
         "deprecated": false
       }
     },
-    "/v0.2/users/me/pending_users/count": {
+    "/v0.3/users/me/pending_users/count": {
       "get": {
         "tags": [
           "Social"
@@ -3315,10 +3994,24 @@
         ],
         "parameters": [
           {
+            "name": "appkey",
+            "in": "header",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
+            "required": false,
             "type": "string"
           }
         ],
@@ -3342,7 +4035,7 @@
         "deprecated": false
       }
     },
-    "/v0.2/users/me/blocked_users": {
+    "/v0.3/users/me/blocked_users": {
       "get": {
         "tags": [
           "Social"
@@ -3373,10 +4066,24 @@
             "format": "int32"
           },
           {
+            "name": "appkey",
+            "in": "header",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
+            "required": false,
             "type": "string"
           }
         ],
@@ -3429,10 +4136,24 @@
             }
           },
           {
+            "name": "appkey",
+            "in": "header",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
+            "required": false,
             "type": "string"
           }
         ],
@@ -3462,7 +4183,7 @@
         "deprecated": false
       }
     },
-    "/v0.2/users/me/blocked_users/{userHandle}": {
+    "/v0.3/users/me/blocked_users/{userHandle}": {
       "delete": {
         "tags": [
           "Social"
@@ -3485,10 +4206,24 @@
             "type": "string"
           },
           {
+            "name": "appkey",
+            "in": "header",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
+            "required": false,
             "type": "string"
           }
         ],
@@ -3518,7 +4253,7 @@
         "deprecated": false
       }
     },
-    "/v0.2/topics": {
+    "/v0.3/topics": {
       "get": {
         "tags": [
           "Topics"
@@ -3551,14 +4286,21 @@
           {
             "name": "appkey",
             "in": "header",
-            "description": "App Key Authentication",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
             "required": false,
             "type": "string"
           },
           {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
             "required": false,
             "type": "string"
           }
@@ -3612,10 +4354,24 @@
             }
           },
           {
+            "name": "appkey",
+            "in": "header",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
+            "required": false,
             "type": "string"
           }
         ],
@@ -3642,7 +4398,7 @@
         "deprecated": false
       }
     },
-    "/v0.2/topics/{topicHandle}": {
+    "/v0.3/topics/{topicHandle}": {
       "get": {
         "tags": [
           "Topics"
@@ -3667,14 +4423,21 @@
           {
             "name": "appkey",
             "in": "header",
-            "description": "App Key Authentication",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
             "required": false,
             "type": "string"
           },
           {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
             "required": false,
             "type": "string"
           }
@@ -3738,10 +4501,24 @@
             }
           },
           {
+            "name": "appkey",
+            "in": "header",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
+            "required": false,
             "type": "string"
           }
         ],
@@ -3792,10 +4569,24 @@
             "type": "string"
           },
           {
+            "name": "appkey",
+            "in": "header",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
+            "required": false,
             "type": "string"
           }
         ],
@@ -3822,7 +4613,7 @@
         "deprecated": false
       }
     },
-    "/v0.2/topics/popular/{timeRange}": {
+    "/v0.3/topics/popular/{timeRange}": {
       "get": {
         "tags": [
           "Topics"
@@ -3872,14 +4663,21 @@
           {
             "name": "appkey",
             "in": "header",
-            "description": "App Key Authentication",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
             "required": false,
             "type": "string"
           },
           {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
             "required": false,
             "type": "string"
           }
@@ -3904,7 +4702,7 @@
         "deprecated": false
       }
     },
-    "/v0.2/topics/featured": {
+    "/v0.3/topics/featured": {
       "get": {
         "tags": [
           "Topics"
@@ -3937,14 +4735,21 @@
           {
             "name": "appkey",
             "in": "header",
-            "description": "App Key Authentication",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
             "required": false,
             "type": "string"
           },
           {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
             "required": false,
             "type": "string"
           }
@@ -3969,7 +4774,7 @@
         "deprecated": false
       }
     },
-    "/v0.2/users/me/apps/{appHandle}/following/difference": {
+    "/v0.3/users/me/apps/{appHandle}/following/difference": {
       "get": {
         "tags": [
           "Users"
@@ -3999,10 +4804,24 @@
             "type": "string"
           },
           {
+            "name": "appkey",
+            "in": "header",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
+            "required": false,
             "type": "string"
           }
         ],
@@ -4026,7 +4845,7 @@
         "deprecated": false
       }
     },
-    "/v0.2/users/me/topics": {
+    "/v0.3/users/me/topics": {
       "get": {
         "tags": [
           "Users"
@@ -4057,10 +4876,24 @@
             "format": "int32"
           },
           {
+            "name": "appkey",
+            "in": "header",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
+            "required": false,
             "type": "string"
           }
         ],
@@ -4084,7 +4917,7 @@
         "deprecated": false
       }
     },
-    "/v0.2/users/me/topics/popular": {
+    "/v0.3/users/me/topics/popular": {
       "get": {
         "tags": [
           "Users"
@@ -4116,10 +4949,24 @@
             "format": "int32"
           },
           {
+            "name": "appkey",
+            "in": "header",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
+            "required": false,
             "type": "string"
           }
         ],
@@ -4143,7 +4990,7 @@
         "deprecated": false
       }
     },
-    "/v0.2/users/me/apps": {
+    "/v0.3/users/me/apps": {
       "get": {
         "tags": [
           "Users"
@@ -4159,10 +5006,24 @@
         ],
         "parameters": [
           {
+            "name": "appkey",
+            "in": "header",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
+            "required": false,
             "type": "string"
           }
         ],
@@ -4189,7 +5050,7 @@
         "deprecated": false
       }
     },
-    "/v0.2/users": {
+    "/v0.3/users": {
       "post": {
         "tags": [
           "Users"
@@ -4222,14 +5083,21 @@
           {
             "name": "appkey",
             "in": "header",
-            "description": "App Key Authentication",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
             "required": false,
             "type": "string"
           },
           {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
             "required": false,
             "type": "string"
           }
@@ -4257,7 +5125,7 @@
         "deprecated": false
       }
     },
-    "/v0.2/users/me": {
+    "/v0.3/users/me": {
       "get": {
         "tags": [
           "Users"
@@ -4273,10 +5141,24 @@
         ],
         "parameters": [
           {
+            "name": "appkey",
+            "in": "header",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
+            "required": false,
             "type": "string"
           }
         ],
@@ -4314,10 +5196,24 @@
         ],
         "parameters": [
           {
+            "name": "appkey",
+            "in": "header",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
+            "required": false,
             "type": "string"
           }
         ],
@@ -4341,7 +5237,7 @@
         "deprecated": false
       }
     },
-    "/v0.2/users/me/info": {
+    "/v0.3/users/me/info": {
       "put": {
         "tags": [
           "Users"
@@ -4372,10 +5268,24 @@
             }
           },
           {
+            "name": "appkey",
+            "in": "header",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
+            "required": false,
             "type": "string"
           }
         ],
@@ -4399,7 +5309,7 @@
         "deprecated": false
       }
     },
-    "/v0.2/users/me/photo": {
+    "/v0.3/users/me/photo": {
       "put": {
         "tags": [
           "Users"
@@ -4430,10 +5340,24 @@
             }
           },
           {
+            "name": "appkey",
+            "in": "header",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
+            "required": false,
             "type": "string"
           }
         ],
@@ -4457,7 +5381,7 @@
         "deprecated": false
       }
     },
-    "/v0.2/users/me/visibility": {
+    "/v0.3/users/me/visibility": {
       "put": {
         "tags": [
           "Users"
@@ -4488,10 +5412,24 @@
             }
           },
           {
+            "name": "appkey",
+            "in": "header",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
+            "required": false,
             "type": "string"
           }
         ],
@@ -4515,7 +5453,7 @@
         "deprecated": false
       }
     },
-    "/v0.2/users/{userHandle}": {
+    "/v0.3/users/{userHandle}": {
       "get": {
         "tags": [
           "Users"
@@ -4540,14 +5478,21 @@
           {
             "name": "appkey",
             "in": "header",
-            "description": "App Key Authentication",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
             "required": false,
             "type": "string"
           },
           {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
             "required": false,
             "type": "string"
           }
@@ -4575,7 +5520,7 @@
         "deprecated": false
       }
     },
-    "/v0.2/users/popular": {
+    "/v0.3/users/popular": {
       "get": {
         "tags": [
           "Users"
@@ -4609,14 +5554,21 @@
           {
             "name": "appkey",
             "in": "header",
-            "description": "App Key Authentication",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
             "required": false,
             "type": "string"
           },
           {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
             "required": false,
             "type": "string"
           }
@@ -4641,7 +5593,7 @@
         "deprecated": false
       }
     },
-    "/v0.2/users/me/likes/topics": {
+    "/v0.3/users/me/likes/topics": {
       "get": {
         "tags": [
           "Users"
@@ -4672,10 +5624,24 @@
             "format": "int32"
           },
           {
+            "name": "appkey",
+            "in": "header",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
+            "required": false,
             "type": "string"
           }
         ],
@@ -4699,7 +5665,7 @@
         "deprecated": false
       }
     },
-    "/v0.2/users/me/linked_accounts": {
+    "/v0.3/users/me/linked_accounts": {
       "get": {
         "tags": [
           "Users"
@@ -4715,10 +5681,24 @@
         ],
         "parameters": [
           {
+            "name": "appkey",
+            "in": "header",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
+            "required": false,
             "type": "string"
           }
         ],
@@ -4774,10 +5754,24 @@
             }
           },
           {
+            "name": "appkey",
+            "in": "header",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
+            "required": false,
             "type": "string"
           }
         ],
@@ -4804,7 +5798,7 @@
         "deprecated": false
       }
     },
-    "/v0.2/users/me/linked_accounts/{identityProvider}": {
+    "/v0.3/users/me/linked_accounts/{identityProvider}": {
       "delete": {
         "tags": [
           "Users"
@@ -4837,10 +5831,24 @@
             }
           },
           {
+            "name": "appkey",
+            "in": "header",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
+            "required": false,
             "type": "string"
           }
         ],
@@ -4870,7 +5878,7 @@
         "deprecated": false
       }
     },
-    "/v0.2/users/{userHandle}/topics": {
+    "/v0.3/users/{userHandle}/topics": {
       "get": {
         "tags": [
           "Users"
@@ -4910,14 +5918,21 @@
           {
             "name": "appkey",
             "in": "header",
-            "description": "App Key Authentication",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
             "required": false,
             "type": "string"
           },
           {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
             "required": false,
             "type": "string"
           }
@@ -4945,7 +5960,7 @@
         "deprecated": false
       }
     },
-    "/v0.2/users/{userHandle}/topics/popular": {
+    "/v0.3/users/{userHandle}/topics/popular": {
       "get": {
         "tags": [
           "Users"
@@ -4986,14 +6001,21 @@
           {
             "name": "appkey",
             "in": "header",
-            "description": "App Key Authentication",
+            "description": "App key must be filled in when using AAD tokens for Authentication.",
             "required": false,
             "type": "string"
           },
           {
             "name": "Authorization",
             "in": "header",
-            "description": "Authenication (must begin with string \"Bearer \")",
+            "description": "Authentication (must begin with string \"Bearer \"). Possible values are:\n\n-sessionToken for client auth\n\n-AAD token for service auth",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "UserHandle",
+            "in": "header",
+            "description": "User handle must be filled when using AAD tokens for Authentication.",
             "required": false,
             "type": "string"
           }

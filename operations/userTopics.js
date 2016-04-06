@@ -35,10 +35,18 @@ function UserTopics(client) {
  * 
  * @param {number} [options.limit] Number of items to return
  * 
- * @param {string} [options.appkey] App Key Authentication
+ * @param {string} [options.appkey] App key must be filled in when using AAD
+ * tokens for Authentication.
  * 
- * @param {string} [options.authorization] Authenication (must begin with
- * string "Bearer ")
+ * @param {string} [options.authorization] Authentication (must begin with
+ * string "Bearer "). Possible values are:
+ * 
+ * -sessionToken for client auth
+ * 
+ * -AAD token for service auth
+ * 
+ * @param {string} [options.userHandle1] User handle must be filled when using
+ * AAD tokens for Authentication.
  * 
  * @param {object} [options.customHeaders] Headers that will be added to the
  * request
@@ -69,6 +77,7 @@ UserTopics.prototype.getTopics = function (userHandle, options, callback) {
   var limit = (options && options.limit !== undefined) ? options.limit : undefined;
   var appkey = (options && options.appkey !== undefined) ? options.appkey : undefined;
   var authorization = (options && options.authorization !== undefined) ? options.authorization : undefined;
+  var userHandle1 = (options && options.userHandle1 !== undefined) ? options.userHandle1 : undefined;
   // Validate
   try {
     if (userHandle === null || userHandle === undefined || typeof userHandle.valueOf() !== 'string') {
@@ -86,13 +95,16 @@ UserTopics.prototype.getTopics = function (userHandle, options, callback) {
     if (authorization !== null && authorization !== undefined && typeof authorization.valueOf() !== 'string') {
       throw new Error('authorization must be of type string.');
     }
+    if (userHandle1 !== null && userHandle1 !== undefined && typeof userHandle1.valueOf() !== 'string') {
+      throw new Error('userHandle1 must be of type string.');
+    }
   } catch (error) {
     return callback(error);
   }
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.2/users/{userHandle}/topics';
+                   '//v0.3/users/{userHandle}/topics';
   requestUrl = requestUrl.replace('{userHandle}', encodeURIComponent(userHandle));
   var queryParameters = [];
   if (cursor !== null && cursor !== undefined) {
@@ -119,6 +131,9 @@ UserTopics.prototype.getTopics = function (userHandle, options, callback) {
   }
   if (authorization !== undefined && authorization !== null) {
     httpRequest.headers['Authorization'] = authorization;
+  }
+  if (userHandle1 !== undefined && userHandle1 !== null) {
+    httpRequest.headers['UserHandle'] = userHandle1;
   }
   if(options) {
     for(var headerName in options['customHeaders']) {
@@ -192,10 +207,18 @@ UserTopics.prototype.getTopics = function (userHandle, options, callback) {
  * 
  * @param {number} [options.limit] Number of items to return
  * 
- * @param {string} [options.appkey] App Key Authentication
+ * @param {string} [options.appkey] App key must be filled in when using AAD
+ * tokens for Authentication.
  * 
- * @param {string} [options.authorization] Authenication (must begin with
- * string "Bearer ")
+ * @param {string} [options.authorization] Authentication (must begin with
+ * string "Bearer "). Possible values are:
+ * 
+ * -sessionToken for client auth
+ * 
+ * -AAD token for service auth
+ * 
+ * @param {string} [options.userHandle1] User handle must be filled when using
+ * AAD tokens for Authentication.
  * 
  * @param {object} [options.customHeaders] Headers that will be added to the
  * request
@@ -226,6 +249,7 @@ UserTopics.prototype.getPopularTopics = function (userHandle, options, callback)
   var limit = (options && options.limit !== undefined) ? options.limit : undefined;
   var appkey = (options && options.appkey !== undefined) ? options.appkey : undefined;
   var authorization = (options && options.authorization !== undefined) ? options.authorization : undefined;
+  var userHandle1 = (options && options.userHandle1 !== undefined) ? options.userHandle1 : undefined;
   // Validate
   try {
     if (userHandle === null || userHandle === undefined || typeof userHandle.valueOf() !== 'string') {
@@ -243,13 +267,16 @@ UserTopics.prototype.getPopularTopics = function (userHandle, options, callback)
     if (authorization !== null && authorization !== undefined && typeof authorization.valueOf() !== 'string') {
       throw new Error('authorization must be of type string.');
     }
+    if (userHandle1 !== null && userHandle1 !== undefined && typeof userHandle1.valueOf() !== 'string') {
+      throw new Error('userHandle1 must be of type string.');
+    }
   } catch (error) {
     return callback(error);
   }
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.2/users/{userHandle}/topics/popular';
+                   '//v0.3/users/{userHandle}/topics/popular';
   requestUrl = requestUrl.replace('{userHandle}', encodeURIComponent(userHandle));
   var queryParameters = [];
   if (cursor !== null && cursor !== undefined) {
@@ -276,6 +303,9 @@ UserTopics.prototype.getPopularTopics = function (userHandle, options, callback)
   }
   if (authorization !== undefined && authorization !== null) {
     httpRequest.headers['Authorization'] = authorization;
+  }
+  if (userHandle1 !== undefined && userHandle1 !== null) {
+    httpRequest.headers['UserHandle'] = userHandle1;
   }
   if(options) {
     for(var headerName in options['customHeaders']) {

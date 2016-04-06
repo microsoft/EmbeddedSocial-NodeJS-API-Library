@@ -29,14 +29,24 @@ function UserFollowers(client) {
  *
  * @param {string} userHandle User handle
  * 
- * @param {string} authorization Authenication (must begin with string "Bearer
- * ")
+ * @param {string} authorization Authentication (must begin with string
+ * "Bearer "). Possible values are:
+ * 
+ * -sessionToken for client auth
+ * 
+ * -AAD token for service auth
  * 
  * @param {object} [options] Optional Parameters.
  * 
  * @param {string} [options.cursor] Current read cursor
  * 
  * @param {number} [options.limit] Number of items to return
+ * 
+ * @param {string} [options.appkey] App key must be filled in when using AAD
+ * tokens for Authentication.
+ * 
+ * @param {string} [options.userHandle1] User handle must be filled when using
+ * AAD tokens for Authentication.
  * 
  * @param {object} [options.customHeaders] Headers that will be added to the
  * request
@@ -66,6 +76,8 @@ UserFollowers.prototype.getFollowers = function (userHandle, authorization, opti
   }
   var cursor = (options && options.cursor !== undefined) ? options.cursor : undefined;
   var limit = (options && options.limit !== undefined) ? options.limit : undefined;
+  var appkey = (options && options.appkey !== undefined) ? options.appkey : undefined;
+  var userHandle1 = (options && options.userHandle1 !== undefined) ? options.userHandle1 : undefined;
   // Validate
   try {
     if (userHandle === null || userHandle === undefined || typeof userHandle.valueOf() !== 'string') {
@@ -77,8 +89,14 @@ UserFollowers.prototype.getFollowers = function (userHandle, authorization, opti
     if (limit !== null && limit !== undefined && typeof limit !== 'number') {
       throw new Error('limit must be of type number.');
     }
+    if (appkey !== null && appkey !== undefined && typeof appkey.valueOf() !== 'string') {
+      throw new Error('appkey must be of type string.');
+    }
     if (authorization === null || authorization === undefined || typeof authorization.valueOf() !== 'string') {
       throw new Error('authorization cannot be null or undefined and it must be of type string.');
+    }
+    if (userHandle1 !== null && userHandle1 !== undefined && typeof userHandle1.valueOf() !== 'string') {
+      throw new Error('userHandle1 must be of type string.');
     }
   } catch (error) {
     return callback(error);
@@ -86,7 +104,7 @@ UserFollowers.prototype.getFollowers = function (userHandle, authorization, opti
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.2/users/{userHandle}/followers';
+                   '//v0.3/users/{userHandle}/followers';
   requestUrl = requestUrl.replace('{userHandle}', encodeURIComponent(userHandle));
   var queryParameters = [];
   if (cursor !== null && cursor !== undefined) {
@@ -108,8 +126,14 @@ UserFollowers.prototype.getFollowers = function (userHandle, authorization, opti
   httpRequest.headers = {};
   httpRequest.url = requestUrl;
   // Set Headers
+  if (appkey !== undefined && appkey !== null) {
+    httpRequest.headers['appkey'] = appkey;
+  }
   if (authorization !== undefined && authorization !== null) {
     httpRequest.headers['Authorization'] = authorization;
+  }
+  if (userHandle1 !== undefined && userHandle1 !== null) {
+    httpRequest.headers['UserHandle'] = userHandle1;
   }
   if(options) {
     for(var headerName in options['customHeaders']) {

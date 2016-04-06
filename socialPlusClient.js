@@ -41,7 +41,7 @@ function SocialPlusClient(baseUri, options) {
   SocialPlusClient['super_'].call(this, null, options);
   this.baseUri = baseUri;
   if (!this.baseUri) {
-    this.baseUri = 'http://localhost:1324';
+    this.baseUri = 'http://sp-ppe.cloudapp.net';
   }
 
   this.blobs = new operations.Blobs(this);
