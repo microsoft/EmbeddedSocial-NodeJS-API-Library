@@ -47,55 +47,6 @@ export interface BuildsCurrentResponse {
 
 /**
  * @class
- * Initializes a new instance of the PostCommentRequest class.
- * @constructor
- * Request to post (create) comment
- * @member {string} text Gets or sets comment text
- * 
- * @member {string} [blobType] Gets or sets comment blob type. Possible values
- * include: 'Unknown', 'Image', 'Video', 'Custom'
- * 
- * @member {string} [blobHandle] Gets or sets comment blob handle
- * 
- * @member {string} [language] Gets or sets comment language
- * 
- */
-export interface PostCommentRequest {
-    text: string;
-    blobType?: string;
-    blobHandle?: string;
-    language?: string;
-}
-
-/**
- * @class
- * Initializes a new instance of the PostCommentResponse class.
- * @constructor
- * Response from post (create) comment
- * @member {string} commentHandle Gets or sets comment handle of the comment
- * 
- */
-export interface PostCommentResponse {
-    commentHandle: string;
-}
-
-/**
- * @class
- * Initializes a new instance of the FeedResponseCommentView class.
- * @constructor
- * Feed response
- * @member {array} data Gets or sets feed data
- * 
- * @member {string} cursor Gets or sets feed cursor
- * 
- */
-export interface FeedResponseCommentView {
-    data: CommentView[];
-    cursor: string;
-}
-
-/**
- * @class
  * Initializes a new instance of the CommentView class.
  * @constructor
  * Comment view
@@ -193,6 +144,55 @@ export interface UserCompactView {
     photoUrl?: string;
     visibility: string;
     followerStatus: string;
+}
+
+/**
+ * @class
+ * Initializes a new instance of the PostCommentRequest class.
+ * @constructor
+ * Request to post (create) comment
+ * @member {string} text Gets or sets comment text
+ * 
+ * @member {string} [blobType] Gets or sets comment blob type. Possible values
+ * include: 'Unknown', 'Image', 'Video', 'Custom'
+ * 
+ * @member {string} [blobHandle] Gets or sets comment blob handle
+ * 
+ * @member {string} [language] Gets or sets comment language
+ * 
+ */
+export interface PostCommentRequest {
+    text: string;
+    blobType?: string;
+    blobHandle?: string;
+    language?: string;
+}
+
+/**
+ * @class
+ * Initializes a new instance of the PostCommentResponse class.
+ * @constructor
+ * Response from post (create) comment
+ * @member {string} commentHandle Gets or sets comment handle of the comment
+ * 
+ */
+export interface PostCommentResponse {
+    commentHandle: string;
+}
+
+/**
+ * @class
+ * Initializes a new instance of the FeedResponseCommentView class.
+ * @constructor
+ * Feed response
+ * @member {array} data Gets or sets feed data
+ * 
+ * @member {string} cursor Gets or sets feed cursor
+ * 
+ */
+export interface FeedResponseCommentView {
+    data: CommentView[];
+    cursor: string;
 }
 
 /**
@@ -573,48 +573,6 @@ export interface PutPushRegistrationRequest {
 
 /**
  * @class
- * Initializes a new instance of the PostReplyRequest class.
- * @constructor
- * Request to post (create) reply
- * @member {string} text Gets or sets reply text
- * 
- * @member {string} [language] Gets or sets reply language
- * 
- */
-export interface PostReplyRequest {
-    text: string;
-    language?: string;
-}
-
-/**
- * @class
- * Initializes a new instance of the PostReplyResponse class.
- * @constructor
- * Response from post (create) reply
- * @member {string} replyHandle Gets or sets reply handle of the reply
- * 
- */
-export interface PostReplyResponse {
-    replyHandle: string;
-}
-
-/**
- * @class
- * Initializes a new instance of the FeedResponseReplyView class.
- * @constructor
- * Feed response
- * @member {array} data Gets or sets feed data
- * 
- * @member {string} cursor Gets or sets feed cursor
- * 
- */
-export interface FeedResponseReplyView {
-    data: ReplyView[];
-    cursor: string;
-}
-
-/**
- * @class
  * Initializes a new instance of the ReplyView class.
  * @constructor
  * Reply view
@@ -669,6 +627,48 @@ export interface ReplyView {
     totalLikes: number;
     liked: boolean;
     contentStatus?: string;
+}
+
+/**
+ * @class
+ * Initializes a new instance of the PostReplyRequest class.
+ * @constructor
+ * Request to post (create) reply
+ * @member {string} text Gets or sets reply text
+ * 
+ * @member {string} [language] Gets or sets reply language
+ * 
+ */
+export interface PostReplyRequest {
+    text: string;
+    language?: string;
+}
+
+/**
+ * @class
+ * Initializes a new instance of the PostReplyResponse class.
+ * @constructor
+ * Response from post (create) reply
+ * @member {string} replyHandle Gets or sets reply handle of the reply
+ * 
+ */
+export interface PostReplyResponse {
+    replyHandle: string;
+}
+
+/**
+ * @class
+ * Initializes a new instance of the FeedResponseReplyView class.
+ * @constructor
+ * Feed response
+ * @member {array} data Gets or sets feed data
+ * 
+ * @member {string} cursor Gets or sets feed cursor
+ * 
+ */
+export interface FeedResponseReplyView {
+    data: ReplyView[];
+    cursor: string;
 }
 
 /**
@@ -753,18 +753,6 @@ export interface GetRequestTokenResponse {
 
 /**
  * @class
- * Initializes a new instance of the PostFollowingRequest class.
- * @constructor
- * Request to post a following (follow user)
- * @member {string} userHandle Gets or sets user handle
- * 
- */
-export interface PostFollowingRequest {
-    userHandle: string;
-}
-
-/**
- * @class
  * Initializes a new instance of the PostFollowerRequest class.
  * @constructor
  * Request to post (accept) a follower
@@ -772,6 +760,18 @@ export interface PostFollowingRequest {
  * 
  */
 export interface PostFollowerRequest {
+    userHandle: string;
+}
+
+/**
+ * @class
+ * Initializes a new instance of the PostFollowingRequest class.
+ * @constructor
+ * Request to post a following (follow user)
+ * @member {string} userHandle Gets or sets user handle
+ * 
+ */
+export interface PostFollowingRequest {
     userHandle: string;
 }
 
@@ -856,6 +856,51 @@ export interface PutTopicRequest {
     title?: string;
     text: string;
     categories?: string;
+}
+
+/**
+ * @class
+ * Initializes a new instance of the PostLinkedAccountRequest class.
+ * @constructor
+ * Request to post (create) linked account
+ * @member {string} identityProvider Gets or sets identity provider type.
+ * Possible values include: 'Facebook', 'Microsoft', 'Google', 'Twitter',
+ * 'Beihai'
+ * 
+ * @member {string} [accessToken] Gets or sets access or authentication token,
+ * user code, or verifier obtained from third-party provider.
+ * The server contacts the third-party provider to use the token
+ * (or user code, or verifier) for discover the user's identity.
+ * 
+ * @member {string} [requestToken] Gets or sets request token obtained from
+ * third-party provider.
+ * Some providers do not issue authentication or access tokens,
+ * but they issue request tokens
+ * and verifiers.
+ * 
+ */
+export interface PostLinkedAccountRequest {
+    identityProvider: string;
+    accessToken?: string;
+    requestToken?: string;
+}
+
+/**
+ * @class
+ * Initializes a new instance of the LinkedAccountView class.
+ * @constructor
+ * Linked account view
+ * @member {string} identityProvider Gets or sets identity provider type.
+ * Possible values include: 'Facebook', 'Microsoft', 'Google', 'Twitter',
+ * 'Beihai'
+ * 
+ * @member {string} accountId Gets or sets third party account id -- Unique
+ * user id provided by the third-party identity provider
+ * 
+ */
+export interface LinkedAccountView {
+    identityProvider: string;
+    accountId: string;
 }
 
 /**
@@ -1032,49 +1077,4 @@ export interface PutUserVisibilityRequest {
 export interface FeedResponseUserProfileView {
     data: UserProfileView[];
     cursor: string;
-}
-
-/**
- * @class
- * Initializes a new instance of the PostLinkedAccountRequest class.
- * @constructor
- * Request to post (create) linked account
- * @member {string} identityProvider Gets or sets identity provider type.
- * Possible values include: 'Facebook', 'Microsoft', 'Google', 'Twitter',
- * 'Beihai'
- * 
- * @member {string} [accessToken] Gets or sets access or authentication token,
- * user code, or verifier obtained from third-party provider.
- * The server contacts the third-party provider to use the token
- * (or user code, or verifier) for discover the user's identity.
- * 
- * @member {string} [requestToken] Gets or sets request token obtained from
- * third-party provider.
- * Some providers do not issue authentication or access tokens,
- * but they issue request tokens
- * and verifiers.
- * 
- */
-export interface PostLinkedAccountRequest {
-    identityProvider: string;
-    accessToken?: string;
-    requestToken?: string;
-}
-
-/**
- * @class
- * Initializes a new instance of the LinkedAccountView class.
- * @constructor
- * Linked account view
- * @member {string} identityProvider Gets or sets identity provider type.
- * Possible values include: 'Facebook', 'Microsoft', 'Google', 'Twitter',
- * 'Beihai'
- * 
- * @member {string} accountId Gets or sets third party account id -- Unique
- * user id provided by the third-party identity provider
- * 
- */
-export interface LinkedAccountView {
-    identityProvider: string;
-    accountId: string;
 }

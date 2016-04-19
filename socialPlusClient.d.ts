@@ -30,38 +30,38 @@ declare class SocialPlusClient {
     // Operation groups
     blobs: operations.Blobs;
     builds: operations.Builds;
-    topicComments: operations.TopicComments;
     comments: operations.Comments;
+    topicComments: operations.TopicComments;
     hashtags: operations.Hashtags;
     images: operations.Images;
-    commentLikes: operations.CommentLikes;
-    replyLikes: operations.ReplyLikes;
     topicLikes: operations.TopicLikes;
+    replyLikes: operations.ReplyLikes;
+    commentLikes: operations.CommentLikes;
     myNotifications: operations.MyNotifications;
     myPins: operations.MyPins;
     myPushRegistrations: operations.MyPushRegistrations;
-    commentReplies: operations.CommentReplies;
     replies: operations.Replies;
+    commentReplies: operations.CommentReplies;
     userReports: operations.UserReports;
+    topicReports: operations.TopicReports;
     replyReports: operations.ReplyReports;
     commentReports: operations.CommentReports;
-    topicReports: operations.TopicReports;
     search: operations.Search;
     sessions: operations.Sessions;
     requestTokens: operations.RequestTokens;
-    myFollowing: operations.MyFollowing;
     userFollowers: operations.UserFollowers;
-    myFollowers: operations.MyFollowers;
-    userFollowing: operations.UserFollowing;
     myPendingUsers: operations.MyPendingUsers;
+    myFollowers: operations.MyFollowers;
+    myFollowing: operations.MyFollowing;
     myBlockedUsers: operations.MyBlockedUsers;
+    userFollowing: operations.UserFollowing;
     topics: operations.Topics;
-    myAppFollowing: operations.MyAppFollowing;
     myTopics: operations.MyTopics;
+    myAppFollowing: operations.MyAppFollowing;
     myApps: operations.MyApps;
-    users: operations.Users;
     myLikes: operations.MyLikes;
     myLinkedAccounts: operations.MyLinkedAccounts;
+    users: operations.Users;
     userTopics: operations.UserTopics;
     }
 

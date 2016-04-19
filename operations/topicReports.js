@@ -27,7 +27,7 @@ function TopicReports(client) {
 /**
  * @summary Report topic
  *
- * @param {string} topicHandle Topic handle
+ * @param {string} topicHandle Topic handle being reported on
  * 
  * @param {object} postReportRequest Post report request
  * 
@@ -149,7 +149,7 @@ TopicReports.prototype.postReport = function (topicHandle, postReportRequest, au
       return callback(err);
     }
     var statusCode = response.statusCode;
-    if (statusCode !== 204 && statusCode !== 400 && statusCode !== 401 && statusCode !== 404 && statusCode !== 500) {
+    if (statusCode !== 204 && statusCode !== 400 && statusCode !== 401 && statusCode !== 404 && statusCode !== 409 && statusCode !== 500) {
       var error = new Error(responseBody);
       error.statusCode = response.statusCode;
       error.request = msRest.stripRequest(httpRequest);

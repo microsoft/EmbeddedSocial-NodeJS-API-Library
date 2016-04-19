@@ -27,19 +27,22 @@ function Images(client) {
 /**
  * @summary Upload a new image
  *
- * <para>Images will be resized. To access a resized image, append the 1
- * character size identifier to the blobHandle that is returned.</para>
- * <para>d = 25 pixels wide</para>
- * <para>h = 50 pixels wide</para>
- * <para>l = 100 pixels wide</para>
- * <para>p = 250 pixels wide</para>
- * <para>t = 500 pixels wide</para>
- * <para>x = 1000 pixels wide</para>
- * <para>ImageType.UserPhoto supports d,h,l,p,t,x</para>
- * <para>ImageType.ContentBlob supports d,h,l,p,t,x</para>
- * <para>ImageType.AppIcon supports l</para>
- * <para>All resized images will maintain their aspect ratio. Any orientation
- * specified in the EXIF headers will be honored.</para>
+ * Images will be resized. To access a resized image, append the 1 character
+ * size identifier to the blobHandle that is returned.
+ * 
+ * - d is 25 pixels wide
+ * - h is 50 pixels wide
+ * - l is 100 pixels wide
+ * - p is 250 pixels wide
+ * - t is 500 pixels wide
+ * - x is 1000 pixels wide
+ * 
+ * - ImageType.UserPhoto supports d,h,l,p,t,x
+ * - ImageType.ContentBlob supports d,h,l,p,t,x
+ * - ImageType.AppIcon supports l
+ * 
+ * All resized images will maintain their aspect ratio. Any
+ * orientation specified in the EXIF headers will be honored.
  *
  * @param {string} imageType Image type. Possible values include: 'UserPhoto',
  * 'ContentBlob', 'AppIcon'

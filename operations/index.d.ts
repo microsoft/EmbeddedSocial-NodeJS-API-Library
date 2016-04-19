@@ -119,88 +119,6 @@ export interface Builds {
 
 /**
  * @class
- * TopicComments
- * __NOTE__: An instance of this class is automatically created for an
- * instance of the SocialPlusClient.
- */
-export interface TopicComments {
-
-    /**
-     * @summary Get comments for a topic
-     *
-     * @param {string} topicHandle Topic handle
-     * 
-     * @param {string} authorization Authentication (must begin with string
-     * "Bearer "). Possible values are:
-     * 
-     * -sessionToken for client auth
-     * 
-     * -AAD token for service auth
-     * 
-     * @param {object} [options] Optional Parameters.
-     * 
-     * @param {string} [options.cursor] Current read cursor
-     * 
-     * @param {number} [options.limit] Number of items to return
-     * 
-     * @param {string} [options.appkey] App key must be filled in when using AAD
-     * tokens for Authentication.
-     * 
-     * @param {string} [options.userHandle] User handle must be filled when using
-     * AAD tokens for Authentication.
-     * 
-     * @param {object} [options.customHeaders] Headers that will be added to the
-     * request
-     * 
-     * @param {ServiceCallback} [callback] callback function; see ServiceCallback
-     * doc in ms-rest index.d.ts for details
-     */
-    getTopicComments(topicHandle: string, authorization: string, options: { cursor? : string, limit? : number, appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseCommentView>): void;
-    getTopicComments(topicHandle: string, authorization: string, callback: ServiceCallback<models.FeedResponseCommentView>): void;
-
-    /**
-     * @summary Create a new comment
-     *
-     * @param {string} topicHandle Topic handle
-     * 
-     * @param {object} request Post comment request
-     * 
-     * @param {string} [request.text] Gets or sets comment text
-     * 
-     * @param {string} [request.blobType] Gets or sets comment blob type. Possible
-     * values include: 'Unknown', 'Image', 'Video', 'Custom'
-     * 
-     * @param {string} [request.blobHandle] Gets or sets comment blob handle
-     * 
-     * @param {string} [request.language] Gets or sets comment language
-     * 
-     * @param {string} authorization Authentication (must begin with string
-     * "Bearer "). Possible values are:
-     * 
-     * -sessionToken for client auth
-     * 
-     * -AAD token for service auth
-     * 
-     * @param {object} [options] Optional Parameters.
-     * 
-     * @param {string} [options.appkey] App key must be filled in when using AAD
-     * tokens for Authentication.
-     * 
-     * @param {string} [options.userHandle] User handle must be filled when using
-     * AAD tokens for Authentication.
-     * 
-     * @param {object} [options.customHeaders] Headers that will be added to the
-     * request
-     * 
-     * @param {ServiceCallback} [callback] callback function; see ServiceCallback
-     * doc in ms-rest index.d.ts for details
-     */
-    postComment(topicHandle: string, request: models.PostCommentRequest, authorization: string, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.PostCommentResponse>): void;
-    postComment(topicHandle: string, request: models.PostCommentRequest, authorization: string, callback: ServiceCallback<models.PostCommentResponse>): void;
-}
-
-/**
- * @class
  * Comments
  * __NOTE__: An instance of this class is automatically created for an
  * instance of the SocialPlusClient.
@@ -264,6 +182,88 @@ export interface Comments {
      */
     deleteComment(commentHandle: string, authorization: string, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
     deleteComment(commentHandle: string, authorization: string, callback: ServiceCallback<any>): void;
+}
+
+/**
+ * @class
+ * TopicComments
+ * __NOTE__: An instance of this class is automatically created for an
+ * instance of the SocialPlusClient.
+ */
+export interface TopicComments {
+
+    /**
+     * @summary Get comments for a topic
+     *
+     * @param {string} topicHandle Topic handle
+     * 
+     * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.cursor] Current read cursor
+     * 
+     * @param {number} [options.limit] Number of items to return
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.authorization] Authentication (must begin with
+     * string "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
+     * 
+     * @param {object} [options.customHeaders] Headers that will be added to the
+     * request
+     * 
+     * @param {ServiceCallback} [callback] callback function; see ServiceCallback
+     * doc in ms-rest index.d.ts for details
+     */
+    getTopicComments(topicHandle: string, options: { cursor? : string, limit? : number, appkey? : string, authorization? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseCommentView>): void;
+    getTopicComments(topicHandle: string, callback: ServiceCallback<models.FeedResponseCommentView>): void;
+
+    /**
+     * @summary Create a new comment
+     *
+     * @param {string} topicHandle Topic handle
+     * 
+     * @param {object} request Post comment request
+     * 
+     * @param {string} [request.text] Gets or sets comment text
+     * 
+     * @param {string} [request.blobType] Gets or sets comment blob type. Possible
+     * values include: 'Unknown', 'Image', 'Video', 'Custom'
+     * 
+     * @param {string} [request.blobHandle] Gets or sets comment blob handle
+     * 
+     * @param {string} [request.language] Gets or sets comment language
+     * 
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
+     * 
+     * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
+     * 
+     * @param {object} [options.customHeaders] Headers that will be added to the
+     * request
+     * 
+     * @param {ServiceCallback} [callback] callback function; see ServiceCallback
+     * doc in ms-rest index.d.ts for details
+     */
+    postComment(topicHandle: string, request: models.PostCommentRequest, authorization: string, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.PostCommentResponse>): void;
+    postComment(topicHandle: string, request: models.PostCommentRequest, authorization: string, callback: ServiceCallback<models.PostCommentResponse>): void;
 }
 
 /**
@@ -342,19 +342,22 @@ export interface Images {
     /**
      * @summary Upload a new image
      *
-     * <para>Images will be resized. To access a resized image, append the 1
-     * character size identifier to the blobHandle that is returned.</para>
-     * <para>d = 25 pixels wide</para>
-     * <para>h = 50 pixels wide</para>
-     * <para>l = 100 pixels wide</para>
-     * <para>p = 250 pixels wide</para>
-     * <para>t = 500 pixels wide</para>
-     * <para>x = 1000 pixels wide</para>
-     * <para>ImageType.UserPhoto supports d,h,l,p,t,x</para>
-     * <para>ImageType.ContentBlob supports d,h,l,p,t,x</para>
-     * <para>ImageType.AppIcon supports l</para>
-     * <para>All resized images will maintain their aspect ratio. Any orientation
-     * specified in the EXIF headers will be honored.</para>
+     * Images will be resized. To access a resized image, append the 1 character
+     * size identifier to the blobHandle that is returned.
+     * 
+     * - d is 25 pixels wide
+     * - h is 50 pixels wide
+     * - l is 100 pixels wide
+     * - p is 250 pixels wide
+     * - t is 500 pixels wide
+     * - x is 1000 pixels wide
+     * 
+     * - ImageType.UserPhoto supports d,h,l,p,t,x
+     * - ImageType.ContentBlob supports d,h,l,p,t,x
+     * - ImageType.AppIcon supports l
+     * 
+     * All resized images will maintain their aspect ratio. Any
+     * orientation specified in the EXIF headers will be honored.
      *
      * @param {string} imageType Image type. Possible values include: 'UserPhoto',
      * 'ContentBlob', 'AppIcon'
@@ -417,16 +420,16 @@ export interface Images {
 
 /**
  * @class
- * CommentLikes
+ * TopicLikes
  * __NOTE__: An instance of this class is automatically created for an
  * instance of the SocialPlusClient.
  */
-export interface CommentLikes {
+export interface TopicLikes {
 
     /**
-     * @summary Get likes for comment
+     * @summary Get likes for topic
      *
-     * @param {string} commentHandle Comment handle
+     * @param {string} topicHandle Topic handle
      * 
      * @param {object} [options] Optional Parameters.
      * 
@@ -453,13 +456,13 @@ export interface CommentLikes {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    getLikes(commentHandle: string, options: { cursor? : string, limit? : number, appkey? : string, authorization? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseUserCompactView>): void;
-    getLikes(commentHandle: string, callback: ServiceCallback<models.FeedResponseUserCompactView>): void;
+    getLikes(topicHandle: string, options: { cursor? : string, limit? : number, appkey? : string, authorization? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseUserCompactView>): void;
+    getLikes(topicHandle: string, callback: ServiceCallback<models.FeedResponseUserCompactView>): void;
 
     /**
-     * @summary Add like to comment
+     * @summary Add like to topic
      *
-     * @param {string} commentHandle Comment handle
+     * @param {string} topicHandle Topic handle
      * 
      * @param {string} authorization Authentication (must begin with string
      * "Bearer "). Possible values are:
@@ -482,13 +485,13 @@ export interface CommentLikes {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    postLike(commentHandle: string, authorization: string, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
-    postLike(commentHandle: string, authorization: string, callback: ServiceCallback<any>): void;
+    postLike(topicHandle: string, authorization: string, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
+    postLike(topicHandle: string, authorization: string, callback: ServiceCallback<any>): void;
 
     /**
-     * @summary Remove like from comment
+     * @summary Remove like from topic
      *
-     * @param {string} commentHandle Comment handle
+     * @param {string} topicHandle Topic handle
      * 
      * @param {string} authorization Authentication (must begin with string
      * "Bearer "). Possible values are:
@@ -511,8 +514,8 @@ export interface CommentLikes {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    deleteLike(commentHandle: string, authorization: string, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
-    deleteLike(commentHandle: string, authorization: string, callback: ServiceCallback<any>): void;
+    deleteLike(topicHandle: string, authorization: string, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
+    deleteLike(topicHandle: string, authorization: string, callback: ServiceCallback<any>): void;
 }
 
 /**
@@ -617,16 +620,16 @@ export interface ReplyLikes {
 
 /**
  * @class
- * TopicLikes
+ * CommentLikes
  * __NOTE__: An instance of this class is automatically created for an
  * instance of the SocialPlusClient.
  */
-export interface TopicLikes {
+export interface CommentLikes {
 
     /**
-     * @summary Get likes for topic
+     * @summary Get likes for comment
      *
-     * @param {string} topicHandle Topic handle
+     * @param {string} commentHandle Comment handle
      * 
      * @param {object} [options] Optional Parameters.
      * 
@@ -653,13 +656,13 @@ export interface TopicLikes {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    getLikes(topicHandle: string, options: { cursor? : string, limit? : number, appkey? : string, authorization? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseUserCompactView>): void;
-    getLikes(topicHandle: string, callback: ServiceCallback<models.FeedResponseUserCompactView>): void;
+    getLikes(commentHandle: string, options: { cursor? : string, limit? : number, appkey? : string, authorization? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseUserCompactView>): void;
+    getLikes(commentHandle: string, callback: ServiceCallback<models.FeedResponseUserCompactView>): void;
 
     /**
-     * @summary Add like to topic
+     * @summary Add like to comment
      *
-     * @param {string} topicHandle Topic handle
+     * @param {string} commentHandle Comment handle
      * 
      * @param {string} authorization Authentication (must begin with string
      * "Bearer "). Possible values are:
@@ -682,13 +685,13 @@ export interface TopicLikes {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    postLike(topicHandle: string, authorization: string, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
-    postLike(topicHandle: string, authorization: string, callback: ServiceCallback<any>): void;
+    postLike(commentHandle: string, authorization: string, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
+    postLike(commentHandle: string, authorization: string, callback: ServiceCallback<any>): void;
 
     /**
-     * @summary Remove like from topic
+     * @summary Remove like from comment
      *
-     * @param {string} topicHandle Topic handle
+     * @param {string} commentHandle Comment handle
      * 
      * @param {string} authorization Authentication (must begin with string
      * "Bearer "). Possible values are:
@@ -711,8 +714,8 @@ export interface TopicLikes {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    deleteLike(topicHandle: string, authorization: string, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
-    deleteLike(topicHandle: string, authorization: string, callback: ServiceCallback<any>): void;
+    deleteLike(commentHandle: string, authorization: string, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
+    deleteLike(commentHandle: string, authorization: string, callback: ServiceCallback<any>): void;
 }
 
 /**
@@ -1008,83 +1011,6 @@ export interface MyPushRegistrations {
 
 /**
  * @class
- * CommentReplies
- * __NOTE__: An instance of this class is automatically created for an
- * instance of the SocialPlusClient.
- */
-export interface CommentReplies {
-
-    /**
-     * @summary Get replies for a comment
-     *
-     * @param {string} commentHandle Comment handle
-     * 
-     * @param {string} authorization Authentication (must begin with string
-     * "Bearer "). Possible values are:
-     * 
-     * -sessionToken for client auth
-     * 
-     * -AAD token for service auth
-     * 
-     * @param {object} [options] Optional Parameters.
-     * 
-     * @param {string} [options.cursor] Current read cursor
-     * 
-     * @param {number} [options.limit] Number of items to return
-     * 
-     * @param {string} [options.appkey] App key must be filled in when using AAD
-     * tokens for Authentication.
-     * 
-     * @param {string} [options.userHandle] User handle must be filled when using
-     * AAD tokens for Authentication.
-     * 
-     * @param {object} [options.customHeaders] Headers that will be added to the
-     * request
-     * 
-     * @param {ServiceCallback} [callback] callback function; see ServiceCallback
-     * doc in ms-rest index.d.ts for details
-     */
-    getReplies(commentHandle: string, authorization: string, options: { cursor? : string, limit? : number, appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseReplyView>): void;
-    getReplies(commentHandle: string, authorization: string, callback: ServiceCallback<models.FeedResponseReplyView>): void;
-
-    /**
-     * @summary Create a new reply
-     *
-     * @param {string} commentHandle Comment handle
-     * 
-     * @param {object} request Post reply request
-     * 
-     * @param {string} [request.text] Gets or sets reply text
-     * 
-     * @param {string} [request.language] Gets or sets reply language
-     * 
-     * @param {string} authorization Authentication (must begin with string
-     * "Bearer "). Possible values are:
-     * 
-     * -sessionToken for client auth
-     * 
-     * -AAD token for service auth
-     * 
-     * @param {object} [options] Optional Parameters.
-     * 
-     * @param {string} [options.appkey] App key must be filled in when using AAD
-     * tokens for Authentication.
-     * 
-     * @param {string} [options.userHandle] User handle must be filled when using
-     * AAD tokens for Authentication.
-     * 
-     * @param {object} [options.customHeaders] Headers that will be added to the
-     * request
-     * 
-     * @param {ServiceCallback} [callback] callback function; see ServiceCallback
-     * doc in ms-rest index.d.ts for details
-     */
-    postReply(commentHandle: string, request: models.PostReplyRequest, authorization: string, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.PostReplyResponse>): void;
-    postReply(commentHandle: string, request: models.PostReplyRequest, authorization: string, callback: ServiceCallback<models.PostReplyResponse>): void;
-}
-
-/**
- * @class
  * Replies
  * __NOTE__: An instance of this class is automatically created for an
  * instance of the SocialPlusClient.
@@ -1152,6 +1078,83 @@ export interface Replies {
 
 /**
  * @class
+ * CommentReplies
+ * __NOTE__: An instance of this class is automatically created for an
+ * instance of the SocialPlusClient.
+ */
+export interface CommentReplies {
+
+    /**
+     * @summary Get replies for a comment
+     *
+     * @param {string} commentHandle Comment handle
+     * 
+     * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.cursor] Current read cursor
+     * 
+     * @param {number} [options.limit] Number of items to return
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.authorization] Authentication (must begin with
+     * string "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
+     * 
+     * @param {object} [options.customHeaders] Headers that will be added to the
+     * request
+     * 
+     * @param {ServiceCallback} [callback] callback function; see ServiceCallback
+     * doc in ms-rest index.d.ts for details
+     */
+    getReplies(commentHandle: string, options: { cursor? : string, limit? : number, appkey? : string, authorization? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseReplyView>): void;
+    getReplies(commentHandle: string, callback: ServiceCallback<models.FeedResponseReplyView>): void;
+
+    /**
+     * @summary Create a new reply
+     *
+     * @param {string} commentHandle Comment handle
+     * 
+     * @param {object} request Post reply request
+     * 
+     * @param {string} [request.text] Gets or sets reply text
+     * 
+     * @param {string} [request.language] Gets or sets reply language
+     * 
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
+     * 
+     * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
+     * 
+     * @param {object} [options.customHeaders] Headers that will be added to the
+     * request
+     * 
+     * @param {ServiceCallback} [callback] callback function; see ServiceCallback
+     * doc in ms-rest index.d.ts for details
+     */
+    postReply(commentHandle: string, request: models.PostReplyRequest, authorization: string, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.PostReplyResponse>): void;
+    postReply(commentHandle: string, request: models.PostReplyRequest, authorization: string, callback: ServiceCallback<models.PostReplyResponse>): void;
+}
+
+/**
+ * @class
  * UserReports
  * __NOTE__: An instance of this class is automatically created for an
  * instance of the SocialPlusClient.
@@ -1159,9 +1162,9 @@ export interface Replies {
 export interface UserReports {
 
     /**
-     * @summary Report user
+     * @summary Report a user
      *
-     * @param {string} userHandle User handle
+     * @param {string} userHandle User handle for the user being reported on
      * 
      * @param {object} postReportRequest Post report request
      * 
@@ -1196,6 +1199,50 @@ export interface UserReports {
 
 /**
  * @class
+ * TopicReports
+ * __NOTE__: An instance of this class is automatically created for an
+ * instance of the SocialPlusClient.
+ */
+export interface TopicReports {
+
+    /**
+     * @summary Report topic
+     *
+     * @param {string} topicHandle Topic handle being reported on
+     * 
+     * @param {object} postReportRequest Post report request
+     * 
+     * @param {string} [postReportRequest.reason] Gets or sets report reason.
+     * Possible values include: 'Spam', 'Cyberbullying', 'ChildEndangerment',
+     * 'Offensive', 'ContentInfringement', 'Other'
+     * 
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
+     * 
+     * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
+     * 
+     * @param {object} [options.customHeaders] Headers that will be added to the
+     * request
+     * 
+     * @param {ServiceCallback} [callback] callback function; see ServiceCallback
+     * doc in ms-rest index.d.ts for details
+     */
+    postReport(topicHandle: string, postReportRequest: models.PostReportRequest, authorization: string, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
+    postReport(topicHandle: string, postReportRequest: models.PostReportRequest, authorization: string, callback: ServiceCallback<any>): void;
+}
+
+/**
+ * @class
  * ReplyReports
  * __NOTE__: An instance of this class is automatically created for an
  * instance of the SocialPlusClient.
@@ -1205,7 +1252,7 @@ export interface ReplyReports {
     /**
      * @summary Report reply
      *
-     * @param {string} replyHandle Reply handle
+     * @param {string} replyHandle Reply handle for the reply being reported on
      * 
      * @param {object} postReportRequest Post report request
      * 
@@ -1249,7 +1296,8 @@ export interface CommentReports {
     /**
      * @summary Report comment
      *
-     * @param {string} commentHandle Comment handle
+     * @param {string} commentHandle Comment handle for the comment being reported
+     * on
      * 
      * @param {object} postReportRequest Post report request
      * 
@@ -1284,50 +1332,6 @@ export interface CommentReports {
 
 /**
  * @class
- * TopicReports
- * __NOTE__: An instance of this class is automatically created for an
- * instance of the SocialPlusClient.
- */
-export interface TopicReports {
-
-    /**
-     * @summary Report topic
-     *
-     * @param {string} topicHandle Topic handle
-     * 
-     * @param {object} postReportRequest Post report request
-     * 
-     * @param {string} [postReportRequest.reason] Gets or sets report reason.
-     * Possible values include: 'Spam', 'Cyberbullying', 'ChildEndangerment',
-     * 'Offensive', 'ContentInfringement', 'Other'
-     * 
-     * @param {string} authorization Authentication (must begin with string
-     * "Bearer "). Possible values are:
-     * 
-     * -sessionToken for client auth
-     * 
-     * -AAD token for service auth
-     * 
-     * @param {object} [options] Optional Parameters.
-     * 
-     * @param {string} [options.appkey] App key must be filled in when using AAD
-     * tokens for Authentication.
-     * 
-     * @param {string} [options.userHandle] User handle must be filled when using
-     * AAD tokens for Authentication.
-     * 
-     * @param {object} [options.customHeaders] Headers that will be added to the
-     * request
-     * 
-     * @param {ServiceCallback} [callback] callback function; see ServiceCallback
-     * doc in ms-rest index.d.ts for details
-     */
-    postReport(topicHandle: string, postReportRequest: models.PostReportRequest, authorization: string, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
-    postReport(topicHandle: string, postReportRequest: models.PostReportRequest, authorization: string, callback: ServiceCallback<any>): void;
-}
-
-/**
- * @class
  * Search
  * __NOTE__: An instance of this class is automatically created for an
  * instance of the SocialPlusClient.
@@ -1336,6 +1340,27 @@ export interface Search {
 
     /**
      * @summary Search topics with a query
+     *
+     * The query string will be searched across hashtags, topic titles, and topic
+     * texts,
+     * and matching results will be returned.
+     * 
+     * If the query string contains only hashtags, e.g. #foo #bar,
+     * then only the hashtags
+     * in topics will be searched.
+     * 
+     * Query string supports the following operators:
+     * - suffix: "foo*"
+     * - and: "foo+bar"
+     * - or: "foo|bar"
+     * - not: "-foo"
+     * - phrase: ""foo bar""
+     * - precedence: "foo+(bar|baz)"
+     * You need to escape * if it is at the end of a word, and - if
+     * it is at the start of a word.
+     * Default behavior is to use and, so if you use whitespace to
+     * separate words,
+     * such as "foo bar", that is equivalent to "foo+bar".
      *
      * @param {string} query Search query
      * 
@@ -1369,6 +1394,22 @@ export interface Search {
 
     /**
      * @summary Search users with a query
+     *
+     * The query string will be searched across the full name of users
+     * and matching results will be returned.
+     * 
+     * Query string supports the following operators:
+     * - suffix: "foo*"
+     * - and: "foo+bar"
+     * - or: "foo|bar"
+     * - not: "-foo"
+     * - phrase: ""foo bar""
+     * - precedence: "foo+(bar|baz)"
+     * You need to escape * if it is at the end of a word, and - if
+     * it is at the start of a word.
+     * Default behavior is to use and, so if you use whitespace to
+     * separate words,
+     * such as "foo bar", that is equivalent to "foo+bar".
      *
      * @param {string} query Search query
      * 
@@ -1524,6 +1565,244 @@ export interface RequestTokens {
      */
     getRequestToken(identityProvider: string, options: { appkey? : string, authorization? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.GetRequestTokenResponse>): void;
     getRequestToken(identityProvider: string, callback: ServiceCallback<models.GetRequestTokenResponse>): void;
+}
+
+/**
+ * @class
+ * UserFollowers
+ * __NOTE__: An instance of this class is automatically created for an
+ * instance of the SocialPlusClient.
+ */
+export interface UserFollowers {
+
+    /**
+     * @summary Get followers of a user
+     *
+     * @param {string} userHandle User handle
+     * 
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
+     * 
+     * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.cursor] Current read cursor
+     * 
+     * @param {number} [options.limit] Number of items to return
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle1] User handle must be filled when using
+     * AAD tokens for Authentication.
+     * 
+     * @param {object} [options.customHeaders] Headers that will be added to the
+     * request
+     * 
+     * @param {ServiceCallback} [callback] callback function; see ServiceCallback
+     * doc in ms-rest index.d.ts for details
+     */
+    getFollowers(userHandle: string, authorization: string, options: { cursor? : string, limit? : number, appkey? : string, userHandle1? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseUserCompactView>): void;
+    getFollowers(userHandle: string, authorization: string, callback: ServiceCallback<models.FeedResponseUserCompactView>): void;
+}
+
+/**
+ * @class
+ * MyPendingUsers
+ * __NOTE__: An instance of this class is automatically created for an
+ * instance of the SocialPlusClient.
+ */
+export interface MyPendingUsers {
+
+    /**
+     * @summary Reject follower request
+     *
+     * @param {string} userHandle User handle
+     * 
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
+     * 
+     * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle1] User handle must be filled when using
+     * AAD tokens for Authentication.
+     * 
+     * @param {object} [options.customHeaders] Headers that will be added to the
+     * request
+     * 
+     * @param {ServiceCallback} [callback] callback function; see ServiceCallback
+     * doc in ms-rest index.d.ts for details
+     */
+    deletePendingUser(userHandle: string, authorization: string, options: { appkey? : string, userHandle1? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
+    deletePendingUser(userHandle: string, authorization: string, callback: ServiceCallback<any>): void;
+
+    /**
+     * @summary Get my pending users
+     *
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
+     * 
+     * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.cursor] Current read cursor
+     * 
+     * @param {number} [options.limit] Number of items to return
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
+     * 
+     * @param {object} [options.customHeaders] Headers that will be added to the
+     * request
+     * 
+     * @param {ServiceCallback} [callback] callback function; see ServiceCallback
+     * doc in ms-rest index.d.ts for details
+     */
+    getPendingUsers(authorization: string, options: { cursor? : string, limit? : number, appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseUserCompactView>): void;
+    getPendingUsers(authorization: string, callback: ServiceCallback<models.FeedResponseUserCompactView>): void;
+
+    /**
+     * @summary Get my pending users count
+     *
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
+     * 
+     * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
+     * 
+     * @param {object} [options.customHeaders] Headers that will be added to the
+     * request
+     * 
+     * @param {ServiceCallback} [callback] callback function; see ServiceCallback
+     * doc in ms-rest index.d.ts for details
+     */
+    getPendingUsersCount(authorization: string, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.CountResponse>): void;
+    getPendingUsersCount(authorization: string, callback: ServiceCallback<models.CountResponse>): void;
+}
+
+/**
+ * @class
+ * MyFollowers
+ * __NOTE__: An instance of this class is automatically created for an
+ * instance of the SocialPlusClient.
+ */
+export interface MyFollowers {
+
+    /**
+     * @summary Get my followers
+     *
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
+     * 
+     * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.cursor] Current read cursor
+     * 
+     * @param {number} [options.limit] Number of items to return
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
+     * 
+     * @param {object} [options.customHeaders] Headers that will be added to the
+     * request
+     * 
+     * @param {ServiceCallback} [callback] callback function; see ServiceCallback
+     * doc in ms-rest index.d.ts for details
+     */
+    getFollowers(authorization: string, options: { cursor? : string, limit? : number, appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseUserCompactView>): void;
+    getFollowers(authorization: string, callback: ServiceCallback<models.FeedResponseUserCompactView>): void;
+
+    /**
+     * @summary Accept follower request
+     *
+     * @param {object} request Post follower request
+     * 
+     * @param {string} [request.userHandle] Gets or sets user handle
+     * 
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
+     * 
+     * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
+     * 
+     * @param {object} [options.customHeaders] Headers that will be added to the
+     * request
+     * 
+     * @param {ServiceCallback} [callback] callback function; see ServiceCallback
+     * doc in ms-rest index.d.ts for details
+     */
+    postFollower(request: models.PostFollowerRequest, authorization: string, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
+    postFollower(request: models.PostFollowerRequest, authorization: string, callback: ServiceCallback<any>): void;
+
+    /**
+     * @summary Remove follower
+     *
+     * @param {string} userHandle User handle
+     * 
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
+     * 
+     * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle1] User handle must be filled when using
+     * AAD tokens for Authentication.
+     * 
+     * @param {object} [options.customHeaders] Headers that will be added to the
+     * request
+     * 
+     * @param {ServiceCallback} [callback] callback function; see ServiceCallback
+     * doc in ms-rest index.d.ts for details
+     */
+    deleteFollower(userHandle: string, authorization: string, options: { appkey? : string, userHandle1? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
+    deleteFollower(userHandle: string, authorization: string, callback: ServiceCallback<any>): void;
 }
 
 /**
@@ -1719,286 +1998,6 @@ export interface MyFollowing {
 
 /**
  * @class
- * UserFollowers
- * __NOTE__: An instance of this class is automatically created for an
- * instance of the SocialPlusClient.
- */
-export interface UserFollowers {
-
-    /**
-     * @summary Get followers of a user
-     *
-     * @param {string} userHandle User handle
-     * 
-     * @param {string} authorization Authentication (must begin with string
-     * "Bearer "). Possible values are:
-     * 
-     * -sessionToken for client auth
-     * 
-     * -AAD token for service auth
-     * 
-     * @param {object} [options] Optional Parameters.
-     * 
-     * @param {string} [options.cursor] Current read cursor
-     * 
-     * @param {number} [options.limit] Number of items to return
-     * 
-     * @param {string} [options.appkey] App key must be filled in when using AAD
-     * tokens for Authentication.
-     * 
-     * @param {string} [options.userHandle1] User handle must be filled when using
-     * AAD tokens for Authentication.
-     * 
-     * @param {object} [options.customHeaders] Headers that will be added to the
-     * request
-     * 
-     * @param {ServiceCallback} [callback] callback function; see ServiceCallback
-     * doc in ms-rest index.d.ts for details
-     */
-    getFollowers(userHandle: string, authorization: string, options: { cursor? : string, limit? : number, appkey? : string, userHandle1? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseUserCompactView>): void;
-    getFollowers(userHandle: string, authorization: string, callback: ServiceCallback<models.FeedResponseUserCompactView>): void;
-}
-
-/**
- * @class
- * MyFollowers
- * __NOTE__: An instance of this class is automatically created for an
- * instance of the SocialPlusClient.
- */
-export interface MyFollowers {
-
-    /**
-     * @summary Get my followers
-     *
-     * @param {string} authorization Authentication (must begin with string
-     * "Bearer "). Possible values are:
-     * 
-     * -sessionToken for client auth
-     * 
-     * -AAD token for service auth
-     * 
-     * @param {object} [options] Optional Parameters.
-     * 
-     * @param {string} [options.cursor] Current read cursor
-     * 
-     * @param {number} [options.limit] Number of items to return
-     * 
-     * @param {string} [options.appkey] App key must be filled in when using AAD
-     * tokens for Authentication.
-     * 
-     * @param {string} [options.userHandle] User handle must be filled when using
-     * AAD tokens for Authentication.
-     * 
-     * @param {object} [options.customHeaders] Headers that will be added to the
-     * request
-     * 
-     * @param {ServiceCallback} [callback] callback function; see ServiceCallback
-     * doc in ms-rest index.d.ts for details
-     */
-    getFollowers(authorization: string, options: { cursor? : string, limit? : number, appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseUserCompactView>): void;
-    getFollowers(authorization: string, callback: ServiceCallback<models.FeedResponseUserCompactView>): void;
-
-    /**
-     * @summary Accept follower request
-     *
-     * @param {object} request Post follower request
-     * 
-     * @param {string} [request.userHandle] Gets or sets user handle
-     * 
-     * @param {string} authorization Authentication (must begin with string
-     * "Bearer "). Possible values are:
-     * 
-     * -sessionToken for client auth
-     * 
-     * -AAD token for service auth
-     * 
-     * @param {object} [options] Optional Parameters.
-     * 
-     * @param {string} [options.appkey] App key must be filled in when using AAD
-     * tokens for Authentication.
-     * 
-     * @param {string} [options.userHandle] User handle must be filled when using
-     * AAD tokens for Authentication.
-     * 
-     * @param {object} [options.customHeaders] Headers that will be added to the
-     * request
-     * 
-     * @param {ServiceCallback} [callback] callback function; see ServiceCallback
-     * doc in ms-rest index.d.ts for details
-     */
-    postFollower(request: models.PostFollowerRequest, authorization: string, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
-    postFollower(request: models.PostFollowerRequest, authorization: string, callback: ServiceCallback<any>): void;
-
-    /**
-     * @summary Remove follower
-     *
-     * @param {string} userHandle User handle
-     * 
-     * @param {string} authorization Authentication (must begin with string
-     * "Bearer "). Possible values are:
-     * 
-     * -sessionToken for client auth
-     * 
-     * -AAD token for service auth
-     * 
-     * @param {object} [options] Optional Parameters.
-     * 
-     * @param {string} [options.appkey] App key must be filled in when using AAD
-     * tokens for Authentication.
-     * 
-     * @param {string} [options.userHandle1] User handle must be filled when using
-     * AAD tokens for Authentication.
-     * 
-     * @param {object} [options.customHeaders] Headers that will be added to the
-     * request
-     * 
-     * @param {ServiceCallback} [callback] callback function; see ServiceCallback
-     * doc in ms-rest index.d.ts for details
-     */
-    deleteFollower(userHandle: string, authorization: string, options: { appkey? : string, userHandle1? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
-    deleteFollower(userHandle: string, authorization: string, callback: ServiceCallback<any>): void;
-}
-
-/**
- * @class
- * UserFollowing
- * __NOTE__: An instance of this class is automatically created for an
- * instance of the SocialPlusClient.
- */
-export interface UserFollowing {
-
-    /**
-     * @summary Get following users of a user
-     *
-     * @param {string} userHandle User handle
-     * 
-     * @param {string} authorization Authentication (must begin with string
-     * "Bearer "). Possible values are:
-     * 
-     * -sessionToken for client auth
-     * 
-     * -AAD token for service auth
-     * 
-     * @param {object} [options] Optional Parameters.
-     * 
-     * @param {string} [options.cursor] Current read cursor
-     * 
-     * @param {number} [options.limit] Number of items to return
-     * 
-     * @param {string} [options.appkey] App key must be filled in when using AAD
-     * tokens for Authentication.
-     * 
-     * @param {string} [options.userHandle1] User handle must be filled when using
-     * AAD tokens for Authentication.
-     * 
-     * @param {object} [options.customHeaders] Headers that will be added to the
-     * request
-     * 
-     * @param {ServiceCallback} [callback] callback function; see ServiceCallback
-     * doc in ms-rest index.d.ts for details
-     */
-    getFollowing(userHandle: string, authorization: string, options: { cursor? : string, limit? : number, appkey? : string, userHandle1? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseUserCompactView>): void;
-    getFollowing(userHandle: string, authorization: string, callback: ServiceCallback<models.FeedResponseUserCompactView>): void;
-}
-
-/**
- * @class
- * MyPendingUsers
- * __NOTE__: An instance of this class is automatically created for an
- * instance of the SocialPlusClient.
- */
-export interface MyPendingUsers {
-
-    /**
-     * @summary Reject follower request
-     *
-     * @param {string} userHandle User handle
-     * 
-     * @param {string} authorization Authentication (must begin with string
-     * "Bearer "). Possible values are:
-     * 
-     * -sessionToken for client auth
-     * 
-     * -AAD token for service auth
-     * 
-     * @param {object} [options] Optional Parameters.
-     * 
-     * @param {string} [options.appkey] App key must be filled in when using AAD
-     * tokens for Authentication.
-     * 
-     * @param {string} [options.userHandle1] User handle must be filled when using
-     * AAD tokens for Authentication.
-     * 
-     * @param {object} [options.customHeaders] Headers that will be added to the
-     * request
-     * 
-     * @param {ServiceCallback} [callback] callback function; see ServiceCallback
-     * doc in ms-rest index.d.ts for details
-     */
-    deletePendingUser(userHandle: string, authorization: string, options: { appkey? : string, userHandle1? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
-    deletePendingUser(userHandle: string, authorization: string, callback: ServiceCallback<any>): void;
-
-    /**
-     * @summary Get my pending users
-     *
-     * @param {string} authorization Authentication (must begin with string
-     * "Bearer "). Possible values are:
-     * 
-     * -sessionToken for client auth
-     * 
-     * -AAD token for service auth
-     * 
-     * @param {object} [options] Optional Parameters.
-     * 
-     * @param {string} [options.cursor] Current read cursor
-     * 
-     * @param {number} [options.limit] Number of items to return
-     * 
-     * @param {string} [options.appkey] App key must be filled in when using AAD
-     * tokens for Authentication.
-     * 
-     * @param {string} [options.userHandle] User handle must be filled when using
-     * AAD tokens for Authentication.
-     * 
-     * @param {object} [options.customHeaders] Headers that will be added to the
-     * request
-     * 
-     * @param {ServiceCallback} [callback] callback function; see ServiceCallback
-     * doc in ms-rest index.d.ts for details
-     */
-    getPendingUsers(authorization: string, options: { cursor? : string, limit? : number, appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseUserCompactView>): void;
-    getPendingUsers(authorization: string, callback: ServiceCallback<models.FeedResponseUserCompactView>): void;
-
-    /**
-     * @summary Get my pending users count
-     *
-     * @param {string} authorization Authentication (must begin with string
-     * "Bearer "). Possible values are:
-     * 
-     * -sessionToken for client auth
-     * 
-     * -AAD token for service auth
-     * 
-     * @param {object} [options] Optional Parameters.
-     * 
-     * @param {string} [options.appkey] App key must be filled in when using AAD
-     * tokens for Authentication.
-     * 
-     * @param {string} [options.userHandle] User handle must be filled when using
-     * AAD tokens for Authentication.
-     * 
-     * @param {object} [options.customHeaders] Headers that will be added to the
-     * request
-     * 
-     * @param {ServiceCallback} [callback] callback function; see ServiceCallback
-     * doc in ms-rest index.d.ts for details
-     */
-    getPendingUsersCount(authorization: string, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.CountResponse>): void;
-    getPendingUsersCount(authorization: string, callback: ServiceCallback<models.CountResponse>): void;
-}
-
-/**
- * @class
  * MyBlockedUsers
  * __NOTE__: An instance of this class is automatically created for an
  * instance of the SocialPlusClient.
@@ -2095,6 +2094,48 @@ export interface MyBlockedUsers {
      */
     deleteBlockedUser(userHandle: string, authorization: string, options: { appkey? : string, userHandle1? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
     deleteBlockedUser(userHandle: string, authorization: string, callback: ServiceCallback<any>): void;
+}
+
+/**
+ * @class
+ * UserFollowing
+ * __NOTE__: An instance of this class is automatically created for an
+ * instance of the SocialPlusClient.
+ */
+export interface UserFollowing {
+
+    /**
+     * @summary Get following users of a user
+     *
+     * @param {string} userHandle User handle
+     * 
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
+     * 
+     * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.cursor] Current read cursor
+     * 
+     * @param {number} [options.limit] Number of items to return
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle1] User handle must be filled when using
+     * AAD tokens for Authentication.
+     * 
+     * @param {object} [options.customHeaders] Headers that will be added to the
+     * request
+     * 
+     * @param {ServiceCallback} [callback] callback function; see ServiceCallback
+     * doc in ms-rest index.d.ts for details
+     */
+    getFollowing(userHandle: string, authorization: string, options: { cursor? : string, limit? : number, appkey? : string, userHandle1? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseUserCompactView>): void;
+    getFollowing(userHandle: string, authorization: string, callback: ServiceCallback<models.FeedResponseUserCompactView>): void;
 }
 
 /**
@@ -2350,47 +2391,6 @@ export interface Topics {
 
 /**
  * @class
- * MyAppFollowing
- * __NOTE__: An instance of this class is automatically created for an
- * instance of the SocialPlusClient.
- */
-export interface MyAppFollowing {
-
-    /**
-     * @summary Find users the current user is following in another app but not in
-     * the current app
-     *
-     * @param {string} appHandle App handle
-     * 
-     * @param {string} authorization Authentication (must begin with string
-     * "Bearer "). Possible values are:
-     * 
-     * -sessionToken for client auth
-     * 
-     * -AAD token for service auth
-     * 
-     * @param {object} [options] Optional Parameters.
-     * 
-     * @param {string} [options.cursor] Current read cursor
-     * 
-     * @param {string} [options.appkey] App key must be filled in when using AAD
-     * tokens for Authentication.
-     * 
-     * @param {string} [options.userHandle] User handle must be filled when using
-     * AAD tokens for Authentication.
-     * 
-     * @param {object} [options.customHeaders] Headers that will be added to the
-     * request
-     * 
-     * @param {ServiceCallback} [callback] callback function; see ServiceCallback
-     * doc in ms-rest index.d.ts for details
-     */
-    getUsers(appHandle: string, authorization: string, options: { cursor? : string, appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseUserCompactView>): void;
-    getUsers(appHandle: string, authorization: string, callback: ServiceCallback<models.FeedResponseUserCompactView>): void;
-}
-
-/**
- * @class
  * MyTopics
  * __NOTE__: An instance of this class is automatically created for an
  * instance of the SocialPlusClient.
@@ -2462,6 +2462,47 @@ export interface MyTopics {
 
 /**
  * @class
+ * MyAppFollowing
+ * __NOTE__: An instance of this class is automatically created for an
+ * instance of the SocialPlusClient.
+ */
+export interface MyAppFollowing {
+
+    /**
+     * @summary Find users the current user is following in another app but not in
+     * the current app
+     *
+     * @param {string} appHandle App handle
+     * 
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
+     * 
+     * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.cursor] Current read cursor
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
+     * 
+     * @param {object} [options.customHeaders] Headers that will be added to the
+     * request
+     * 
+     * @param {ServiceCallback} [callback] callback function; see ServiceCallback
+     * doc in ms-rest index.d.ts for details
+     */
+    getUsers(appHandle: string, authorization: string, options: { cursor? : string, appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseUserCompactView>): void;
+    getUsers(appHandle: string, authorization: string, callback: ServiceCallback<models.FeedResponseUserCompactView>): void;
+}
+
+/**
+ * @class
  * MyApps
  * __NOTE__: An instance of this class is automatically created for an
  * instance of the SocialPlusClient.
@@ -2498,6 +2539,156 @@ export interface MyApps {
 
 /**
  * @class
+ * MyLikes
+ * __NOTE__: An instance of this class is automatically created for an
+ * instance of the SocialPlusClient.
+ */
+export interface MyLikes {
+
+    /**
+     * @summary Get my liked topics
+     *
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
+     * 
+     * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.cursor] Current read cursor
+     * 
+     * @param {number} [options.limit] Number of items to return
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
+     * 
+     * @param {object} [options.customHeaders] Headers that will be added to the
+     * request
+     * 
+     * @param {ServiceCallback} [callback] callback function; see ServiceCallback
+     * doc in ms-rest index.d.ts for details
+     */
+    getLikedTopics(authorization: string, options: { cursor? : string, limit? : number, appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseTopicView>): void;
+    getLikedTopics(authorization: string, callback: ServiceCallback<models.FeedResponseTopicView>): void;
+}
+
+/**
+ * @class
+ * MyLinkedAccounts
+ * __NOTE__: An instance of this class is automatically created for an
+ * instance of the SocialPlusClient.
+ */
+export interface MyLinkedAccounts {
+
+    /**
+     * @summary Get linked accounts
+     *
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
+     * 
+     * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
+     * 
+     * @param {object} [options.customHeaders] Headers that will be added to the
+     * request
+     * 
+     * @param {ServiceCallback} [callback] callback function; see ServiceCallback
+     * doc in ms-rest index.d.ts for details
+     */
+    getLinkedAccounts(authorization: string, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.LinkedAccountView[]>): void;
+    getLinkedAccounts(authorization: string, callback: ServiceCallback<models.LinkedAccountView[]>): void;
+
+    /**
+     * @summary Create a new linked account
+     *
+     * @param {object} request Post linked account request
+     * 
+     * @param {string} [request.identityProvider] Gets or sets identity provider
+     * type. Possible values include: 'Facebook', 'Microsoft', 'Google',
+     * 'Twitter', 'Beihai'
+     * 
+     * @param {string} [request.accessToken] Gets or sets access or authentication
+     * token, user code, or verifier obtained from third-party provider.
+     * The server contacts the third-party provider to use the token
+     * (or user code, or verifier) for discover the user's identity.
+     * 
+     * @param {string} [request.requestToken] Gets or sets request token obtained
+     * from third-party provider.
+     * Some providers do not issue authentication or access tokens,
+     * but they issue request tokens
+     * and verifiers.
+     * 
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
+     * 
+     * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
+     * 
+     * @param {object} [options.customHeaders] Headers that will be added to the
+     * request
+     * 
+     * @param {ServiceCallback} [callback] callback function; see ServiceCallback
+     * doc in ms-rest index.d.ts for details
+     */
+    postLinkedAccount(request: models.PostLinkedAccountRequest, authorization: string, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
+    postLinkedAccount(request: models.PostLinkedAccountRequest, authorization: string, callback: ServiceCallback<any>): void;
+
+    /**
+     * @summary Delete linked account
+     *
+     * @param {string} identityProvider Identity provider type. Possible values
+     * include: 'Facebook', 'Microsoft', 'Google', 'Twitter', 'Beihai'
+     * 
+     * @param {string} authorization Authentication (must begin with string
+     * "Bearer "). Possible values are:
+     * 
+     * -sessionToken for client auth
+     * 
+     * -AAD token for service auth
+     * 
+     * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.appkey] App key must be filled in when using AAD
+     * tokens for Authentication.
+     * 
+     * @param {string} [options.userHandle] User handle must be filled when using
+     * AAD tokens for Authentication.
+     * 
+     * @param {object} [options.customHeaders] Headers that will be added to the
+     * request
+     * 
+     * @param {ServiceCallback} [callback] callback function; see ServiceCallback
+     * doc in ms-rest index.d.ts for details
+     */
+    deleteLinkedAccount(identityProvider: string, authorization: string, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
+    deleteLinkedAccount(identityProvider: string, authorization: string, callback: ServiceCallback<any>): void;
+}
+
+/**
+ * @class
  * Users
  * __NOTE__: An instance of this class is automatically created for an
  * instance of the SocialPlusClient.
@@ -2505,24 +2696,33 @@ export interface MyApps {
 export interface Users {
 
     /**
-     * @summary Create a new user using the following flow:
+     * @summary Create a new user
+     *
+     * Create a new user using the following flow:
+     * 
      * 1. Validate and parse the identity provider access token to
      * construct an identity provider user
-     * 2. If identity provider user present in linked account
-     * table, read user profile for this specific application from user profile
-     * table
-     * 3.    If user profile exists, return user conflict
-     * 4.    Otherwise, it means that the user does not have a
-     * profile for this particular application. Create one.
+     * 
+     * 2. If the identity provider user is present in the linked
+     * account table, read the user profile for this
+     * specific application from the user profile table
+     * 
+     * 3.    If the user profile already exists, return user conflict
+     * 
+     * 4.    Otherwise, the user does not already have a profile for
+     * this particular application, so we create one.
+     * 
      * 5. Otherwise, the identity provider user is not present.
-     * Create the user, and its user profile.
+     * Create the user, and the corresponding user profile.
+     * 
      * 6. Generate session token, and return
+     * 
      * The purpose of steps 2-4 is to ensure that if the user has
-     * already registered with us using the same identity provider
-     * but for a different SocialPlus application, we reuse his
-     * user-handle and just resume to create a new profile for this specific
-     * SocialPlus application. The end result is that we know it is
-     * the same user in both apps.
+     * already registered with us using the same identity
+     * provider but for a different SocialPlus application, we reuse
+     * his user-handle and just create a new profile for
+     * this specific SocialPlus application. The end result is that
+     * we know it is the same user in both apps.
      *
      * @param {object} request Post user request
      * 
@@ -2787,156 +2987,6 @@ export interface Users {
      */
     getPopularUsers(options: { cursor? : number, limit? : number, appkey? : string, authorization? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseUserProfileView>): void;
     getPopularUsers(callback: ServiceCallback<models.FeedResponseUserProfileView>): void;
-}
-
-/**
- * @class
- * MyLikes
- * __NOTE__: An instance of this class is automatically created for an
- * instance of the SocialPlusClient.
- */
-export interface MyLikes {
-
-    /**
-     * @summary Get my liked topics
-     *
-     * @param {string} authorization Authentication (must begin with string
-     * "Bearer "). Possible values are:
-     * 
-     * -sessionToken for client auth
-     * 
-     * -AAD token for service auth
-     * 
-     * @param {object} [options] Optional Parameters.
-     * 
-     * @param {string} [options.cursor] Current read cursor
-     * 
-     * @param {number} [options.limit] Number of items to return
-     * 
-     * @param {string} [options.appkey] App key must be filled in when using AAD
-     * tokens for Authentication.
-     * 
-     * @param {string} [options.userHandle] User handle must be filled when using
-     * AAD tokens for Authentication.
-     * 
-     * @param {object} [options.customHeaders] Headers that will be added to the
-     * request
-     * 
-     * @param {ServiceCallback} [callback] callback function; see ServiceCallback
-     * doc in ms-rest index.d.ts for details
-     */
-    getLikedTopics(authorization: string, options: { cursor? : string, limit? : number, appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseTopicView>): void;
-    getLikedTopics(authorization: string, callback: ServiceCallback<models.FeedResponseTopicView>): void;
-}
-
-/**
- * @class
- * MyLinkedAccounts
- * __NOTE__: An instance of this class is automatically created for an
- * instance of the SocialPlusClient.
- */
-export interface MyLinkedAccounts {
-
-    /**
-     * @summary Get linked accounts
-     *
-     * @param {string} authorization Authentication (must begin with string
-     * "Bearer "). Possible values are:
-     * 
-     * -sessionToken for client auth
-     * 
-     * -AAD token for service auth
-     * 
-     * @param {object} [options] Optional Parameters.
-     * 
-     * @param {string} [options.appkey] App key must be filled in when using AAD
-     * tokens for Authentication.
-     * 
-     * @param {string} [options.userHandle] User handle must be filled when using
-     * AAD tokens for Authentication.
-     * 
-     * @param {object} [options.customHeaders] Headers that will be added to the
-     * request
-     * 
-     * @param {ServiceCallback} [callback] callback function; see ServiceCallback
-     * doc in ms-rest index.d.ts for details
-     */
-    getLinkedAccounts(authorization: string, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.LinkedAccountView[]>): void;
-    getLinkedAccounts(authorization: string, callback: ServiceCallback<models.LinkedAccountView[]>): void;
-
-    /**
-     * @summary Create a new linked account
-     *
-     * @param {object} request Post linked account request
-     * 
-     * @param {string} [request.identityProvider] Gets or sets identity provider
-     * type. Possible values include: 'Facebook', 'Microsoft', 'Google',
-     * 'Twitter', 'Beihai'
-     * 
-     * @param {string} [request.accessToken] Gets or sets access or authentication
-     * token, user code, or verifier obtained from third-party provider.
-     * The server contacts the third-party provider to use the token
-     * (or user code, or verifier) for discover the user's identity.
-     * 
-     * @param {string} [request.requestToken] Gets or sets request token obtained
-     * from third-party provider.
-     * Some providers do not issue authentication or access tokens,
-     * but they issue request tokens
-     * and verifiers.
-     * 
-     * @param {string} authorization Authentication (must begin with string
-     * "Bearer "). Possible values are:
-     * 
-     * -sessionToken for client auth
-     * 
-     * -AAD token for service auth
-     * 
-     * @param {object} [options] Optional Parameters.
-     * 
-     * @param {string} [options.appkey] App key must be filled in when using AAD
-     * tokens for Authentication.
-     * 
-     * @param {string} [options.userHandle] User handle must be filled when using
-     * AAD tokens for Authentication.
-     * 
-     * @param {object} [options.customHeaders] Headers that will be added to the
-     * request
-     * 
-     * @param {ServiceCallback} [callback] callback function; see ServiceCallback
-     * doc in ms-rest index.d.ts for details
-     */
-    postLinkedAccount(request: models.PostLinkedAccountRequest, authorization: string, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
-    postLinkedAccount(request: models.PostLinkedAccountRequest, authorization: string, callback: ServiceCallback<any>): void;
-
-    /**
-     * @summary Delete linked account
-     *
-     * @param {string} identityProvider Identity provider type. Possible values
-     * include: 'Facebook', 'Microsoft', 'Google', 'Twitter', 'Beihai'
-     * 
-     * @param {string} authorization Authentication (must begin with string
-     * "Bearer "). Possible values are:
-     * 
-     * -sessionToken for client auth
-     * 
-     * -AAD token for service auth
-     * 
-     * @param {object} [options] Optional Parameters.
-     * 
-     * @param {string} [options.appkey] App key must be filled in when using AAD
-     * tokens for Authentication.
-     * 
-     * @param {string} [options.userHandle] User handle must be filled when using
-     * AAD tokens for Authentication.
-     * 
-     * @param {object} [options.customHeaders] Headers that will be added to the
-     * request
-     * 
-     * @param {ServiceCallback} [callback] callback function; see ServiceCallback
-     * doc in ms-rest index.d.ts for details
-     */
-    deleteLinkedAccount(identityProvider: string, authorization: string, options: { appkey? : string, userHandle? : string, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<any>): void;
-    deleteLinkedAccount(identityProvider: string, authorization: string, callback: ServiceCallback<any>): void;
 }
 
 /**
