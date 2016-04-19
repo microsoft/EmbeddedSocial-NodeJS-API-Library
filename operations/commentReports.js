@@ -27,7 +27,8 @@ function CommentReports(client) {
 /**
  * @summary Report comment
  *
- * @param {string} commentHandle Comment handle
+ * @param {string} commentHandle Comment handle for the comment being reported
+ * on
  * 
  * @param {object} postReportRequest Post report request
  * 
@@ -149,7 +150,7 @@ CommentReports.prototype.postReport = function (commentHandle, postReportRequest
       return callback(err);
     }
     var statusCode = response.statusCode;
-    if (statusCode !== 204 && statusCode !== 400 && statusCode !== 401 && statusCode !== 404 && statusCode !== 500) {
+    if (statusCode !== 204 && statusCode !== 400 && statusCode !== 401 && statusCode !== 404 && statusCode !== 409 && statusCode !== 500) {
       var error = new Error(responseBody);
       error.statusCode = response.statusCode;
       error.request = msRest.stripRequest(httpRequest);

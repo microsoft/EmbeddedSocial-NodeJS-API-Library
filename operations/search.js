@@ -27,6 +27,27 @@ function Search(client) {
 /**
  * @summary Search topics with a query
  *
+ * The query string will be searched across hashtags, topic titles, and topic
+ * texts,
+ * and matching results will be returned.
+ * 
+ * If the query string contains only hashtags, e.g. #foo #bar,
+ * then only the hashtags
+ * in topics will be searched.
+ * 
+ * Query string supports the following operators:
+ * - suffix: "foo*"
+ * - and: "foo+bar"
+ * - or: "foo|bar"
+ * - not: "-foo"
+ * - phrase: ""foo bar""
+ * - precedence: "foo+(bar|baz)"
+ * You need to escape * if it is at the end of a word, and - if
+ * it is at the start of a word.
+ * Default behavior is to use and, so if you use whitespace to
+ * separate words,
+ * such as "foo bar", that is equivalent to "foo+bar".
+ *
  * @param {string} query Search query
  * 
  * @param {object} [options] Optional Parameters.
@@ -198,6 +219,22 @@ Search.prototype.getTopics = function (query, options, callback) {
 
 /**
  * @summary Search users with a query
+ *
+ * The query string will be searched across the full name of users
+ * and matching results will be returned.
+ * 
+ * Query string supports the following operators:
+ * - suffix: "foo*"
+ * - and: "foo+bar"
+ * - or: "foo|bar"
+ * - not: "-foo"
+ * - phrase: ""foo bar""
+ * - precedence: "foo+(bar|baz)"
+ * You need to escape * if it is at the end of a word, and - if
+ * it is at the start of a word.
+ * Default behavior is to use and, so if you use whitespace to
+ * separate words,
+ * such as "foo bar", that is equivalent to "foo+bar".
  *
  * @param {string} query Search query
  * 

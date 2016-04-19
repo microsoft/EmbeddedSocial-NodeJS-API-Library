@@ -29,13 +29,6 @@ function CommentReplies(client) {
  *
  * @param {string} commentHandle Comment handle
  * 
- * @param {string} authorization Authentication (must begin with string
- * "Bearer "). Possible values are:
- * 
- * -sessionToken for client auth
- * 
- * -AAD token for service auth
- * 
  * @param {object} [options] Optional Parameters.
  * 
  * @param {string} [options.cursor] Current read cursor
@@ -44,6 +37,13 @@ function CommentReplies(client) {
  * 
  * @param {string} [options.appkey] App key must be filled in when using AAD
  * tokens for Authentication.
+ * 
+ * @param {string} [options.authorization] Authentication (must begin with
+ * string "Bearer "). Possible values are:
+ * 
+ * -sessionToken for client auth
+ * 
+ * -AAD token for service auth
  * 
  * @param {string} [options.userHandle] User handle must be filled when using
  * AAD tokens for Authentication.
@@ -64,7 +64,7 @@ function CommentReplies(client) {
  *
  *                      {stream} [response] - The HTTP Response stream if an error did not occur.
  */
-CommentReplies.prototype.getReplies = function (commentHandle, authorization, options, callback) {
+CommentReplies.prototype.getReplies = function (commentHandle, options, callback) {
   var client = this.client;
   if(!callback && typeof options === 'function') {
     callback = options;
@@ -76,6 +76,7 @@ CommentReplies.prototype.getReplies = function (commentHandle, authorization, op
   var cursor = (options && options.cursor !== undefined) ? options.cursor : undefined;
   var limit = (options && options.limit !== undefined) ? options.limit : undefined;
   var appkey = (options && options.appkey !== undefined) ? options.appkey : undefined;
+  var authorization = (options && options.authorization !== undefined) ? options.authorization : undefined;
   var userHandle = (options && options.userHandle !== undefined) ? options.userHandle : undefined;
   // Validate
   try {
@@ -91,8 +92,8 @@ CommentReplies.prototype.getReplies = function (commentHandle, authorization, op
     if (appkey !== null && appkey !== undefined && typeof appkey.valueOf() !== 'string') {
       throw new Error('appkey must be of type string.');
     }
-    if (authorization === null || authorization === undefined || typeof authorization.valueOf() !== 'string') {
-      throw new Error('authorization cannot be null or undefined and it must be of type string.');
+    if (authorization !== null && authorization !== undefined && typeof authorization.valueOf() !== 'string') {
+      throw new Error('authorization must be of type string.');
     }
     if (userHandle !== null && userHandle !== undefined && typeof userHandle.valueOf() !== 'string') {
       throw new Error('userHandle must be of type string.');

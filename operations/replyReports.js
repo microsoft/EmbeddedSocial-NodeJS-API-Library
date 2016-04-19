@@ -27,7 +27,7 @@ function ReplyReports(client) {
 /**
  * @summary Report reply
  *
- * @param {string} replyHandle Reply handle
+ * @param {string} replyHandle Reply handle for the reply being reported on
  * 
  * @param {object} postReportRequest Post report request
  * 
@@ -149,7 +149,7 @@ ReplyReports.prototype.postReport = function (replyHandle, postReportRequest, au
       return callback(err);
     }
     var statusCode = response.statusCode;
-    if (statusCode !== 204 && statusCode !== 400 && statusCode !== 401 && statusCode !== 404 && statusCode !== 500) {
+    if (statusCode !== 204 && statusCode !== 400 && statusCode !== 401 && statusCode !== 404 && statusCode !== 409 && statusCode !== 500) {
       var error = new Error(responseBody);
       error.statusCode = response.statusCode;
       error.request = msRest.stripRequest(httpRequest);
