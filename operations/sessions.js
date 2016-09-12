@@ -29,39 +29,29 @@ function Sessions(client) {
  *
  * @param {object} request Post session request
  * 
- * @param {string} [request.identityProvider] Gets or sets identity provider
- * type. Possible values include: 'Facebook', 'Microsoft', 'Google',
- * 'Twitter', 'Beihai'
- * 
- * @param {string} [request.accessToken] Gets or sets access or authentication
- * token, user code, or verifier obtained from third-party provider.
- * The server contacts the third-party provider to use the token
- * (or user code, or verifier) for discover the user's identity.
- * For S2S auth, the access token must be set to the user handle
- * 
- * @param {string} [request.requestToken] Gets or sets request token obtained
- * from third-party provider.
- * Some providers do not issue authentication or access tokens,
- * but they issue request tokens
- * and verifiers.
- * 
  * @param {string} [request.instanceId] Gets or sets instance id -- Unique
  * installation id of the app
  * 
+ * @param {string} [request.userHandle] Gets or sets user handle
+ * 
+ * @param {string} authorization Format is: "Scheme CredentialsList". Possible
+ * values are:
+ * 
+ * - Anon AK=AppKey
+ * 
+ * - SocialPlus TK=SessionToken
+ * 
+ * - Facebook AK=AppKey|TK=AccessToken
+ * 
+ * - Google AK=AppKey|TK=AccessToken
+ * 
+ * - Twitter AK=AppKey|RT=RequestToken|TK=AccessToken
+ * 
+ * - Microsoft AK=AppKey|TK=AccessToken
+ * 
+ * - AADS2S AK=AppKey|[UH=UserHandle]|TK=AADToken
+ * 
  * @param {object} [options] Optional Parameters.
- * 
- * @param {string} [options.appkey] App key must be filled in when using AAD
- * tokens for Authentication.
- * 
- * @param {string} [options.authorization] Authentication (must begin with
- * string "Bearer "). Possible values are:
- * 
- * -sessionToken for client auth
- * 
- * -AAD token for service auth
- * 
- * @param {string} [options.userHandle] This field is for internal use only.
- * Do not provide a value except under special circumstances.
  * 
  * @param {object} [options.customHeaders] Headers that will be added to the
  * request
@@ -79,7 +69,7 @@ function Sessions(client) {
  *
  *                      {stream} [response] - The HTTP Response stream if an error did not occur.
  */
-Sessions.prototype.postSession = function (request, options, callback) {
+Sessions.prototype.postSession = function (request, authorization, options, callback) {
   var client = this.client;
   if(!callback && typeof options === 'function') {
     callback = options;
@@ -88,22 +78,13 @@ Sessions.prototype.postSession = function (request, options, callback) {
   if (!callback) {
     throw new Error('callback cannot be null.');
   }
-  var appkey = (options && options.appkey !== undefined) ? options.appkey : undefined;
-  var authorization = (options && options.authorization !== undefined) ? options.authorization : undefined;
-  var userHandle = (options && options.userHandle !== undefined) ? options.userHandle : undefined;
   // Validate
   try {
     if (request === null || request === undefined) {
       throw new Error('request cannot be null or undefined.');
     }
-    if (appkey !== null && appkey !== undefined && typeof appkey.valueOf() !== 'string') {
-      throw new Error('appkey must be of type string.');
-    }
-    if (authorization !== null && authorization !== undefined && typeof authorization.valueOf() !== 'string') {
-      throw new Error('authorization must be of type string.');
-    }
-    if (userHandle !== null && userHandle !== undefined && typeof userHandle.valueOf() !== 'string') {
-      throw new Error('userHandle must be of type string.');
+    if (authorization === null || authorization === undefined || typeof authorization.valueOf() !== 'string') {
+      throw new Error('authorization cannot be null or undefined and it must be of type string.');
     }
   } catch (error) {
     return callback(error);
@@ -111,7 +92,7 @@ Sessions.prototype.postSession = function (request, options, callback) {
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.4/sessions';
+                   '//v0.5/sessions';
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
   requestUrl = requestUrl.replace(regex, '$1');
@@ -122,14 +103,8 @@ Sessions.prototype.postSession = function (request, options, callback) {
   httpRequest.headers = {};
   httpRequest.url = requestUrl;
   // Set Headers
-  if (appkey !== undefined && appkey !== null) {
-    httpRequest.headers['appkey'] = appkey;
-  }
   if (authorization !== undefined && authorization !== null) {
     httpRequest.headers['Authorization'] = authorization;
-  }
-  if (userHandle !== undefined && userHandle !== null) {
-    httpRequest.headers['UserHandle'] = userHandle;
   }
   if(options) {
     for(var headerName in options['customHeaders']) {
@@ -160,7 +135,7 @@ Sessions.prototype.postSession = function (request, options, callback) {
       return callback(err);
     }
     var statusCode = response.statusCode;
-    if (statusCode !== 201 && statusCode !== 400 && statusCode !== 401 && statusCode !== 404 && statusCode !== 500) {
+    if (statusCode !== 201 && statusCode !== 401 && statusCode !== 404 && statusCode !== 500) {
       var error = new Error(responseBody);
       error.statusCode = response.statusCode;
       error.request = msRest.stripRequest(httpRequest);
@@ -209,20 +184,24 @@ Sessions.prototype.postSession = function (request, options, callback) {
 /**
  * @summary Delete the current session (sign out)
  *
- * @param {string} authorization Authentication (must begin with string
- * "Bearer "). Possible values are:
+ * @param {string} authorization Format is: "Scheme CredentialsList". Possible
+ * values are:
  * 
- * -sessionToken for client auth
+ * - Anon AK=AppKey
  * 
- * -AAD token for service auth
+ * - SocialPlus TK=SessionToken
+ * 
+ * - Facebook AK=AppKey|TK=AccessToken
+ * 
+ * - Google AK=AppKey|TK=AccessToken
+ * 
+ * - Twitter AK=AppKey|RT=RequestToken|TK=AccessToken
+ * 
+ * - Microsoft AK=AppKey|TK=AccessToken
+ * 
+ * - AADS2S AK=AppKey|[UH=UserHandle]|TK=AADToken
  * 
  * @param {object} [options] Optional Parameters.
- * 
- * @param {string} [options.appkey] App key must be filled in when using AAD
- * tokens for Authentication.
- * 
- * @param {string} [options.userHandle] This field is for internal use only.
- * Do not provide a value except under special circumstances.
  * 
  * @param {object} [options.customHeaders] Headers that will be added to the
  * request
@@ -248,18 +227,10 @@ Sessions.prototype.deleteSession = function (authorization, options, callback) {
   if (!callback) {
     throw new Error('callback cannot be null.');
   }
-  var appkey = (options && options.appkey !== undefined) ? options.appkey : undefined;
-  var userHandle = (options && options.userHandle !== undefined) ? options.userHandle : undefined;
   // Validate
   try {
-    if (appkey !== null && appkey !== undefined && typeof appkey.valueOf() !== 'string') {
-      throw new Error('appkey must be of type string.');
-    }
     if (authorization === null || authorization === undefined || typeof authorization.valueOf() !== 'string') {
       throw new Error('authorization cannot be null or undefined and it must be of type string.');
-    }
-    if (userHandle !== null && userHandle !== undefined && typeof userHandle.valueOf() !== 'string') {
-      throw new Error('userHandle must be of type string.');
     }
   } catch (error) {
     return callback(error);
@@ -267,7 +238,7 @@ Sessions.prototype.deleteSession = function (authorization, options, callback) {
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.4/sessions/current';
+                   '//v0.5/sessions/current';
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
   requestUrl = requestUrl.replace(regex, '$1');
@@ -278,14 +249,8 @@ Sessions.prototype.deleteSession = function (authorization, options, callback) {
   httpRequest.headers = {};
   httpRequest.url = requestUrl;
   // Set Headers
-  if (appkey !== undefined && appkey !== null) {
-    httpRequest.headers['appkey'] = appkey;
-  }
   if (authorization !== undefined && authorization !== null) {
     httpRequest.headers['Authorization'] = authorization;
-  }
-  if (userHandle !== undefined && userHandle !== null) {
-    httpRequest.headers['UserHandle'] = userHandle;
   }
   if(options) {
     for(var headerName in options['customHeaders']) {

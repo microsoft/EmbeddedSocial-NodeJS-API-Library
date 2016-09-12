@@ -52,20 +52,24 @@ function MyPushRegistrations(client) {
  * 
  * @param {string} [request.language] Gets or sets language of the user
  * 
- * @param {string} authorization Authentication (must begin with string
- * "Bearer "). Possible values are:
+ * @param {string} authorization Format is: "Scheme CredentialsList". Possible
+ * values are:
  * 
- * -sessionToken for client auth
+ * - Anon AK=AppKey
  * 
- * -AAD token for service auth
+ * - SocialPlus TK=SessionToken
+ * 
+ * - Facebook AK=AppKey|TK=AccessToken
+ * 
+ * - Google AK=AppKey|TK=AccessToken
+ * 
+ * - Twitter AK=AppKey|RT=RequestToken|TK=AccessToken
+ * 
+ * - Microsoft AK=AppKey|TK=AccessToken
+ * 
+ * - AADS2S AK=AppKey|[UH=UserHandle]|TK=AADToken
  * 
  * @param {object} [options] Optional Parameters.
- * 
- * @param {string} [options.appkey] App key must be filled in when using AAD
- * tokens for Authentication.
- * 
- * @param {string} [options.userHandle] This field is for internal use only.
- * Do not provide a value except under special circumstances.
  * 
  * @param {object} [options.customHeaders] Headers that will be added to the
  * request
@@ -91,8 +95,6 @@ MyPushRegistrations.prototype.putPushRegistration = function (platform, registra
   if (!callback) {
     throw new Error('callback cannot be null.');
   }
-  var appkey = (options && options.appkey !== undefined) ? options.appkey : undefined;
-  var userHandle = (options && options.userHandle !== undefined) ? options.userHandle : undefined;
   // Validate
   try {
     if (platform) {
@@ -109,14 +111,8 @@ MyPushRegistrations.prototype.putPushRegistration = function (platform, registra
     if (request === null || request === undefined) {
       throw new Error('request cannot be null or undefined.');
     }
-    if (appkey !== null && appkey !== undefined && typeof appkey.valueOf() !== 'string') {
-      throw new Error('appkey must be of type string.');
-    }
     if (authorization === null || authorization === undefined || typeof authorization.valueOf() !== 'string') {
       throw new Error('authorization cannot be null or undefined and it must be of type string.');
-    }
-    if (userHandle !== null && userHandle !== undefined && typeof userHandle.valueOf() !== 'string') {
-      throw new Error('userHandle must be of type string.');
     }
   } catch (error) {
     return callback(error);
@@ -124,7 +120,7 @@ MyPushRegistrations.prototype.putPushRegistration = function (platform, registra
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.4/users/me/push_registrations/{platform}/{registrationId}';
+                   '//v0.5/users/me/push_registrations/{platform}/{registrationId}';
   requestUrl = requestUrl.replace('{platform}', encodeURIComponent(platform));
   requestUrl = requestUrl.replace('{registrationId}', encodeURIComponent(registrationId));
   // trim all duplicate forward slashes in the url
@@ -137,14 +133,8 @@ MyPushRegistrations.prototype.putPushRegistration = function (platform, registra
   httpRequest.headers = {};
   httpRequest.url = requestUrl;
   // Set Headers
-  if (appkey !== undefined && appkey !== null) {
-    httpRequest.headers['appkey'] = appkey;
-  }
   if (authorization !== undefined && authorization !== null) {
     httpRequest.headers['Authorization'] = authorization;
-  }
-  if (userHandle !== undefined && userHandle !== null) {
-    httpRequest.headers['UserHandle'] = userHandle;
   }
   if(options) {
     for(var headerName in options['customHeaders']) {
@@ -240,20 +230,24 @@ MyPushRegistrations.prototype.putPushRegistration = function (platform, registra
  * For Windows, this is the PushNotificationChannel URI.
  * For iOS, this is the device token.
  * 
- * @param {string} authorization Authentication (must begin with string
- * "Bearer "). Possible values are:
+ * @param {string} authorization Format is: "Scheme CredentialsList". Possible
+ * values are:
  * 
- * -sessionToken for client auth
+ * - Anon AK=AppKey
  * 
- * -AAD token for service auth
+ * - SocialPlus TK=SessionToken
+ * 
+ * - Facebook AK=AppKey|TK=AccessToken
+ * 
+ * - Google AK=AppKey|TK=AccessToken
+ * 
+ * - Twitter AK=AppKey|RT=RequestToken|TK=AccessToken
+ * 
+ * - Microsoft AK=AppKey|TK=AccessToken
+ * 
+ * - AADS2S AK=AppKey|[UH=UserHandle]|TK=AADToken
  * 
  * @param {object} [options] Optional Parameters.
- * 
- * @param {string} [options.appkey] App key must be filled in when using AAD
- * tokens for Authentication.
- * 
- * @param {string} [options.userHandle] This field is for internal use only.
- * Do not provide a value except under special circumstances.
  * 
  * @param {object} [options.customHeaders] Headers that will be added to the
  * request
@@ -279,8 +273,6 @@ MyPushRegistrations.prototype.deletePushRegistration = function (platform, regis
   if (!callback) {
     throw new Error('callback cannot be null.');
   }
-  var appkey = (options && options.appkey !== undefined) ? options.appkey : undefined;
-  var userHandle = (options && options.userHandle !== undefined) ? options.userHandle : undefined;
   // Validate
   try {
     if (platform) {
@@ -294,14 +286,8 @@ MyPushRegistrations.prototype.deletePushRegistration = function (platform, regis
     if (registrationId === null || registrationId === undefined || typeof registrationId.valueOf() !== 'string') {
       throw new Error('registrationId cannot be null or undefined and it must be of type string.');
     }
-    if (appkey !== null && appkey !== undefined && typeof appkey.valueOf() !== 'string') {
-      throw new Error('appkey must be of type string.');
-    }
     if (authorization === null || authorization === undefined || typeof authorization.valueOf() !== 'string') {
       throw new Error('authorization cannot be null or undefined and it must be of type string.');
-    }
-    if (userHandle !== null && userHandle !== undefined && typeof userHandle.valueOf() !== 'string') {
-      throw new Error('userHandle must be of type string.');
     }
   } catch (error) {
     return callback(error);
@@ -309,7 +295,7 @@ MyPushRegistrations.prototype.deletePushRegistration = function (platform, regis
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.4/users/me/push_registrations/{platform}/{registrationId}';
+                   '//v0.5/users/me/push_registrations/{platform}/{registrationId}';
   requestUrl = requestUrl.replace('{platform}', encodeURIComponent(platform));
   requestUrl = requestUrl.replace('{registrationId}', encodeURIComponent(registrationId));
   // trim all duplicate forward slashes in the url
@@ -322,14 +308,8 @@ MyPushRegistrations.prototype.deletePushRegistration = function (platform, regis
   httpRequest.headers = {};
   httpRequest.url = requestUrl;
   // Set Headers
-  if (appkey !== undefined && appkey !== null) {
-    httpRequest.headers['appkey'] = appkey;
-  }
   if (authorization !== undefined && authorization !== null) {
     httpRequest.headers['Authorization'] = authorization;
-  }
-  if (userHandle !== undefined && userHandle !== null) {
-    httpRequest.headers['UserHandle'] = userHandle;
   }
   if(options) {
     for(var headerName in options['customHeaders']) {

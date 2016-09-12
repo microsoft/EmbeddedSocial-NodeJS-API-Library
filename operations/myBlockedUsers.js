@@ -27,24 +27,46 @@ function MyBlockedUsers(client) {
 /**
  * @summary Get my blocked users
  *
- * @param {string} authorization Authentication (must begin with string
- * "Bearer "). Possible values are:
+ * This is a feed of users that I have blocked. Any user on this list
+ * cannot see topics authored by me. However, any such user will
+ * see comments
+ * and replies that I create on topics authored by other users or
+ * by the app.
+ * Any such user will also be able to observe that activities have
+ * been performed
+ * by users on my topics.
+ * I will not appear in any such user's following feed, and those
+ * users will not
+ * appear in my followers feed.
+ * If I am following any user in this feed, that relationship will
+ * continue and I
+ * will continue to see topics and activities by that user and I
+ * will appear in
+ * that user's follower feed and that user will appear in my
+ * following feed.
+ *
+ * @param {string} authorization Format is: "Scheme CredentialsList". Possible
+ * values are:
  * 
- * -sessionToken for client auth
+ * - Anon AK=AppKey
  * 
- * -AAD token for service auth
+ * - SocialPlus TK=SessionToken
+ * 
+ * - Facebook AK=AppKey|TK=AccessToken
+ * 
+ * - Google AK=AppKey|TK=AccessToken
+ * 
+ * - Twitter AK=AppKey|RT=RequestToken|TK=AccessToken
+ * 
+ * - Microsoft AK=AppKey|TK=AccessToken
+ * 
+ * - AADS2S AK=AppKey|[UH=UserHandle]|TK=AADToken
  * 
  * @param {object} [options] Optional Parameters.
  * 
  * @param {string} [options.cursor] Current read cursor
  * 
  * @param {number} [options.limit] Number of items to return
- * 
- * @param {string} [options.appkey] App key must be filled in when using AAD
- * tokens for Authentication.
- * 
- * @param {string} [options.userHandle] This field is for internal use only.
- * Do not provide a value except under special circumstances.
  * 
  * @param {object} [options.customHeaders] Headers that will be added to the
  * request
@@ -74,8 +96,6 @@ MyBlockedUsers.prototype.getBlockedUsers = function (authorization, options, cal
   }
   var cursor = (options && options.cursor !== undefined) ? options.cursor : undefined;
   var limit = (options && options.limit !== undefined) ? options.limit : undefined;
-  var appkey = (options && options.appkey !== undefined) ? options.appkey : undefined;
-  var userHandle = (options && options.userHandle !== undefined) ? options.userHandle : undefined;
   // Validate
   try {
     if (cursor !== null && cursor !== undefined && typeof cursor.valueOf() !== 'string') {
@@ -84,14 +104,8 @@ MyBlockedUsers.prototype.getBlockedUsers = function (authorization, options, cal
     if (limit !== null && limit !== undefined && typeof limit !== 'number') {
       throw new Error('limit must be of type number.');
     }
-    if (appkey !== null && appkey !== undefined && typeof appkey.valueOf() !== 'string') {
-      throw new Error('appkey must be of type string.');
-    }
     if (authorization === null || authorization === undefined || typeof authorization.valueOf() !== 'string') {
       throw new Error('authorization cannot be null or undefined and it must be of type string.');
-    }
-    if (userHandle !== null && userHandle !== undefined && typeof userHandle.valueOf() !== 'string') {
-      throw new Error('userHandle must be of type string.');
     }
   } catch (error) {
     return callback(error);
@@ -99,7 +113,7 @@ MyBlockedUsers.prototype.getBlockedUsers = function (authorization, options, cal
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.4/users/me/blocked_users';
+                   '//v0.5/users/me/blocked_users';
   var queryParameters = [];
   if (cursor !== null && cursor !== undefined) {
     queryParameters.push('cursor=' + encodeURIComponent(cursor));
@@ -120,14 +134,8 @@ MyBlockedUsers.prototype.getBlockedUsers = function (authorization, options, cal
   httpRequest.headers = {};
   httpRequest.url = requestUrl;
   // Set Headers
-  if (appkey !== undefined && appkey !== null) {
-    httpRequest.headers['appkey'] = appkey;
-  }
   if (authorization !== undefined && authorization !== null) {
     httpRequest.headers['Authorization'] = authorization;
-  }
-  if (userHandle !== undefined && userHandle !== null) {
-    httpRequest.headers['UserHandle'] = userHandle;
   }
   if(options) {
     for(var headerName in options['customHeaders']) {
@@ -191,26 +199,46 @@ MyBlockedUsers.prototype.getBlockedUsers = function (authorization, options, cal
 };
 
 /**
- * @summary Block user
+ * @summary Block a user
+ *
+ * After I block a user, that user will no longer be able to see topics
+ * authored by me.
+ * However, that user will continue to see comments and replies
+ * that I create on
+ * topics authored by other users or by the app. That user will
+ * also be able to observe
+ * that activities have been performed by users on my topics.
+ * I will no longer appear in that user's following feed, and that
+ * user will no longer
+ * appear in my followers feed.
+ * If I am following that user, that relationship will survive and
+ * I will continue to see
+ * topics and activities by that user and I will appear in that
+ * user's follower feed and
+ * that user will appear in my following feed.
  *
  * @param {object} request Post blocked user request
  * 
  * @param {string} [request.userHandle] Gets or sets user handle
  * 
- * @param {string} authorization Authentication (must begin with string
- * "Bearer "). Possible values are:
+ * @param {string} authorization Format is: "Scheme CredentialsList". Possible
+ * values are:
  * 
- * -sessionToken for client auth
+ * - Anon AK=AppKey
  * 
- * -AAD token for service auth
+ * - SocialPlus TK=SessionToken
+ * 
+ * - Facebook AK=AppKey|TK=AccessToken
+ * 
+ * - Google AK=AppKey|TK=AccessToken
+ * 
+ * - Twitter AK=AppKey|RT=RequestToken|TK=AccessToken
+ * 
+ * - Microsoft AK=AppKey|TK=AccessToken
+ * 
+ * - AADS2S AK=AppKey|[UH=UserHandle]|TK=AADToken
  * 
  * @param {object} [options] Optional Parameters.
- * 
- * @param {string} [options.appkey] App key must be filled in when using AAD
- * tokens for Authentication.
- * 
- * @param {string} [options.userHandle] This field is for internal use only.
- * Do not provide a value except under special circumstances.
  * 
  * @param {object} [options.customHeaders] Headers that will be added to the
  * request
@@ -236,21 +264,13 @@ MyBlockedUsers.prototype.postBlockedUser = function (request, authorization, opt
   if (!callback) {
     throw new Error('callback cannot be null.');
   }
-  var appkey = (options && options.appkey !== undefined) ? options.appkey : undefined;
-  var userHandle = (options && options.userHandle !== undefined) ? options.userHandle : undefined;
   // Validate
   try {
     if (request === null || request === undefined) {
       throw new Error('request cannot be null or undefined.');
     }
-    if (appkey !== null && appkey !== undefined && typeof appkey.valueOf() !== 'string') {
-      throw new Error('appkey must be of type string.');
-    }
     if (authorization === null || authorization === undefined || typeof authorization.valueOf() !== 'string') {
       throw new Error('authorization cannot be null or undefined and it must be of type string.');
-    }
-    if (userHandle !== null && userHandle !== undefined && typeof userHandle.valueOf() !== 'string') {
-      throw new Error('userHandle must be of type string.');
     }
   } catch (error) {
     return callback(error);
@@ -258,7 +278,7 @@ MyBlockedUsers.prototype.postBlockedUser = function (request, authorization, opt
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.4/users/me/blocked_users';
+                   '//v0.5/users/me/blocked_users';
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
   requestUrl = requestUrl.replace(regex, '$1');
@@ -269,14 +289,8 @@ MyBlockedUsers.prototype.postBlockedUser = function (request, authorization, opt
   httpRequest.headers = {};
   httpRequest.url = requestUrl;
   // Set Headers
-  if (appkey !== undefined && appkey !== null) {
-    httpRequest.headers['appkey'] = appkey;
-  }
   if (authorization !== undefined && authorization !== null) {
     httpRequest.headers['Authorization'] = authorization;
-  }
-  if (userHandle !== undefined && userHandle !== null) {
-    httpRequest.headers['UserHandle'] = userHandle;
   }
   if(options) {
     for(var headerName in options['customHeaders']) {
@@ -360,24 +374,28 @@ MyBlockedUsers.prototype.postBlockedUser = function (request, authorization, opt
 };
 
 /**
- * @summary Unblock user
+ * @summary Unblock a user
  *
  * @param {string} userHandle User handle
  * 
- * @param {string} authorization Authentication (must begin with string
- * "Bearer "). Possible values are:
+ * @param {string} authorization Format is: "Scheme CredentialsList". Possible
+ * values are:
  * 
- * -sessionToken for client auth
+ * - Anon AK=AppKey
  * 
- * -AAD token for service auth
+ * - SocialPlus TK=SessionToken
+ * 
+ * - Facebook AK=AppKey|TK=AccessToken
+ * 
+ * - Google AK=AppKey|TK=AccessToken
+ * 
+ * - Twitter AK=AppKey|RT=RequestToken|TK=AccessToken
+ * 
+ * - Microsoft AK=AppKey|TK=AccessToken
+ * 
+ * - AADS2S AK=AppKey|[UH=UserHandle]|TK=AADToken
  * 
  * @param {object} [options] Optional Parameters.
- * 
- * @param {string} [options.appkey] App key must be filled in when using AAD
- * tokens for Authentication.
- * 
- * @param {string} [options.userHandle1] This field is for internal use only.
- * Do not provide a value except under special circumstances.
  * 
  * @param {object} [options.customHeaders] Headers that will be added to the
  * request
@@ -403,21 +421,13 @@ MyBlockedUsers.prototype.deleteBlockedUser = function (userHandle, authorization
   if (!callback) {
     throw new Error('callback cannot be null.');
   }
-  var appkey = (options && options.appkey !== undefined) ? options.appkey : undefined;
-  var userHandle1 = (options && options.userHandle1 !== undefined) ? options.userHandle1 : undefined;
   // Validate
   try {
     if (userHandle === null || userHandle === undefined || typeof userHandle.valueOf() !== 'string') {
       throw new Error('userHandle cannot be null or undefined and it must be of type string.');
     }
-    if (appkey !== null && appkey !== undefined && typeof appkey.valueOf() !== 'string') {
-      throw new Error('appkey must be of type string.');
-    }
     if (authorization === null || authorization === undefined || typeof authorization.valueOf() !== 'string') {
       throw new Error('authorization cannot be null or undefined and it must be of type string.');
-    }
-    if (userHandle1 !== null && userHandle1 !== undefined && typeof userHandle1.valueOf() !== 'string') {
-      throw new Error('userHandle1 must be of type string.');
     }
   } catch (error) {
     return callback(error);
@@ -425,7 +435,7 @@ MyBlockedUsers.prototype.deleteBlockedUser = function (userHandle, authorization
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.4/users/me/blocked_users/{userHandle}';
+                   '//v0.5/users/me/blocked_users/{userHandle}';
   requestUrl = requestUrl.replace('{userHandle}', encodeURIComponent(userHandle));
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
@@ -437,14 +447,8 @@ MyBlockedUsers.prototype.deleteBlockedUser = function (userHandle, authorization
   httpRequest.headers = {};
   httpRequest.url = requestUrl;
   // Set Headers
-  if (appkey !== undefined && appkey !== null) {
-    httpRequest.headers['appkey'] = appkey;
-  }
   if (authorization !== undefined && authorization !== null) {
     httpRequest.headers['Authorization'] = authorization;
-  }
-  if (userHandle1 !== undefined && userHandle1 !== null) {
-    httpRequest.headers['UserHandle'] = userHandle1;
   }
   if(options) {
     for(var headerName in options['customHeaders']) {

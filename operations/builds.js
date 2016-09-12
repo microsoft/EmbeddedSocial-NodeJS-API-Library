@@ -59,7 +59,7 @@ Builds.prototype.getBuildsCurrent = function (options, callback) {
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.4/builds/current';
+                   '//v0.5/builds/current';
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
   requestUrl = requestUrl.replace(regex, '$1');
