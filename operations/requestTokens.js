@@ -28,22 +28,27 @@ function RequestTokens(client) {
  * @summary Get request token
  *
  * @param {string} identityProvider Identity provider type. Possible values
- * include: 'Facebook', 'Microsoft', 'Google', 'Twitter', 'Beihai'
+ * include: 'Facebook', 'Microsoft', 'Google', 'Twitter', 'AADS2S',
+ * 'SocialPlus'
+ * 
+ * @param {string} authorization Format is: "Scheme CredentialsList". Possible
+ * values are:
+ * 
+ * - Anon AK=AppKey
+ * 
+ * - SocialPlus TK=SessionToken
+ * 
+ * - Facebook AK=AppKey|TK=AccessToken
+ * 
+ * - Google AK=AppKey|TK=AccessToken
+ * 
+ * - Twitter AK=AppKey|RT=RequestToken|TK=AccessToken
+ * 
+ * - Microsoft AK=AppKey|TK=AccessToken
+ * 
+ * - AADS2S AK=AppKey|[UH=UserHandle]|TK=AADToken
  * 
  * @param {object} [options] Optional Parameters.
- * 
- * @param {string} [options.appkey] App key must be filled in when using AAD
- * tokens for Authentication.
- * 
- * @param {string} [options.authorization] Authentication (must begin with
- * string "Bearer "). Possible values are:
- * 
- * -sessionToken for client auth
- * 
- * -AAD token for service auth
- * 
- * @param {string} [options.userHandle] This field is for internal use only.
- * Do not provide a value except under special circumstances.
  * 
  * @param {object} [options.customHeaders] Headers that will be added to the
  * request
@@ -62,7 +67,7 @@ function RequestTokens(client) {
  *
  *                      {stream} [response] - The HTTP Response stream if an error did not occur.
  */
-RequestTokens.prototype.getRequestToken = function (identityProvider, options, callback) {
+RequestTokens.prototype.getRequestToken = function (identityProvider, authorization, options, callback) {
   var client = this.client;
   if(!callback && typeof options === 'function') {
     callback = options;
@@ -71,27 +76,18 @@ RequestTokens.prototype.getRequestToken = function (identityProvider, options, c
   if (!callback) {
     throw new Error('callback cannot be null.');
   }
-  var appkey = (options && options.appkey !== undefined) ? options.appkey : undefined;
-  var authorization = (options && options.authorization !== undefined) ? options.authorization : undefined;
-  var userHandle = (options && options.userHandle !== undefined) ? options.userHandle : undefined;
   // Validate
   try {
     if (identityProvider) {
-      var allowedValues = [ 'Facebook', 'Microsoft', 'Google', 'Twitter', 'Beihai' ];
+      var allowedValues = [ 'Facebook', 'Microsoft', 'Google', 'Twitter', 'AADS2S', 'SocialPlus' ];
       if (!allowedValues.some( function(item) { return item === identityProvider; })) {
         throw new Error(identityProvider + ' is not a valid value. The valid values are: ' + allowedValues);
       }
     } else {
       throw new Error('identityProvider cannot be null or undefined.');
     }
-    if (appkey !== null && appkey !== undefined && typeof appkey.valueOf() !== 'string') {
-      throw new Error('appkey must be of type string.');
-    }
-    if (authorization !== null && authorization !== undefined && typeof authorization.valueOf() !== 'string') {
-      throw new Error('authorization must be of type string.');
-    }
-    if (userHandle !== null && userHandle !== undefined && typeof userHandle.valueOf() !== 'string') {
-      throw new Error('userHandle must be of type string.');
+    if (authorization === null || authorization === undefined || typeof authorization.valueOf() !== 'string') {
+      throw new Error('authorization cannot be null or undefined and it must be of type string.');
     }
   } catch (error) {
     return callback(error);
@@ -99,7 +95,7 @@ RequestTokens.prototype.getRequestToken = function (identityProvider, options, c
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.4/request_tokens/{identityProvider}';
+                   '//v0.5/request_tokens/{identityProvider}';
   requestUrl = requestUrl.replace('{identityProvider}', encodeURIComponent(identityProvider));
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
@@ -111,14 +107,8 @@ RequestTokens.prototype.getRequestToken = function (identityProvider, options, c
   httpRequest.headers = {};
   httpRequest.url = requestUrl;
   // Set Headers
-  if (appkey !== undefined && appkey !== null) {
-    httpRequest.headers['appkey'] = appkey;
-  }
   if (authorization !== undefined && authorization !== null) {
     httpRequest.headers['Authorization'] = authorization;
-  }
-  if (userHandle !== undefined && userHandle !== null) {
-    httpRequest.headers['UserHandle'] = userHandle;
   }
   if(options) {
     for(var headerName in options['customHeaders']) {

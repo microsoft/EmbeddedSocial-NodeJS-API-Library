@@ -25,22 +25,27 @@ function MyLinkedAccounts(client) {
 }
 
 /**
- * @summary Get linked accounts
+ * @summary Get linked accounts. Each user has at least two linked accounts:
+ * one SocialPlus account, and one (or more) third-party account.
  *
- * @param {string} authorization Authentication (must begin with string
- * "Bearer "). Possible values are:
+ * @param {string} authorization Format is: "Scheme CredentialsList". Possible
+ * values are:
  * 
- * -sessionToken for client auth
+ * - Anon AK=AppKey
  * 
- * -AAD token for service auth
+ * - SocialPlus TK=SessionToken
+ * 
+ * - Facebook AK=AppKey|TK=AccessToken
+ * 
+ * - Google AK=AppKey|TK=AccessToken
+ * 
+ * - Twitter AK=AppKey|RT=RequestToken|TK=AccessToken
+ * 
+ * - Microsoft AK=AppKey|TK=AccessToken
+ * 
+ * - AADS2S AK=AppKey|[UH=UserHandle]|TK=AADToken
  * 
  * @param {object} [options] Optional Parameters.
- * 
- * @param {string} [options.appkey] App key must be filled in when using AAD
- * tokens for Authentication.
- * 
- * @param {string} [options.userHandle] This field is for internal use only.
- * Do not provide a value except under special circumstances.
  * 
  * @param {object} [options.customHeaders] Headers that will be added to the
  * request
@@ -66,18 +71,10 @@ MyLinkedAccounts.prototype.getLinkedAccounts = function (authorization, options,
   if (!callback) {
     throw new Error('callback cannot be null.');
   }
-  var appkey = (options && options.appkey !== undefined) ? options.appkey : undefined;
-  var userHandle = (options && options.userHandle !== undefined) ? options.userHandle : undefined;
   // Validate
   try {
-    if (appkey !== null && appkey !== undefined && typeof appkey.valueOf() !== 'string') {
-      throw new Error('appkey must be of type string.');
-    }
     if (authorization === null || authorization === undefined || typeof authorization.valueOf() !== 'string') {
       throw new Error('authorization cannot be null or undefined and it must be of type string.');
-    }
-    if (userHandle !== null && userHandle !== undefined && typeof userHandle.valueOf() !== 'string') {
-      throw new Error('userHandle must be of type string.');
     }
   } catch (error) {
     return callback(error);
@@ -85,7 +82,7 @@ MyLinkedAccounts.prototype.getLinkedAccounts = function (authorization, options,
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.4/users/me/linked_accounts';
+                   '//v0.5/users/me/linked_accounts';
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
   requestUrl = requestUrl.replace(regex, '$1');
@@ -96,14 +93,8 @@ MyLinkedAccounts.prototype.getLinkedAccounts = function (authorization, options,
   httpRequest.headers = {};
   httpRequest.url = requestUrl;
   // Set Headers
-  if (appkey !== undefined && appkey !== null) {
-    httpRequest.headers['appkey'] = appkey;
-  }
   if (authorization !== undefined && authorization !== null) {
     httpRequest.headers['Authorization'] = authorization;
-  }
-  if (userHandle !== undefined && userHandle !== null) {
-    httpRequest.headers['UserHandle'] = userHandle;
   }
   if(options) {
     for(var headerName in options['customHeaders']) {
@@ -120,7 +111,7 @@ MyLinkedAccounts.prototype.getLinkedAccounts = function (authorization, options,
       return callback(err);
     }
     var statusCode = response.statusCode;
-    if (statusCode !== 200 && statusCode !== 400 && statusCode !== 401 && statusCode !== 500) {
+    if (statusCode !== 200 && statusCode !== 500) {
       var error = new Error(responseBody);
       error.statusCode = response.statusCode;
       error.request = msRest.stripRequest(httpRequest);
@@ -181,39 +172,34 @@ MyLinkedAccounts.prototype.getLinkedAccounts = function (authorization, options,
 };
 
 /**
- * @summary Create a new linked account
+ * @summary Create a new linked account.
+ * The account to be linked must appear in the Auth header of the
+ * request. This new third-party account
+ * will be linked against the credentials appearing in the session
+ * token passed in the body of the request.
  *
  * @param {object} request Post linked account request
  * 
- * @param {string} [request.identityProvider] Gets or sets identity provider
- * type. Possible values include: 'Facebook', 'Microsoft', 'Google',
- * 'Twitter', 'Beihai'
+ * @param {string} [request.sessionToken] Gets or sets a session token.
  * 
- * @param {string} [request.accessToken] Gets or sets access or authentication
- * token, user code, or verifier obtained from third-party provider.
- * The server contacts the third-party provider to use the token
- * (or user code, or verifier) for discover the user's identity.
+ * @param {string} authorization Format is: "Scheme CredentialsList". Possible
+ * values are:
  * 
- * @param {string} [request.requestToken] Gets or sets request token obtained
- * from third-party provider.
- * Some providers do not issue authentication or access tokens,
- * but they issue request tokens
- * and verifiers.
+ * - Anon AK=AppKey
  * 
- * @param {string} authorization Authentication (must begin with string
- * "Bearer "). Possible values are:
+ * - SocialPlus TK=SessionToken
  * 
- * -sessionToken for client auth
+ * - Facebook AK=AppKey|TK=AccessToken
  * 
- * -AAD token for service auth
+ * - Google AK=AppKey|TK=AccessToken
+ * 
+ * - Twitter AK=AppKey|RT=RequestToken|TK=AccessToken
+ * 
+ * - Microsoft AK=AppKey|TK=AccessToken
+ * 
+ * - AADS2S AK=AppKey|[UH=UserHandle]|TK=AADToken
  * 
  * @param {object} [options] Optional Parameters.
- * 
- * @param {string} [options.appkey] App key must be filled in when using AAD
- * tokens for Authentication.
- * 
- * @param {string} [options.userHandle] This field is for internal use only.
- * Do not provide a value except under special circumstances.
  * 
  * @param {object} [options.customHeaders] Headers that will be added to the
  * request
@@ -239,21 +225,13 @@ MyLinkedAccounts.prototype.postLinkedAccount = function (request, authorization,
   if (!callback) {
     throw new Error('callback cannot be null.');
   }
-  var appkey = (options && options.appkey !== undefined) ? options.appkey : undefined;
-  var userHandle = (options && options.userHandle !== undefined) ? options.userHandle : undefined;
   // Validate
   try {
     if (request === null || request === undefined) {
       throw new Error('request cannot be null or undefined.');
     }
-    if (appkey !== null && appkey !== undefined && typeof appkey.valueOf() !== 'string') {
-      throw new Error('appkey must be of type string.');
-    }
     if (authorization === null || authorization === undefined || typeof authorization.valueOf() !== 'string') {
       throw new Error('authorization cannot be null or undefined and it must be of type string.');
-    }
-    if (userHandle !== null && userHandle !== undefined && typeof userHandle.valueOf() !== 'string') {
-      throw new Error('userHandle must be of type string.');
     }
   } catch (error) {
     return callback(error);
@@ -261,7 +239,7 @@ MyLinkedAccounts.prototype.postLinkedAccount = function (request, authorization,
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.4/users/me/linked_accounts';
+                   '//v0.5/users/me/linked_accounts';
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
   requestUrl = requestUrl.replace(regex, '$1');
@@ -272,14 +250,8 @@ MyLinkedAccounts.prototype.postLinkedAccount = function (request, authorization,
   httpRequest.headers = {};
   httpRequest.url = requestUrl;
   // Set Headers
-  if (appkey !== undefined && appkey !== null) {
-    httpRequest.headers['appkey'] = appkey;
-  }
   if (authorization !== undefined && authorization !== null) {
     httpRequest.headers['Authorization'] = authorization;
-  }
-  if (userHandle !== undefined && userHandle !== null) {
-    httpRequest.headers['UserHandle'] = userHandle;
   }
   if(options) {
     for(var headerName in options['customHeaders']) {
@@ -310,7 +282,7 @@ MyLinkedAccounts.prototype.postLinkedAccount = function (request, authorization,
       return callback(err);
     }
     var statusCode = response.statusCode;
-    if (statusCode !== 204 && statusCode !== 400 && statusCode !== 401 && statusCode !== 409 && statusCode !== 500) {
+    if (statusCode !== 204 && statusCode !== 400 && statusCode !== 409) {
       var error = new Error(responseBody);
       error.statusCode = response.statusCode;
       error.request = msRest.stripRequest(httpRequest);
@@ -366,22 +338,27 @@ MyLinkedAccounts.prototype.postLinkedAccount = function (request, authorization,
  * @summary Delete linked account
  *
  * @param {string} identityProvider Identity provider type. Possible values
- * include: 'Facebook', 'Microsoft', 'Google', 'Twitter', 'Beihai'
+ * include: 'Facebook', 'Microsoft', 'Google', 'Twitter', 'AADS2S',
+ * 'SocialPlus'
  * 
- * @param {string} authorization Authentication (must begin with string
- * "Bearer "). Possible values are:
+ * @param {string} authorization Format is: "Scheme CredentialsList". Possible
+ * values are:
  * 
- * -sessionToken for client auth
+ * - Anon AK=AppKey
  * 
- * -AAD token for service auth
+ * - SocialPlus TK=SessionToken
+ * 
+ * - Facebook AK=AppKey|TK=AccessToken
+ * 
+ * - Google AK=AppKey|TK=AccessToken
+ * 
+ * - Twitter AK=AppKey|RT=RequestToken|TK=AccessToken
+ * 
+ * - Microsoft AK=AppKey|TK=AccessToken
+ * 
+ * - AADS2S AK=AppKey|[UH=UserHandle]|TK=AADToken
  * 
  * @param {object} [options] Optional Parameters.
- * 
- * @param {string} [options.appkey] App key must be filled in when using AAD
- * tokens for Authentication.
- * 
- * @param {string} [options.userHandle] This field is for internal use only.
- * Do not provide a value except under special circumstances.
  * 
  * @param {object} [options.customHeaders] Headers that will be added to the
  * request
@@ -407,26 +384,18 @@ MyLinkedAccounts.prototype.deleteLinkedAccount = function (identityProvider, aut
   if (!callback) {
     throw new Error('callback cannot be null.');
   }
-  var appkey = (options && options.appkey !== undefined) ? options.appkey : undefined;
-  var userHandle = (options && options.userHandle !== undefined) ? options.userHandle : undefined;
   // Validate
   try {
     if (identityProvider) {
-      var allowedValues = [ 'Facebook', 'Microsoft', 'Google', 'Twitter', 'Beihai' ];
+      var allowedValues = [ 'Facebook', 'Microsoft', 'Google', 'Twitter', 'AADS2S', 'SocialPlus' ];
       if (!allowedValues.some( function(item) { return item === identityProvider; })) {
         throw new Error(identityProvider + ' is not a valid value. The valid values are: ' + allowedValues);
       }
     } else {
       throw new Error('identityProvider cannot be null or undefined.');
     }
-    if (appkey !== null && appkey !== undefined && typeof appkey.valueOf() !== 'string') {
-      throw new Error('appkey must be of type string.');
-    }
     if (authorization === null || authorization === undefined || typeof authorization.valueOf() !== 'string') {
       throw new Error('authorization cannot be null or undefined and it must be of type string.');
-    }
-    if (userHandle !== null && userHandle !== undefined && typeof userHandle.valueOf() !== 'string') {
-      throw new Error('userHandle must be of type string.');
     }
   } catch (error) {
     return callback(error);
@@ -434,7 +403,7 @@ MyLinkedAccounts.prototype.deleteLinkedAccount = function (identityProvider, aut
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.4/users/me/linked_accounts/{identityProvider}';
+                   '//v0.5/users/me/linked_accounts/{identityProvider}';
   requestUrl = requestUrl.replace('{identityProvider}', encodeURIComponent(identityProvider));
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
@@ -446,14 +415,8 @@ MyLinkedAccounts.prototype.deleteLinkedAccount = function (identityProvider, aut
   httpRequest.headers = {};
   httpRequest.url = requestUrl;
   // Set Headers
-  if (appkey !== undefined && appkey !== null) {
-    httpRequest.headers['appkey'] = appkey;
-  }
   if (authorization !== undefined && authorization !== null) {
     httpRequest.headers['Authorization'] = authorization;
-  }
-  if (userHandle !== undefined && userHandle !== null) {
-    httpRequest.headers['UserHandle'] = userHandle;
   }
   if(options) {
     for(var headerName in options['customHeaders']) {
@@ -470,7 +433,7 @@ MyLinkedAccounts.prototype.deleteLinkedAccount = function (identityProvider, aut
       return callback(err);
     }
     var statusCode = response.statusCode;
-    if (statusCode !== 204 && statusCode !== 400 && statusCode !== 401 && statusCode !== 403 && statusCode !== 404 && statusCode !== 500) {
+    if (statusCode !== 204 && statusCode !== 400 && statusCode !== 401 && statusCode !== 404 && statusCode !== 500) {
       var error = new Error(responseBody);
       error.statusCode = response.statusCode;
       error.request = msRest.stripRequest(httpRequest);

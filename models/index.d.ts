@@ -697,31 +697,15 @@ export interface PostReportRequest {
  * Initializes a new instance of the PostSessionRequest class.
  * @constructor
  * Request to post (create) session
- * @member {string} identityProvider Gets or sets identity provider type.
- * Possible values include: 'Facebook', 'Microsoft', 'Google', 'Twitter',
- * 'Beihai'
- * 
- * @member {string} [accessToken] Gets or sets access or authentication token,
- * user code, or verifier obtained from third-party provider.
- * The server contacts the third-party provider to use the token
- * (or user code, or verifier) for discover the user's identity.
- * For S2S auth, the access token must be set to the user handle
- * 
- * @member {string} [requestToken] Gets or sets request token obtained from
- * third-party provider.
- * Some providers do not issue authentication or access tokens,
- * but they issue request tokens
- * and verifiers.
- * 
  * @member {string} instanceId Gets or sets instance id -- Unique installation
  * id of the app
  * 
+ * @member {string} userHandle Gets or sets user handle
+ * 
  */
 export interface PostSessionRequest {
-    identityProvider: string;
-    accessToken?: string;
-    requestToken?: string;
     instanceId: string;
+    userHandle: string;
 }
 
 /**
@@ -769,14 +753,26 @@ export interface PostFollowerRequest {
 
 /**
  * @class
- * Initializes a new instance of the PostFollowingRequest class.
+ * Initializes a new instance of the PostFollowingUserRequest class.
  * @constructor
- * Request to post a following (follow user)
+ * Request to follow a user
  * @member {string} userHandle Gets or sets user handle
  * 
  */
-export interface PostFollowingRequest {
+export interface PostFollowingUserRequest {
     userHandle: string;
+}
+
+/**
+ * @class
+ * Initializes a new instance of the PostFollowingTopicRequest class.
+ * @constructor
+ * Request to follow a topic
+ * @member {string} topicHandle Gets or sets topic handle
+ * 
+ */
+export interface PostFollowingTopicRequest {
+    topicHandle: string;
 }
 
 /**
@@ -927,26 +923,11 @@ export interface GetTopicNameResponse {
  * Initializes a new instance of the PostLinkedAccountRequest class.
  * @constructor
  * Request to post (create) linked account
- * @member {string} identityProvider Gets or sets identity provider type.
- * Possible values include: 'Facebook', 'Microsoft', 'Google', 'Twitter',
- * 'Beihai'
- * 
- * @member {string} [accessToken] Gets or sets access or authentication token,
- * user code, or verifier obtained from third-party provider.
- * The server contacts the third-party provider to use the token
- * (or user code, or verifier) for discover the user's identity.
- * 
- * @member {string} [requestToken] Gets or sets request token obtained from
- * third-party provider.
- * Some providers do not issue authentication or access tokens,
- * but they issue request tokens
- * and verifiers.
+ * @member {string} sessionToken Gets or sets a session token.
  * 
  */
 export interface PostLinkedAccountRequest {
-    identityProvider: string;
-    accessToken?: string;
-    requestToken?: string;
+    sessionToken: string;
 }
 
 /**
@@ -956,7 +937,7 @@ export interface PostLinkedAccountRequest {
  * Linked account view
  * @member {string} identityProvider Gets or sets identity provider type.
  * Possible values include: 'Facebook', 'Microsoft', 'Google', 'Twitter',
- * 'Beihai'
+ * 'AADS2S', 'SocialPlus'
  * 
  * @member {string} accountId Gets or sets third party account id -- Unique
  * user id provided by the third-party identity provider
@@ -972,21 +953,6 @@ export interface LinkedAccountView {
  * Initializes a new instance of the PostUserRequest class.
  * @constructor
  * Request to post (create) user
- * @member {string} identityProvider Gets or sets identity provider type.
- * Possible values include: 'Facebook', 'Microsoft', 'Google', 'Twitter',
- * 'Beihai'
- * 
- * @member {string} [accessToken] Gets or sets access or authentication token
- * obtained from third-party provider.
- * The server contacts the third-party provider to validate the
- * token
- * 
- * @member {string} [requestToken] Gets or sets request token obtained from
- * third-party provider.
- * Some providers do not issue authentication or access tokens,
- * but they issue request tokens
- * and verifiers.
- * 
  * @member {string} instanceId Gets or sets instance id -- Unique installation
  * id of the app
  * 
@@ -1000,9 +966,6 @@ export interface LinkedAccountView {
  * 
  */
 export interface PostUserRequest {
-    identityProvider: string;
-    accessToken?: string;
-    requestToken?: string;
     instanceId: string;
     firstName: string;
     lastName: string;

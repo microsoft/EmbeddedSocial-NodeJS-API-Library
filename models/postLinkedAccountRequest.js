@@ -11,20 +11,7 @@
  * Initializes a new instance of the PostLinkedAccountRequest class.
  * @constructor
  * Request to post (create) linked account
- * @member {string} identityProvider Gets or sets identity provider type.
- * Possible values include: 'Facebook', 'Microsoft', 'Google', 'Twitter',
- * 'Beihai'
- * 
- * @member {string} [accessToken] Gets or sets access or authentication token,
- * user code, or verifier obtained from third-party provider.
- * The server contacts the third-party provider to use the token
- * (or user code, or verifier) for discover the user's identity.
- * 
- * @member {string} [requestToken] Gets or sets request token obtained from
- * third-party provider.
- * Some providers do not issue authentication or access tokens,
- * but they issue request tokens
- * and verifiers.
+ * @member {string} sessionToken Gets or sets a session token.
  * 
  */
 function PostLinkedAccountRequest() {
@@ -44,24 +31,9 @@ PostLinkedAccountRequest.prototype.mapper = function () {
       name: 'Composite',
       className: 'PostLinkedAccountRequest',
       modelProperties: {
-        identityProvider: {
+        sessionToken: {
           required: true,
-          serializedName: 'identityProvider',
-          type: {
-            name: 'Enum',
-            allowedValues: [ 'Facebook', 'Microsoft', 'Google', 'Twitter', 'Beihai' ]
-          }
-        },
-        accessToken: {
-          required: false,
-          serializedName: 'accessToken',
-          type: {
-            name: 'String'
-          }
-        },
-        requestToken: {
-          required: false,
-          serializedName: 'requestToken',
+          serializedName: 'sessionToken',
           type: {
             name: 'String'
           }

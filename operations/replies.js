@@ -29,20 +29,24 @@ function Replies(client) {
  *
  * @param {string} replyHandle Reply handle
  * 
- * @param {string} authorization Authentication (must begin with string
- * "Bearer "). Possible values are:
+ * @param {string} authorization Format is: "Scheme CredentialsList". Possible
+ * values are:
  * 
- * -sessionToken for client auth
+ * - Anon AK=AppKey
  * 
- * -AAD token for service auth
+ * - SocialPlus TK=SessionToken
+ * 
+ * - Facebook AK=AppKey|TK=AccessToken
+ * 
+ * - Google AK=AppKey|TK=AccessToken
+ * 
+ * - Twitter AK=AppKey|RT=RequestToken|TK=AccessToken
+ * 
+ * - Microsoft AK=AppKey|TK=AccessToken
+ * 
+ * - AADS2S AK=AppKey|[UH=UserHandle]|TK=AADToken
  * 
  * @param {object} [options] Optional Parameters.
- * 
- * @param {string} [options.appkey] App key must be filled in when using AAD
- * tokens for Authentication.
- * 
- * @param {string} [options.userHandle] This field is for internal use only.
- * Do not provide a value except under special circumstances.
  * 
  * @param {object} [options.customHeaders] Headers that will be added to the
  * request
@@ -69,21 +73,13 @@ Replies.prototype.getReply = function (replyHandle, authorization, options, call
   if (!callback) {
     throw new Error('callback cannot be null.');
   }
-  var appkey = (options && options.appkey !== undefined) ? options.appkey : undefined;
-  var userHandle = (options && options.userHandle !== undefined) ? options.userHandle : undefined;
   // Validate
   try {
     if (replyHandle === null || replyHandle === undefined || typeof replyHandle.valueOf() !== 'string') {
       throw new Error('replyHandle cannot be null or undefined and it must be of type string.');
     }
-    if (appkey !== null && appkey !== undefined && typeof appkey.valueOf() !== 'string') {
-      throw new Error('appkey must be of type string.');
-    }
     if (authorization === null || authorization === undefined || typeof authorization.valueOf() !== 'string') {
       throw new Error('authorization cannot be null or undefined and it must be of type string.');
-    }
-    if (userHandle !== null && userHandle !== undefined && typeof userHandle.valueOf() !== 'string') {
-      throw new Error('userHandle must be of type string.');
     }
   } catch (error) {
     return callback(error);
@@ -91,7 +87,7 @@ Replies.prototype.getReply = function (replyHandle, authorization, options, call
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.4/replies/{replyHandle}';
+                   '//v0.5/replies/{replyHandle}';
   requestUrl = requestUrl.replace('{replyHandle}', encodeURIComponent(replyHandle));
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
@@ -103,14 +99,8 @@ Replies.prototype.getReply = function (replyHandle, authorization, options, call
   httpRequest.headers = {};
   httpRequest.url = requestUrl;
   // Set Headers
-  if (appkey !== undefined && appkey !== null) {
-    httpRequest.headers['appkey'] = appkey;
-  }
   if (authorization !== undefined && authorization !== null) {
     httpRequest.headers['Authorization'] = authorization;
-  }
-  if (userHandle !== undefined && userHandle !== null) {
-    httpRequest.headers['UserHandle'] = userHandle;
   }
   if(options) {
     for(var headerName in options['customHeaders']) {
@@ -178,20 +168,24 @@ Replies.prototype.getReply = function (replyHandle, authorization, options, call
  *
  * @param {string} replyHandle Reply handle
  * 
- * @param {string} authorization Authentication (must begin with string
- * "Bearer "). Possible values are:
+ * @param {string} authorization Format is: "Scheme CredentialsList". Possible
+ * values are:
  * 
- * -sessionToken for client auth
+ * - Anon AK=AppKey
  * 
- * -AAD token for service auth
+ * - SocialPlus TK=SessionToken
+ * 
+ * - Facebook AK=AppKey|TK=AccessToken
+ * 
+ * - Google AK=AppKey|TK=AccessToken
+ * 
+ * - Twitter AK=AppKey|RT=RequestToken|TK=AccessToken
+ * 
+ * - Microsoft AK=AppKey|TK=AccessToken
+ * 
+ * - AADS2S AK=AppKey|[UH=UserHandle]|TK=AADToken
  * 
  * @param {object} [options] Optional Parameters.
- * 
- * @param {string} [options.appkey] App key must be filled in when using AAD
- * tokens for Authentication.
- * 
- * @param {string} [options.userHandle] This field is for internal use only.
- * Do not provide a value except under special circumstances.
  * 
  * @param {object} [options.customHeaders] Headers that will be added to the
  * request
@@ -217,21 +211,13 @@ Replies.prototype.deleteReply = function (replyHandle, authorization, options, c
   if (!callback) {
     throw new Error('callback cannot be null.');
   }
-  var appkey = (options && options.appkey !== undefined) ? options.appkey : undefined;
-  var userHandle = (options && options.userHandle !== undefined) ? options.userHandle : undefined;
   // Validate
   try {
     if (replyHandle === null || replyHandle === undefined || typeof replyHandle.valueOf() !== 'string') {
       throw new Error('replyHandle cannot be null or undefined and it must be of type string.');
     }
-    if (appkey !== null && appkey !== undefined && typeof appkey.valueOf() !== 'string') {
-      throw new Error('appkey must be of type string.');
-    }
     if (authorization === null || authorization === undefined || typeof authorization.valueOf() !== 'string') {
       throw new Error('authorization cannot be null or undefined and it must be of type string.');
-    }
-    if (userHandle !== null && userHandle !== undefined && typeof userHandle.valueOf() !== 'string') {
-      throw new Error('userHandle must be of type string.');
     }
   } catch (error) {
     return callback(error);
@@ -239,7 +225,7 @@ Replies.prototype.deleteReply = function (replyHandle, authorization, options, c
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.4/replies/{replyHandle}';
+                   '//v0.5/replies/{replyHandle}';
   requestUrl = requestUrl.replace('{replyHandle}', encodeURIComponent(replyHandle));
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
@@ -251,14 +237,8 @@ Replies.prototype.deleteReply = function (replyHandle, authorization, options, c
   httpRequest.headers = {};
   httpRequest.url = requestUrl;
   // Set Headers
-  if (appkey !== undefined && appkey !== null) {
-    httpRequest.headers['appkey'] = appkey;
-  }
   if (authorization !== undefined && authorization !== null) {
     httpRequest.headers['Authorization'] = authorization;
-  }
-  if (userHandle !== undefined && userHandle !== null) {
-    httpRequest.headers['UserHandle'] = userHandle;
   }
   if(options) {
     for(var headerName in options['customHeaders']) {

@@ -27,20 +27,24 @@ function Hashtags(client) {
 /**
  * @summary Get trending hashtags
  *
+ * @param {string} authorization Format is: "Scheme CredentialsList". Possible
+ * values are:
+ * 
+ * - Anon AK=AppKey
+ * 
+ * - SocialPlus TK=SessionToken
+ * 
+ * - Facebook AK=AppKey|TK=AccessToken
+ * 
+ * - Google AK=AppKey|TK=AccessToken
+ * 
+ * - Twitter AK=AppKey|RT=RequestToken|TK=AccessToken
+ * 
+ * - Microsoft AK=AppKey|TK=AccessToken
+ * 
+ * - AADS2S AK=AppKey|[UH=UserHandle]|TK=AADToken
+ * 
  * @param {object} [options] Optional Parameters.
- * 
- * @param {string} [options.appkey] App key must be filled in when using AAD
- * tokens for Authentication.
- * 
- * @param {string} [options.authorization] Authentication (must begin with
- * string "Bearer "). Possible values are:
- * 
- * -sessionToken for client auth
- * 
- * -AAD token for service auth
- * 
- * @param {string} [options.userHandle] This field is for internal use only.
- * Do not provide a value except under special circumstances.
  * 
  * @param {object} [options.customHeaders] Headers that will be added to the
  * request
@@ -57,7 +61,7 @@ function Hashtags(client) {
  *
  *                      {stream} [response] - The HTTP Response stream if an error did not occur.
  */
-Hashtags.prototype.getTrendingHashtags = function (options, callback) {
+Hashtags.prototype.getTrendingHashtags = function (authorization, options, callback) {
   var client = this.client;
   if(!callback && typeof options === 'function') {
     callback = options;
@@ -66,19 +70,10 @@ Hashtags.prototype.getTrendingHashtags = function (options, callback) {
   if (!callback) {
     throw new Error('callback cannot be null.');
   }
-  var appkey = (options && options.appkey !== undefined) ? options.appkey : undefined;
-  var authorization = (options && options.authorization !== undefined) ? options.authorization : undefined;
-  var userHandle = (options && options.userHandle !== undefined) ? options.userHandle : undefined;
   // Validate
   try {
-    if (appkey !== null && appkey !== undefined && typeof appkey.valueOf() !== 'string') {
-      throw new Error('appkey must be of type string.');
-    }
-    if (authorization !== null && authorization !== undefined && typeof authorization.valueOf() !== 'string') {
-      throw new Error('authorization must be of type string.');
-    }
-    if (userHandle !== null && userHandle !== undefined && typeof userHandle.valueOf() !== 'string') {
-      throw new Error('userHandle must be of type string.');
+    if (authorization === null || authorization === undefined || typeof authorization.valueOf() !== 'string') {
+      throw new Error('authorization cannot be null or undefined and it must be of type string.');
     }
   } catch (error) {
     return callback(error);
@@ -86,7 +81,7 @@ Hashtags.prototype.getTrendingHashtags = function (options, callback) {
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.4/hashtags/trending';
+                   '//v0.5/hashtags/trending';
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
   requestUrl = requestUrl.replace(regex, '$1');
@@ -97,14 +92,8 @@ Hashtags.prototype.getTrendingHashtags = function (options, callback) {
   httpRequest.headers = {};
   httpRequest.url = requestUrl;
   // Set Headers
-  if (appkey !== undefined && appkey !== null) {
-    httpRequest.headers['appkey'] = appkey;
-  }
   if (authorization !== undefined && authorization !== null) {
     httpRequest.headers['Authorization'] = authorization;
-  }
-  if (userHandle !== undefined && userHandle !== null) {
-    httpRequest.headers['UserHandle'] = userHandle;
   }
   if(options) {
     for(var headerName in options['customHeaders']) {
@@ -183,22 +172,29 @@ Hashtags.prototype.getTrendingHashtags = function (options, callback) {
 /**
  * @summary Get autocompleted hashtags
  *
+ * The query string must be at least 3 characters long, and no more than 25
+ * characters long.
+ *
  * @param {string} query Search query
  * 
+ * @param {string} authorization Format is: "Scheme CredentialsList". Possible
+ * values are:
+ * 
+ * - Anon AK=AppKey
+ * 
+ * - SocialPlus TK=SessionToken
+ * 
+ * - Facebook AK=AppKey|TK=AccessToken
+ * 
+ * - Google AK=AppKey|TK=AccessToken
+ * 
+ * - Twitter AK=AppKey|RT=RequestToken|TK=AccessToken
+ * 
+ * - Microsoft AK=AppKey|TK=AccessToken
+ * 
+ * - AADS2S AK=AppKey|[UH=UserHandle]|TK=AADToken
+ * 
  * @param {object} [options] Optional Parameters.
- * 
- * @param {string} [options.appkey] App key must be filled in when using AAD
- * tokens for Authentication.
- * 
- * @param {string} [options.authorization] Authentication (must begin with
- * string "Bearer "). Possible values are:
- * 
- * -sessionToken for client auth
- * 
- * -AAD token for service auth
- * 
- * @param {string} [options.userHandle] This field is for internal use only.
- * Do not provide a value except under special circumstances.
  * 
  * @param {object} [options.customHeaders] Headers that will be added to the
  * request
@@ -215,7 +211,7 @@ Hashtags.prototype.getTrendingHashtags = function (options, callback) {
  *
  *                      {stream} [response] - The HTTP Response stream if an error did not occur.
  */
-Hashtags.prototype.getAutocompletedHashtags = function (query, options, callback) {
+Hashtags.prototype.getAutocompletedHashtags = function (query, authorization, options, callback) {
   var client = this.client;
   if(!callback && typeof options === 'function') {
     callback = options;
@@ -224,22 +220,13 @@ Hashtags.prototype.getAutocompletedHashtags = function (query, options, callback
   if (!callback) {
     throw new Error('callback cannot be null.');
   }
-  var appkey = (options && options.appkey !== undefined) ? options.appkey : undefined;
-  var authorization = (options && options.authorization !== undefined) ? options.authorization : undefined;
-  var userHandle = (options && options.userHandle !== undefined) ? options.userHandle : undefined;
   // Validate
   try {
     if (query === null || query === undefined || typeof query.valueOf() !== 'string') {
       throw new Error('query cannot be null or undefined and it must be of type string.');
     }
-    if (appkey !== null && appkey !== undefined && typeof appkey.valueOf() !== 'string') {
-      throw new Error('appkey must be of type string.');
-    }
-    if (authorization !== null && authorization !== undefined && typeof authorization.valueOf() !== 'string') {
-      throw new Error('authorization must be of type string.');
-    }
-    if (userHandle !== null && userHandle !== undefined && typeof userHandle.valueOf() !== 'string') {
-      throw new Error('userHandle must be of type string.');
+    if (authorization === null || authorization === undefined || typeof authorization.valueOf() !== 'string') {
+      throw new Error('authorization cannot be null or undefined and it must be of type string.');
     }
   } catch (error) {
     return callback(error);
@@ -247,7 +234,7 @@ Hashtags.prototype.getAutocompletedHashtags = function (query, options, callback
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.4/hashtags/autocomplete';
+                   '//v0.5/hashtags/autocomplete';
   var queryParameters = [];
   queryParameters.push('query=' + encodeURIComponent(query));
   if (queryParameters.length > 0) {
@@ -263,14 +250,8 @@ Hashtags.prototype.getAutocompletedHashtags = function (query, options, callback
   httpRequest.headers = {};
   httpRequest.url = requestUrl;
   // Set Headers
-  if (appkey !== undefined && appkey !== null) {
-    httpRequest.headers['appkey'] = appkey;
-  }
   if (authorization !== undefined && authorization !== null) {
     httpRequest.headers['Authorization'] = authorization;
-  }
-  if (userHandle !== undefined && userHandle !== null) {
-    httpRequest.headers['UserHandle'] = userHandle;
   }
   if(options) {
     for(var headerName in options['customHeaders']) {

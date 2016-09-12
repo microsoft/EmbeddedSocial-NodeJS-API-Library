@@ -11,21 +11,6 @@
  * Initializes a new instance of the PostUserRequest class.
  * @constructor
  * Request to post (create) user
- * @member {string} identityProvider Gets or sets identity provider type.
- * Possible values include: 'Facebook', 'Microsoft', 'Google', 'Twitter',
- * 'Beihai'
- * 
- * @member {string} [accessToken] Gets or sets access or authentication token
- * obtained from third-party provider.
- * The server contacts the third-party provider to validate the
- * token
- * 
- * @member {string} [requestToken] Gets or sets request token obtained from
- * third-party provider.
- * Some providers do not issue authentication or access tokens,
- * but they issue request tokens
- * and verifiers.
- * 
  * @member {string} instanceId Gets or sets instance id -- Unique installation
  * id of the app
  * 
@@ -55,28 +40,6 @@ PostUserRequest.prototype.mapper = function () {
       name: 'Composite',
       className: 'PostUserRequest',
       modelProperties: {
-        identityProvider: {
-          required: true,
-          serializedName: 'identityProvider',
-          type: {
-            name: 'Enum',
-            allowedValues: [ 'Facebook', 'Microsoft', 'Google', 'Twitter', 'Beihai' ]
-          }
-        },
-        accessToken: {
-          required: false,
-          serializedName: 'accessToken',
-          type: {
-            name: 'String'
-          }
-        },
-        requestToken: {
-          required: false,
-          serializedName: 'requestToken',
-          type: {
-            name: 'String'
-          }
-        },
         instanceId: {
           required: true,
           serializedName: 'instanceId',

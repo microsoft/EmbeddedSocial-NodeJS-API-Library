@@ -29,24 +29,28 @@ function TopicLikes(client) {
  *
  * @param {string} topicHandle Topic handle
  * 
+ * @param {string} authorization Format is: "Scheme CredentialsList". Possible
+ * values are:
+ * 
+ * - Anon AK=AppKey
+ * 
+ * - SocialPlus TK=SessionToken
+ * 
+ * - Facebook AK=AppKey|TK=AccessToken
+ * 
+ * - Google AK=AppKey|TK=AccessToken
+ * 
+ * - Twitter AK=AppKey|RT=RequestToken|TK=AccessToken
+ * 
+ * - Microsoft AK=AppKey|TK=AccessToken
+ * 
+ * - AADS2S AK=AppKey|[UH=UserHandle]|TK=AADToken
+ * 
  * @param {object} [options] Optional Parameters.
  * 
  * @param {string} [options.cursor] Current read cursor
  * 
  * @param {number} [options.limit] Number of items to return
- * 
- * @param {string} [options.appkey] App key must be filled in when using AAD
- * tokens for Authentication.
- * 
- * @param {string} [options.authorization] Authentication (must begin with
- * string "Bearer "). Possible values are:
- * 
- * -sessionToken for client auth
- * 
- * -AAD token for service auth
- * 
- * @param {string} [options.userHandle] This field is for internal use only.
- * Do not provide a value except under special circumstances.
  * 
  * @param {object} [options.customHeaders] Headers that will be added to the
  * request
@@ -65,7 +69,7 @@ function TopicLikes(client) {
  *
  *                      {stream} [response] - The HTTP Response stream if an error did not occur.
  */
-TopicLikes.prototype.getLikes = function (topicHandle, options, callback) {
+TopicLikes.prototype.getLikes = function (topicHandle, authorization, options, callback) {
   var client = this.client;
   if(!callback && typeof options === 'function') {
     callback = options;
@@ -76,9 +80,6 @@ TopicLikes.prototype.getLikes = function (topicHandle, options, callback) {
   }
   var cursor = (options && options.cursor !== undefined) ? options.cursor : undefined;
   var limit = (options && options.limit !== undefined) ? options.limit : undefined;
-  var appkey = (options && options.appkey !== undefined) ? options.appkey : undefined;
-  var authorization = (options && options.authorization !== undefined) ? options.authorization : undefined;
-  var userHandle = (options && options.userHandle !== undefined) ? options.userHandle : undefined;
   // Validate
   try {
     if (topicHandle === null || topicHandle === undefined || typeof topicHandle.valueOf() !== 'string') {
@@ -90,14 +91,8 @@ TopicLikes.prototype.getLikes = function (topicHandle, options, callback) {
     if (limit !== null && limit !== undefined && typeof limit !== 'number') {
       throw new Error('limit must be of type number.');
     }
-    if (appkey !== null && appkey !== undefined && typeof appkey.valueOf() !== 'string') {
-      throw new Error('appkey must be of type string.');
-    }
-    if (authorization !== null && authorization !== undefined && typeof authorization.valueOf() !== 'string') {
-      throw new Error('authorization must be of type string.');
-    }
-    if (userHandle !== null && userHandle !== undefined && typeof userHandle.valueOf() !== 'string') {
-      throw new Error('userHandle must be of type string.');
+    if (authorization === null || authorization === undefined || typeof authorization.valueOf() !== 'string') {
+      throw new Error('authorization cannot be null or undefined and it must be of type string.');
     }
   } catch (error) {
     return callback(error);
@@ -105,7 +100,7 @@ TopicLikes.prototype.getLikes = function (topicHandle, options, callback) {
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.4/topics/{topicHandle}/likes';
+                   '//v0.5/topics/{topicHandle}/likes';
   requestUrl = requestUrl.replace('{topicHandle}', encodeURIComponent(topicHandle));
   var queryParameters = [];
   if (cursor !== null && cursor !== undefined) {
@@ -127,14 +122,8 @@ TopicLikes.prototype.getLikes = function (topicHandle, options, callback) {
   httpRequest.headers = {};
   httpRequest.url = requestUrl;
   // Set Headers
-  if (appkey !== undefined && appkey !== null) {
-    httpRequest.headers['appkey'] = appkey;
-  }
   if (authorization !== undefined && authorization !== null) {
     httpRequest.headers['Authorization'] = authorization;
-  }
-  if (userHandle !== undefined && userHandle !== null) {
-    httpRequest.headers['UserHandle'] = userHandle;
   }
   if(options) {
     for(var headerName in options['customHeaders']) {
@@ -202,20 +191,24 @@ TopicLikes.prototype.getLikes = function (topicHandle, options, callback) {
  *
  * @param {string} topicHandle Topic handle
  * 
- * @param {string} authorization Authentication (must begin with string
- * "Bearer "). Possible values are:
+ * @param {string} authorization Format is: "Scheme CredentialsList". Possible
+ * values are:
  * 
- * -sessionToken for client auth
+ * - Anon AK=AppKey
  * 
- * -AAD token for service auth
+ * - SocialPlus TK=SessionToken
+ * 
+ * - Facebook AK=AppKey|TK=AccessToken
+ * 
+ * - Google AK=AppKey|TK=AccessToken
+ * 
+ * - Twitter AK=AppKey|RT=RequestToken|TK=AccessToken
+ * 
+ * - Microsoft AK=AppKey|TK=AccessToken
+ * 
+ * - AADS2S AK=AppKey|[UH=UserHandle]|TK=AADToken
  * 
  * @param {object} [options] Optional Parameters.
- * 
- * @param {string} [options.appkey] App key must be filled in when using AAD
- * tokens for Authentication.
- * 
- * @param {string} [options.userHandle] This field is for internal use only.
- * Do not provide a value except under special circumstances.
  * 
  * @param {object} [options.customHeaders] Headers that will be added to the
  * request
@@ -241,21 +234,13 @@ TopicLikes.prototype.postLike = function (topicHandle, authorization, options, c
   if (!callback) {
     throw new Error('callback cannot be null.');
   }
-  var appkey = (options && options.appkey !== undefined) ? options.appkey : undefined;
-  var userHandle = (options && options.userHandle !== undefined) ? options.userHandle : undefined;
   // Validate
   try {
     if (topicHandle === null || topicHandle === undefined || typeof topicHandle.valueOf() !== 'string') {
       throw new Error('topicHandle cannot be null or undefined and it must be of type string.');
     }
-    if (appkey !== null && appkey !== undefined && typeof appkey.valueOf() !== 'string') {
-      throw new Error('appkey must be of type string.');
-    }
     if (authorization === null || authorization === undefined || typeof authorization.valueOf() !== 'string') {
       throw new Error('authorization cannot be null or undefined and it must be of type string.');
-    }
-    if (userHandle !== null && userHandle !== undefined && typeof userHandle.valueOf() !== 'string') {
-      throw new Error('userHandle must be of type string.');
     }
   } catch (error) {
     return callback(error);
@@ -263,7 +248,7 @@ TopicLikes.prototype.postLike = function (topicHandle, authorization, options, c
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.4/topics/{topicHandle}/likes';
+                   '//v0.5/topics/{topicHandle}/likes';
   requestUrl = requestUrl.replace('{topicHandle}', encodeURIComponent(topicHandle));
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
@@ -275,14 +260,8 @@ TopicLikes.prototype.postLike = function (topicHandle, authorization, options, c
   httpRequest.headers = {};
   httpRequest.url = requestUrl;
   // Set Headers
-  if (appkey !== undefined && appkey !== null) {
-    httpRequest.headers['appkey'] = appkey;
-  }
   if (authorization !== undefined && authorization !== null) {
     httpRequest.headers['Authorization'] = authorization;
-  }
-  if (userHandle !== undefined && userHandle !== null) {
-    httpRequest.headers['UserHandle'] = userHandle;
   }
   if(options) {
     for(var headerName in options['customHeaders']) {
@@ -356,20 +335,24 @@ TopicLikes.prototype.postLike = function (topicHandle, authorization, options, c
  *
  * @param {string} topicHandle Topic handle
  * 
- * @param {string} authorization Authentication (must begin with string
- * "Bearer "). Possible values are:
+ * @param {string} authorization Format is: "Scheme CredentialsList". Possible
+ * values are:
  * 
- * -sessionToken for client auth
+ * - Anon AK=AppKey
  * 
- * -AAD token for service auth
+ * - SocialPlus TK=SessionToken
+ * 
+ * - Facebook AK=AppKey|TK=AccessToken
+ * 
+ * - Google AK=AppKey|TK=AccessToken
+ * 
+ * - Twitter AK=AppKey|RT=RequestToken|TK=AccessToken
+ * 
+ * - Microsoft AK=AppKey|TK=AccessToken
+ * 
+ * - AADS2S AK=AppKey|[UH=UserHandle]|TK=AADToken
  * 
  * @param {object} [options] Optional Parameters.
- * 
- * @param {string} [options.appkey] App key must be filled in when using AAD
- * tokens for Authentication.
- * 
- * @param {string} [options.userHandle] This field is for internal use only.
- * Do not provide a value except under special circumstances.
  * 
  * @param {object} [options.customHeaders] Headers that will be added to the
  * request
@@ -395,21 +378,13 @@ TopicLikes.prototype.deleteLike = function (topicHandle, authorization, options,
   if (!callback) {
     throw new Error('callback cannot be null.');
   }
-  var appkey = (options && options.appkey !== undefined) ? options.appkey : undefined;
-  var userHandle = (options && options.userHandle !== undefined) ? options.userHandle : undefined;
   // Validate
   try {
     if (topicHandle === null || topicHandle === undefined || typeof topicHandle.valueOf() !== 'string') {
       throw new Error('topicHandle cannot be null or undefined and it must be of type string.');
     }
-    if (appkey !== null && appkey !== undefined && typeof appkey.valueOf() !== 'string') {
-      throw new Error('appkey must be of type string.');
-    }
     if (authorization === null || authorization === undefined || typeof authorization.valueOf() !== 'string') {
       throw new Error('authorization cannot be null or undefined and it must be of type string.');
-    }
-    if (userHandle !== null && userHandle !== undefined && typeof userHandle.valueOf() !== 'string') {
-      throw new Error('userHandle must be of type string.');
     }
   } catch (error) {
     return callback(error);
@@ -417,7 +392,7 @@ TopicLikes.prototype.deleteLike = function (topicHandle, authorization, options,
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.4/topics/{topicHandle}/likes/me';
+                   '//v0.5/topics/{topicHandle}/likes/me';
   requestUrl = requestUrl.replace('{topicHandle}', encodeURIComponent(topicHandle));
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
@@ -429,14 +404,8 @@ TopicLikes.prototype.deleteLike = function (topicHandle, authorization, options,
   httpRequest.headers = {};
   httpRequest.url = requestUrl;
   // Set Headers
-  if (appkey !== undefined && appkey !== null) {
-    httpRequest.headers['appkey'] = appkey;
-  }
   if (authorization !== undefined && authorization !== null) {
     httpRequest.headers['Authorization'] = authorization;
-  }
-  if (userHandle !== undefined && userHandle !== null) {
-    httpRequest.headers['UserHandle'] = userHandle;
   }
   if(options) {
     for(var headerName in options['customHeaders']) {

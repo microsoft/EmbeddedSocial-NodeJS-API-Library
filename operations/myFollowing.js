@@ -27,24 +27,32 @@ function MyFollowing(client) {
 /**
  * @summary Get the feed of users that I am following
  *
- * @param {string} authorization Authentication (must begin with string
- * "Bearer "). Possible values are:
+ * These are the users whose topics appear on my following topics feed, and
+ * whose activities
+ * appear on my following activities feed.
+ *
+ * @param {string} authorization Format is: "Scheme CredentialsList". Possible
+ * values are:
  * 
- * -sessionToken for client auth
+ * - Anon AK=AppKey
  * 
- * -AAD token for service auth
+ * - SocialPlus TK=SessionToken
+ * 
+ * - Facebook AK=AppKey|TK=AccessToken
+ * 
+ * - Google AK=AppKey|TK=AccessToken
+ * 
+ * - Twitter AK=AppKey|RT=RequestToken|TK=AccessToken
+ * 
+ * - Microsoft AK=AppKey|TK=AccessToken
+ * 
+ * - AADS2S AK=AppKey|[UH=UserHandle]|TK=AADToken
  * 
  * @param {object} [options] Optional Parameters.
  * 
  * @param {string} [options.cursor] Current read cursor
  * 
  * @param {number} [options.limit] Number of items to return
- * 
- * @param {string} [options.appkey] App key must be filled in when using AAD
- * tokens for Authentication.
- * 
- * @param {string} [options.userHandle] This field is for internal use only.
- * Do not provide a value except under special circumstances.
  * 
  * @param {object} [options.customHeaders] Headers that will be added to the
  * request
@@ -63,7 +71,7 @@ function MyFollowing(client) {
  *
  *                      {stream} [response] - The HTTP Response stream if an error did not occur.
  */
-MyFollowing.prototype.getFollowing = function (authorization, options, callback) {
+MyFollowing.prototype.getFollowingUsers = function (authorization, options, callback) {
   var client = this.client;
   if(!callback && typeof options === 'function') {
     callback = options;
@@ -74,8 +82,6 @@ MyFollowing.prototype.getFollowing = function (authorization, options, callback)
   }
   var cursor = (options && options.cursor !== undefined) ? options.cursor : undefined;
   var limit = (options && options.limit !== undefined) ? options.limit : undefined;
-  var appkey = (options && options.appkey !== undefined) ? options.appkey : undefined;
-  var userHandle = (options && options.userHandle !== undefined) ? options.userHandle : undefined;
   // Validate
   try {
     if (cursor !== null && cursor !== undefined && typeof cursor.valueOf() !== 'string') {
@@ -84,14 +90,8 @@ MyFollowing.prototype.getFollowing = function (authorization, options, callback)
     if (limit !== null && limit !== undefined && typeof limit !== 'number') {
       throw new Error('limit must be of type number.');
     }
-    if (appkey !== null && appkey !== undefined && typeof appkey.valueOf() !== 'string') {
-      throw new Error('appkey must be of type string.');
-    }
     if (authorization === null || authorization === undefined || typeof authorization.valueOf() !== 'string') {
       throw new Error('authorization cannot be null or undefined and it must be of type string.');
-    }
-    if (userHandle !== null && userHandle !== undefined && typeof userHandle.valueOf() !== 'string') {
-      throw new Error('userHandle must be of type string.');
     }
   } catch (error) {
     return callback(error);
@@ -99,7 +99,7 @@ MyFollowing.prototype.getFollowing = function (authorization, options, callback)
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.4/users/me/following';
+                   '//v0.5/users/me/following/users';
   var queryParameters = [];
   if (cursor !== null && cursor !== undefined) {
     queryParameters.push('cursor=' + encodeURIComponent(cursor));
@@ -120,14 +120,8 @@ MyFollowing.prototype.getFollowing = function (authorization, options, callback)
   httpRequest.headers = {};
   httpRequest.url = requestUrl;
   // Set Headers
-  if (appkey !== undefined && appkey !== null) {
-    httpRequest.headers['appkey'] = appkey;
-  }
   if (authorization !== undefined && authorization !== null) {
     httpRequest.headers['Authorization'] = authorization;
-  }
-  if (userHandle !== undefined && userHandle !== null) {
-    httpRequest.headers['UserHandle'] = userHandle;
   }
   if(options) {
     for(var headerName in options['customHeaders']) {
@@ -193,24 +187,42 @@ MyFollowing.prototype.getFollowing = function (authorization, options, callback)
 /**
  * @summary Follow a user
  *
- * @param {object} request Post following request
+ * When I follow a user, that user will appear on my following feed. That feed
+ * is
+ * visible to all users, unless my profile is set to private, in
+ * which case only those
+ * users that request to follow me and I approve will see that
+ * feed. If I try to follow a
+ * user with a private profile, then that private user controls
+ * whether I am allowed to
+ * follow them or not.
+ * That user's topics will appear in my following topics feed and
+ * actions
+ * performed by that user will also appear in my following
+ * activities feed.
+ *
+ * @param {object} request Post following user request
  * 
  * @param {string} [request.userHandle] Gets or sets user handle
  * 
- * @param {string} authorization Authentication (must begin with string
- * "Bearer "). Possible values are:
+ * @param {string} authorization Format is: "Scheme CredentialsList". Possible
+ * values are:
  * 
- * -sessionToken for client auth
+ * - Anon AK=AppKey
  * 
- * -AAD token for service auth
+ * - SocialPlus TK=SessionToken
+ * 
+ * - Facebook AK=AppKey|TK=AccessToken
+ * 
+ * - Google AK=AppKey|TK=AccessToken
+ * 
+ * - Twitter AK=AppKey|RT=RequestToken|TK=AccessToken
+ * 
+ * - Microsoft AK=AppKey|TK=AccessToken
+ * 
+ * - AADS2S AK=AppKey|[UH=UserHandle]|TK=AADToken
  * 
  * @param {object} [options] Optional Parameters.
- * 
- * @param {string} [options.appkey] App key must be filled in when using AAD
- * tokens for Authentication.
- * 
- * @param {string} [options.userHandle] This field is for internal use only.
- * Do not provide a value except under special circumstances.
  * 
  * @param {object} [options.customHeaders] Headers that will be added to the
  * request
@@ -227,7 +239,7 @@ MyFollowing.prototype.getFollowing = function (authorization, options, callback)
  *
  *                      {stream} [response] - The HTTP Response stream if an error did not occur.
  */
-MyFollowing.prototype.postFollowing = function (request, authorization, options, callback) {
+MyFollowing.prototype.postFollowingUser = function (request, authorization, options, callback) {
   var client = this.client;
   if(!callback && typeof options === 'function') {
     callback = options;
@@ -236,21 +248,13 @@ MyFollowing.prototype.postFollowing = function (request, authorization, options,
   if (!callback) {
     throw new Error('callback cannot be null.');
   }
-  var appkey = (options && options.appkey !== undefined) ? options.appkey : undefined;
-  var userHandle = (options && options.userHandle !== undefined) ? options.userHandle : undefined;
   // Validate
   try {
     if (request === null || request === undefined) {
       throw new Error('request cannot be null or undefined.');
     }
-    if (appkey !== null && appkey !== undefined && typeof appkey.valueOf() !== 'string') {
-      throw new Error('appkey must be of type string.');
-    }
     if (authorization === null || authorization === undefined || typeof authorization.valueOf() !== 'string') {
       throw new Error('authorization cannot be null or undefined and it must be of type string.');
-    }
-    if (userHandle !== null && userHandle !== undefined && typeof userHandle.valueOf() !== 'string') {
-      throw new Error('userHandle must be of type string.');
     }
   } catch (error) {
     return callback(error);
@@ -258,7 +262,7 @@ MyFollowing.prototype.postFollowing = function (request, authorization, options,
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.4/users/me/following';
+                   '//v0.5/users/me/following/users';
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
   requestUrl = requestUrl.replace(regex, '$1');
@@ -269,14 +273,8 @@ MyFollowing.prototype.postFollowing = function (request, authorization, options,
   httpRequest.headers = {};
   httpRequest.url = requestUrl;
   // Set Headers
-  if (appkey !== undefined && appkey !== null) {
-    httpRequest.headers['appkey'] = appkey;
-  }
   if (authorization !== undefined && authorization !== null) {
     httpRequest.headers['Authorization'] = authorization;
-  }
-  if (userHandle !== undefined && userHandle !== null) {
-    httpRequest.headers['UserHandle'] = userHandle;
   }
   if(options) {
     for(var headerName in options['customHeaders']) {
@@ -291,7 +289,327 @@ MyFollowing.prototype.postFollowing = function (request, authorization, options,
   var requestModel = null;
   try {
     if (request !== null && request !== undefined) {
-      var requestModelMapper = new client.models['PostFollowingRequest']().mapper();
+      var requestModelMapper = new client.models['PostFollowingUserRequest']().mapper();
+      requestModel = client.serialize(requestModelMapper, request, 'request');
+      requestContent = JSON.stringify(requestModel);
+    }
+  } catch (error) {
+    var serializationError = new Error(util.format('Error "%s" occurred in serializing the ' + 
+        'payload - "%s"', error.message, util.inspect(request, {depth: null})));
+    return callback(serializationError);
+  }
+  httpRequest.body = requestContent;
+  // Send Request
+  return client.pipeline(httpRequest, function (err, response, responseBody) {
+    if (err) {
+      return callback(err);
+    }
+    var statusCode = response.statusCode;
+    if (statusCode !== 204 && statusCode !== 400 && statusCode !== 401 && statusCode !== 404 && statusCode !== 409 && statusCode !== 500) {
+      var error = new Error(responseBody);
+      error.statusCode = response.statusCode;
+      error.request = msRest.stripRequest(httpRequest);
+      error.response = msRest.stripResponse(response);
+      if (responseBody === '') responseBody = null;
+      var parsedErrorResponse;
+      try {
+        parsedErrorResponse = JSON.parse(responseBody);
+        if (parsedErrorResponse) {
+          if (parsedErrorResponse.error) parsedErrorResponse = parsedErrorResponse.error;
+          if (parsedErrorResponse.code) error.code = parsedErrorResponse.code;
+          if (parsedErrorResponse.message) error.message = parsedErrorResponse.message;
+        }
+      } catch (defaultError) {
+        error.message = util.format('Error "%s" occurred in deserializing the responseBody ' + 
+                         '- "%s" for the default response.', defaultError.message, responseBody);
+        return callback(error);
+      }
+      return callback(error);
+    }
+    // Create Result
+    var result = null;
+    if (responseBody === '') responseBody = null;
+    // Deserialize Response
+    if (statusCode === 204) {
+      var parsedResponse = null;
+      try {
+        parsedResponse = JSON.parse(responseBody);
+        result = JSON.parse(responseBody);
+        if (parsedResponse !== null && parsedResponse !== undefined) {
+          var resultMapper = {
+            required: false,
+            serializedName: 'parsedResponse',
+            type: {
+              name: 'Object'
+            }
+          };
+          result = client.deserialize(resultMapper, parsedResponse, 'result');
+        }
+      } catch (error) {
+        var deserializationError = new Error(util.format('Error "%s" occurred in deserializing the responseBody - "%s"', error, responseBody));
+        deserializationError.request = msRest.stripRequest(httpRequest);
+        deserializationError.response = msRest.stripResponse(response);
+        return callback(deserializationError);
+      }
+    }
+
+    return callback(null, result, httpRequest, response);
+  });
+};
+
+/**
+ * @summary Get the feed of topics that I am following
+ *
+ * @param {string} authorization Format is: "Scheme CredentialsList". Possible
+ * values are:
+ * 
+ * - Anon AK=AppKey
+ * 
+ * - SocialPlus TK=SessionToken
+ * 
+ * - Facebook AK=AppKey|TK=AccessToken
+ * 
+ * - Google AK=AppKey|TK=AccessToken
+ * 
+ * - Twitter AK=AppKey|RT=RequestToken|TK=AccessToken
+ * 
+ * - Microsoft AK=AppKey|TK=AccessToken
+ * 
+ * - AADS2S AK=AppKey|[UH=UserHandle]|TK=AADToken
+ * 
+ * @param {object} [options] Optional Parameters.
+ * 
+ * @param {string} [options.cursor] Current read cursor
+ * 
+ * @param {number} [options.limit] Number of items to return
+ * 
+ * @param {object} [options.customHeaders] Headers that will be added to the
+ * request
+ * 
+ * @param {function} callback
+ *
+ * @returns {function} callback(err, result, request, response)
+ *
+ *                      {Error}  err        - The Error object if an error occurred, null otherwise.
+ *
+ *                      {object} [result]   - The deserialized result object.
+ *                      See {@link FeedResponseTopicView} for more information.
+ *
+ *                      {object} [request]  - The HTTP Request object if an error did not occur.
+ *
+ *                      {stream} [response] - The HTTP Response stream if an error did not occur.
+ */
+MyFollowing.prototype.getFollowingTopics = function (authorization, options, callback) {
+  var client = this.client;
+  if(!callback && typeof options === 'function') {
+    callback = options;
+    options = null;
+  }
+  if (!callback) {
+    throw new Error('callback cannot be null.');
+  }
+  var cursor = (options && options.cursor !== undefined) ? options.cursor : undefined;
+  var limit = (options && options.limit !== undefined) ? options.limit : undefined;
+  // Validate
+  try {
+    if (cursor !== null && cursor !== undefined && typeof cursor.valueOf() !== 'string') {
+      throw new Error('cursor must be of type string.');
+    }
+    if (limit !== null && limit !== undefined && typeof limit !== 'number') {
+      throw new Error('limit must be of type number.');
+    }
+    if (authorization === null || authorization === undefined || typeof authorization.valueOf() !== 'string') {
+      throw new Error('authorization cannot be null or undefined and it must be of type string.');
+    }
+  } catch (error) {
+    return callback(error);
+  }
+
+  // Construct URL
+  var requestUrl = this.client.baseUri +
+                   '//v0.5/users/me/following/topics';
+  var queryParameters = [];
+  if (cursor !== null && cursor !== undefined) {
+    queryParameters.push('cursor=' + encodeURIComponent(cursor));
+  }
+  if (limit !== null && limit !== undefined) {
+    queryParameters.push('limit=' + encodeURIComponent(limit.toString()));
+  }
+  if (queryParameters.length > 0) {
+    requestUrl += '?' + queryParameters.join('&');
+  }
+  // trim all duplicate forward slashes in the url
+  var regex = /([^:]\/)\/+/gi;
+  requestUrl = requestUrl.replace(regex, '$1');
+
+  // Create HTTP transport objects
+  var httpRequest = new WebResource();
+  httpRequest.method = 'GET';
+  httpRequest.headers = {};
+  httpRequest.url = requestUrl;
+  // Set Headers
+  if (authorization !== undefined && authorization !== null) {
+    httpRequest.headers['Authorization'] = authorization;
+  }
+  if(options) {
+    for(var headerName in options['customHeaders']) {
+      if (options['customHeaders'].hasOwnProperty(headerName)) {
+        httpRequest.headers[headerName] = options['customHeaders'][headerName];
+      }
+    }
+  }
+  httpRequest.headers['Content-Type'] = 'application/json; charset=utf-8';
+  httpRequest.body = null;
+  // Send Request
+  return client.pipeline(httpRequest, function (err, response, responseBody) {
+    if (err) {
+      return callback(err);
+    }
+    var statusCode = response.statusCode;
+    if (statusCode !== 200 && statusCode !== 400 && statusCode !== 401 && statusCode !== 500) {
+      var error = new Error(responseBody);
+      error.statusCode = response.statusCode;
+      error.request = msRest.stripRequest(httpRequest);
+      error.response = msRest.stripResponse(response);
+      if (responseBody === '') responseBody = null;
+      var parsedErrorResponse;
+      try {
+        parsedErrorResponse = JSON.parse(responseBody);
+        if (parsedErrorResponse) {
+          if (parsedErrorResponse.error) parsedErrorResponse = parsedErrorResponse.error;
+          if (parsedErrorResponse.code) error.code = parsedErrorResponse.code;
+          if (parsedErrorResponse.message) error.message = parsedErrorResponse.message;
+        }
+      } catch (defaultError) {
+        error.message = util.format('Error "%s" occurred in deserializing the responseBody ' + 
+                         '- "%s" for the default response.', defaultError.message, responseBody);
+        return callback(error);
+      }
+      return callback(error);
+    }
+    // Create Result
+    var result = null;
+    if (responseBody === '') responseBody = null;
+    // Deserialize Response
+    if (statusCode === 200) {
+      var parsedResponse = null;
+      try {
+        parsedResponse = JSON.parse(responseBody);
+        result = JSON.parse(responseBody);
+        if (parsedResponse !== null && parsedResponse !== undefined) {
+          var resultMapper = new client.models['FeedResponseTopicView']().mapper();
+          result = client.deserialize(resultMapper, parsedResponse, 'result');
+        }
+      } catch (error) {
+        var deserializationError = new Error(util.format('Error "%s" occurred in deserializing the responseBody - "%s"', error, responseBody));
+        deserializationError.request = msRest.stripRequest(httpRequest);
+        deserializationError.response = msRest.stripResponse(response);
+        return callback(deserializationError);
+      }
+    }
+
+    return callback(null, result, httpRequest, response);
+  });
+};
+
+/**
+ * @summary Follow a topic
+ *
+ * When I follow a topic, that topic will appear on my following topics feed.
+ * When users
+ * perform actions on the topic (such as posting comments or
+ * replies), those actions will
+ * appear on my following activites feed.
+ *
+ * @param {object} request Post following topic request
+ * 
+ * @param {string} [request.topicHandle] Gets or sets topic handle
+ * 
+ * @param {string} authorization Format is: "Scheme CredentialsList". Possible
+ * values are:
+ * 
+ * - Anon AK=AppKey
+ * 
+ * - SocialPlus TK=SessionToken
+ * 
+ * - Facebook AK=AppKey|TK=AccessToken
+ * 
+ * - Google AK=AppKey|TK=AccessToken
+ * 
+ * - Twitter AK=AppKey|RT=RequestToken|TK=AccessToken
+ * 
+ * - Microsoft AK=AppKey|TK=AccessToken
+ * 
+ * - AADS2S AK=AppKey|[UH=UserHandle]|TK=AADToken
+ * 
+ * @param {object} [options] Optional Parameters.
+ * 
+ * @param {object} [options.customHeaders] Headers that will be added to the
+ * request
+ * 
+ * @param {function} callback
+ *
+ * @returns {function} callback(err, result, request, response)
+ *
+ *                      {Error}  err        - The Error object if an error occurred, null otherwise.
+ *
+ *                      {object} [result]   - The deserialized result object.
+ *
+ *                      {object} [request]  - The HTTP Request object if an error did not occur.
+ *
+ *                      {stream} [response] - The HTTP Response stream if an error did not occur.
+ */
+MyFollowing.prototype.postFollowingTopic = function (request, authorization, options, callback) {
+  var client = this.client;
+  if(!callback && typeof options === 'function') {
+    callback = options;
+    options = null;
+  }
+  if (!callback) {
+    throw new Error('callback cannot be null.');
+  }
+  // Validate
+  try {
+    if (request === null || request === undefined) {
+      throw new Error('request cannot be null or undefined.');
+    }
+    if (authorization === null || authorization === undefined || typeof authorization.valueOf() !== 'string') {
+      throw new Error('authorization cannot be null or undefined and it must be of type string.');
+    }
+  } catch (error) {
+    return callback(error);
+  }
+
+  // Construct URL
+  var requestUrl = this.client.baseUri +
+                   '//v0.5/users/me/following/topics';
+  // trim all duplicate forward slashes in the url
+  var regex = /([^:]\/)\/+/gi;
+  requestUrl = requestUrl.replace(regex, '$1');
+
+  // Create HTTP transport objects
+  var httpRequest = new WebResource();
+  httpRequest.method = 'POST';
+  httpRequest.headers = {};
+  httpRequest.url = requestUrl;
+  // Set Headers
+  if (authorization !== undefined && authorization !== null) {
+    httpRequest.headers['Authorization'] = authorization;
+  }
+  if(options) {
+    for(var headerName in options['customHeaders']) {
+      if (options['customHeaders'].hasOwnProperty(headerName)) {
+        httpRequest.headers[headerName] = options['customHeaders'][headerName];
+      }
+    }
+  }
+  httpRequest.headers['Content-Type'] = 'application/json; charset=utf-8';
+  // Serialize Request
+  var requestContent = null;
+  var requestModel = null;
+  try {
+    if (request !== null && request !== undefined) {
+      var requestModelMapper = new client.models['PostFollowingTopicRequest']().mapper();
       requestModel = client.serialize(requestModelMapper, request, 'request');
       requestContent = JSON.stringify(requestModel);
     }
@@ -362,22 +680,34 @@ MyFollowing.prototype.postFollowing = function (request, authorization, options,
 /**
  * @summary Unfollow a user
  *
+ * After I unfollow a user, that user will no longer appear on my following
+ * feed.
+ * All of that user's previous topics will be removed from my
+ * following topics feed and
+ * none of their future topics will be added to that feed.
+ * Their past and future activities will no longer appear in my
+ * following activities feed.
+ *
  * @param {string} userHandle User handle
  * 
- * @param {string} authorization Authentication (must begin with string
- * "Bearer "). Possible values are:
+ * @param {string} authorization Format is: "Scheme CredentialsList". Possible
+ * values are:
  * 
- * -sessionToken for client auth
+ * - Anon AK=AppKey
  * 
- * -AAD token for service auth
+ * - SocialPlus TK=SessionToken
+ * 
+ * - Facebook AK=AppKey|TK=AccessToken
+ * 
+ * - Google AK=AppKey|TK=AccessToken
+ * 
+ * - Twitter AK=AppKey|RT=RequestToken|TK=AccessToken
+ * 
+ * - Microsoft AK=AppKey|TK=AccessToken
+ * 
+ * - AADS2S AK=AppKey|[UH=UserHandle]|TK=AADToken
  * 
  * @param {object} [options] Optional Parameters.
- * 
- * @param {string} [options.appkey] App key must be filled in when using AAD
- * tokens for Authentication.
- * 
- * @param {string} [options.userHandle1] This field is for internal use only.
- * Do not provide a value except under special circumstances.
  * 
  * @param {object} [options.customHeaders] Headers that will be added to the
  * request
@@ -394,7 +724,7 @@ MyFollowing.prototype.postFollowing = function (request, authorization, options,
  *
  *                      {stream} [response] - The HTTP Response stream if an error did not occur.
  */
-MyFollowing.prototype.deleteFollowing = function (userHandle, authorization, options, callback) {
+MyFollowing.prototype.deleteFollowingUser = function (userHandle, authorization, options, callback) {
   var client = this.client;
   if(!callback && typeof options === 'function') {
     callback = options;
@@ -403,21 +733,13 @@ MyFollowing.prototype.deleteFollowing = function (userHandle, authorization, opt
   if (!callback) {
     throw new Error('callback cannot be null.');
   }
-  var appkey = (options && options.appkey !== undefined) ? options.appkey : undefined;
-  var userHandle1 = (options && options.userHandle1 !== undefined) ? options.userHandle1 : undefined;
   // Validate
   try {
     if (userHandle === null || userHandle === undefined || typeof userHandle.valueOf() !== 'string') {
       throw new Error('userHandle cannot be null or undefined and it must be of type string.');
     }
-    if (appkey !== null && appkey !== undefined && typeof appkey.valueOf() !== 'string') {
-      throw new Error('appkey must be of type string.');
-    }
     if (authorization === null || authorization === undefined || typeof authorization.valueOf() !== 'string') {
       throw new Error('authorization cannot be null or undefined and it must be of type string.');
-    }
-    if (userHandle1 !== null && userHandle1 !== undefined && typeof userHandle1.valueOf() !== 'string') {
-      throw new Error('userHandle1 must be of type string.');
     }
   } catch (error) {
     return callback(error);
@@ -425,7 +747,7 @@ MyFollowing.prototype.deleteFollowing = function (userHandle, authorization, opt
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.4/users/me/following/{userHandle}';
+                   '//v0.5/users/me/following/users/{userHandle}';
   requestUrl = requestUrl.replace('{userHandle}', encodeURIComponent(userHandle));
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
@@ -437,14 +759,8 @@ MyFollowing.prototype.deleteFollowing = function (userHandle, authorization, opt
   httpRequest.headers = {};
   httpRequest.url = requestUrl;
   // Set Headers
-  if (appkey !== undefined && appkey !== null) {
-    httpRequest.headers['appkey'] = appkey;
-  }
   if (authorization !== undefined && authorization !== null) {
     httpRequest.headers['Authorization'] = authorization;
-  }
-  if (userHandle1 !== undefined && userHandle1 !== null) {
-    httpRequest.headers['UserHandle'] = userHandle1;
   }
   if(options) {
     for(var headerName in options['customHeaders']) {
@@ -514,29 +830,33 @@ MyFollowing.prototype.deleteFollowing = function (userHandle, authorization, opt
 };
 
 /**
- * @summary Remove a topic from the feed of topics authored by users that I'm
- * following
+ * @summary Unfollow a topic
  *
- * My following topics feed is a feed of topics created by users that I am
- * following.
- * This API call will remove the specified topic from that feed.
+ * After I unfollow a topic, that topic will no longer appear on my following
+ * topics feed.
+ * The past and future activities on that topic will no longer
+ * appear in my following activities feed.
  *
  * @param {string} topicHandle Topic handle
  * 
- * @param {string} authorization Authentication (must begin with string
- * "Bearer "). Possible values are:
+ * @param {string} authorization Format is: "Scheme CredentialsList". Possible
+ * values are:
  * 
- * -sessionToken for client auth
+ * - Anon AK=AppKey
  * 
- * -AAD token for service auth
+ * - SocialPlus TK=SessionToken
+ * 
+ * - Facebook AK=AppKey|TK=AccessToken
+ * 
+ * - Google AK=AppKey|TK=AccessToken
+ * 
+ * - Twitter AK=AppKey|RT=RequestToken|TK=AccessToken
+ * 
+ * - Microsoft AK=AppKey|TK=AccessToken
+ * 
+ * - AADS2S AK=AppKey|[UH=UserHandle]|TK=AADToken
  * 
  * @param {object} [options] Optional Parameters.
- * 
- * @param {string} [options.appkey] App key must be filled in when using AAD
- * tokens for Authentication.
- * 
- * @param {string} [options.userHandle] This field is for internal use only.
- * Do not provide a value except under special circumstances.
  * 
  * @param {object} [options.customHeaders] Headers that will be added to the
  * request
@@ -553,7 +873,7 @@ MyFollowing.prototype.deleteFollowing = function (userHandle, authorization, opt
  *
  *                      {stream} [response] - The HTTP Response stream if an error did not occur.
  */
-MyFollowing.prototype.deleteTopic = function (topicHandle, authorization, options, callback) {
+MyFollowing.prototype.deleteFollowingTopic = function (topicHandle, authorization, options, callback) {
   var client = this.client;
   if(!callback && typeof options === 'function') {
     callback = options;
@@ -562,21 +882,13 @@ MyFollowing.prototype.deleteTopic = function (topicHandle, authorization, option
   if (!callback) {
     throw new Error('callback cannot be null.');
   }
-  var appkey = (options && options.appkey !== undefined) ? options.appkey : undefined;
-  var userHandle = (options && options.userHandle !== undefined) ? options.userHandle : undefined;
   // Validate
   try {
     if (topicHandle === null || topicHandle === undefined || typeof topicHandle.valueOf() !== 'string') {
       throw new Error('topicHandle cannot be null or undefined and it must be of type string.');
     }
-    if (appkey !== null && appkey !== undefined && typeof appkey.valueOf() !== 'string') {
-      throw new Error('appkey must be of type string.');
-    }
     if (authorization === null || authorization === undefined || typeof authorization.valueOf() !== 'string') {
       throw new Error('authorization cannot be null or undefined and it must be of type string.');
-    }
-    if (userHandle !== null && userHandle !== undefined && typeof userHandle.valueOf() !== 'string') {
-      throw new Error('userHandle must be of type string.');
     }
   } catch (error) {
     return callback(error);
@@ -584,7 +896,7 @@ MyFollowing.prototype.deleteTopic = function (topicHandle, authorization, option
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.4/users/me/following/topics/{topicHandle}';
+                   '//v0.5/users/me/following/topics/{topicHandle}';
   requestUrl = requestUrl.replace('{topicHandle}', encodeURIComponent(topicHandle));
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
@@ -596,14 +908,157 @@ MyFollowing.prototype.deleteTopic = function (topicHandle, authorization, option
   httpRequest.headers = {};
   httpRequest.url = requestUrl;
   // Set Headers
-  if (appkey !== undefined && appkey !== null) {
-    httpRequest.headers['appkey'] = appkey;
-  }
   if (authorization !== undefined && authorization !== null) {
     httpRequest.headers['Authorization'] = authorization;
   }
-  if (userHandle !== undefined && userHandle !== null) {
-    httpRequest.headers['UserHandle'] = userHandle;
+  if(options) {
+    for(var headerName in options['customHeaders']) {
+      if (options['customHeaders'].hasOwnProperty(headerName)) {
+        httpRequest.headers[headerName] = options['customHeaders'][headerName];
+      }
+    }
+  }
+  httpRequest.headers['Content-Type'] = 'application/json; charset=utf-8';
+  httpRequest.body = null;
+  // Send Request
+  return client.pipeline(httpRequest, function (err, response, responseBody) {
+    if (err) {
+      return callback(err);
+    }
+    var statusCode = response.statusCode;
+    if (statusCode !== 204 && statusCode !== 400 && statusCode !== 401 && statusCode !== 404 && statusCode !== 409 && statusCode !== 500) {
+      var error = new Error(responseBody);
+      error.statusCode = response.statusCode;
+      error.request = msRest.stripRequest(httpRequest);
+      error.response = msRest.stripResponse(response);
+      if (responseBody === '') responseBody = null;
+      var parsedErrorResponse;
+      try {
+        parsedErrorResponse = JSON.parse(responseBody);
+        if (parsedErrorResponse) {
+          if (parsedErrorResponse.error) parsedErrorResponse = parsedErrorResponse.error;
+          if (parsedErrorResponse.code) error.code = parsedErrorResponse.code;
+          if (parsedErrorResponse.message) error.message = parsedErrorResponse.message;
+        }
+      } catch (defaultError) {
+        error.message = util.format('Error "%s" occurred in deserializing the responseBody ' + 
+                         '- "%s" for the default response.', defaultError.message, responseBody);
+        return callback(error);
+      }
+      return callback(error);
+    }
+    // Create Result
+    var result = null;
+    if (responseBody === '') responseBody = null;
+    // Deserialize Response
+    if (statusCode === 204) {
+      var parsedResponse = null;
+      try {
+        parsedResponse = JSON.parse(responseBody);
+        result = JSON.parse(responseBody);
+        if (parsedResponse !== null && parsedResponse !== undefined) {
+          var resultMapper = {
+            required: false,
+            serializedName: 'parsedResponse',
+            type: {
+              name: 'Object'
+            }
+          };
+          result = client.deserialize(resultMapper, parsedResponse, 'result');
+        }
+      } catch (error) {
+        var deserializationError = new Error(util.format('Error "%s" occurred in deserializing the responseBody - "%s"', error, responseBody));
+        deserializationError.request = msRest.stripRequest(httpRequest);
+        deserializationError.response = msRest.stripResponse(response);
+        return callback(deserializationError);
+      }
+    }
+
+    return callback(null, result, httpRequest, response);
+  });
+};
+
+/**
+ * @summary Remove a topic from my combined following topics feed.
+ *
+ * My combined following topics feed is a feed of topics I am explicitly
+ * following, combined with topics created by all users
+ * that I am following.  This call will remove the specified topic
+ * from that feed.
+ *
+ * @param {string} topicHandle Topic handle
+ * 
+ * @param {string} authorization Format is: "Scheme CredentialsList". Possible
+ * values are:
+ * 
+ * - Anon AK=AppKey
+ * 
+ * - SocialPlus TK=SessionToken
+ * 
+ * - Facebook AK=AppKey|TK=AccessToken
+ * 
+ * - Google AK=AppKey|TK=AccessToken
+ * 
+ * - Twitter AK=AppKey|RT=RequestToken|TK=AccessToken
+ * 
+ * - Microsoft AK=AppKey|TK=AccessToken
+ * 
+ * - AADS2S AK=AppKey|[UH=UserHandle]|TK=AADToken
+ * 
+ * @param {object} [options] Optional Parameters.
+ * 
+ * @param {object} [options.customHeaders] Headers that will be added to the
+ * request
+ * 
+ * @param {function} callback
+ *
+ * @returns {function} callback(err, result, request, response)
+ *
+ *                      {Error}  err        - The Error object if an error occurred, null otherwise.
+ *
+ *                      {object} [result]   - The deserialized result object.
+ *
+ *                      {object} [request]  - The HTTP Request object if an error did not occur.
+ *
+ *                      {stream} [response] - The HTTP Response stream if an error did not occur.
+ */
+MyFollowing.prototype.deleteTopicFromCombinedFollowingFeed = function (topicHandle, authorization, options, callback) {
+  var client = this.client;
+  if(!callback && typeof options === 'function') {
+    callback = options;
+    options = null;
+  }
+  if (!callback) {
+    throw new Error('callback cannot be null.');
+  }
+  // Validate
+  try {
+    if (topicHandle === null || topicHandle === undefined || typeof topicHandle.valueOf() !== 'string') {
+      throw new Error('topicHandle cannot be null or undefined and it must be of type string.');
+    }
+    if (authorization === null || authorization === undefined || typeof authorization.valueOf() !== 'string') {
+      throw new Error('authorization cannot be null or undefined and it must be of type string.');
+    }
+  } catch (error) {
+    return callback(error);
+  }
+
+  // Construct URL
+  var requestUrl = this.client.baseUri +
+                   '//v0.5/users/me/following/combined/{topicHandle}';
+  requestUrl = requestUrl.replace('{topicHandle}', encodeURIComponent(topicHandle));
+  // trim all duplicate forward slashes in the url
+  var regex = /([^:]\/)\/+/gi;
+  requestUrl = requestUrl.replace(regex, '$1');
+
+  // Create HTTP transport objects
+  var httpRequest = new WebResource();
+  httpRequest.method = 'DELETE';
+  httpRequest.headers = {};
+  httpRequest.url = requestUrl;
+  // Set Headers
+  if (authorization !== undefined && authorization !== null) {
+    httpRequest.headers['Authorization'] = authorization;
   }
   if(options) {
     for(var headerName in options['customHeaders']) {
@@ -673,38 +1128,47 @@ MyFollowing.prototype.deleteTopic = function (topicHandle, authorization, option
 };
 
 /**
- * @summary Get the feed of topics authored by users that I'm following
+ * @summary Get my combined following topics feed.
  *
- * My following topics feed is a list of topics posted by users that I am
- * following.
+ * My combined following topics feed includes:
+ * (1) topics that I'm explicitly following and
+ * (2) topics authored by users that I'm following
+ * 
  * This feed is time ordered, with the most recent topic first.
  * This feed will not include topics that I have explicitly
  * deleted from this feed.
- * When I follow a user, all of their past topics will be added to
- * this feed, and all their
- * future topics will be added to this feed when they are created.
+ * When I follow a user, a limited set of their past topics will
+ * be added to this feed,
+ * and all their future topics will be added to this feed when
+ * they are created.
  * When I unfollow a user, all of their previous topics will be
  * removed from the feed and
  * none of their future topics will be added to this feed.
+ * When I follow a topic, it will appear in this feed.
+ * When I unfollow a topic, it will no longer appear in this feed.
  *
- * @param {string} authorization Authentication (must begin with string
- * "Bearer "). Possible values are:
+ * @param {string} authorization Format is: "Scheme CredentialsList". Possible
+ * values are:
  * 
- * -sessionToken for client auth
+ * - Anon AK=AppKey
  * 
- * -AAD token for service auth
+ * - SocialPlus TK=SessionToken
+ * 
+ * - Facebook AK=AppKey|TK=AccessToken
+ * 
+ * - Google AK=AppKey|TK=AccessToken
+ * 
+ * - Twitter AK=AppKey|RT=RequestToken|TK=AccessToken
+ * 
+ * - Microsoft AK=AppKey|TK=AccessToken
+ * 
+ * - AADS2S AK=AppKey|[UH=UserHandle]|TK=AADToken
  * 
  * @param {object} [options] Optional Parameters.
  * 
  * @param {string} [options.cursor] Current read cursor
  * 
  * @param {number} [options.limit] Number of items to return
- * 
- * @param {string} [options.appkey] App key must be filled in when using AAD
- * tokens for Authentication.
- * 
- * @param {string} [options.userHandle] This field is for internal use only.
- * Do not provide a value except under special circumstances.
  * 
  * @param {object} [options.customHeaders] Headers that will be added to the
  * request
@@ -733,8 +1197,6 @@ MyFollowing.prototype.getTopics = function (authorization, options, callback) {
   }
   var cursor = (options && options.cursor !== undefined) ? options.cursor : undefined;
   var limit = (options && options.limit !== undefined) ? options.limit : undefined;
-  var appkey = (options && options.appkey !== undefined) ? options.appkey : undefined;
-  var userHandle = (options && options.userHandle !== undefined) ? options.userHandle : undefined;
   // Validate
   try {
     if (cursor !== null && cursor !== undefined && typeof cursor.valueOf() !== 'string') {
@@ -743,14 +1205,8 @@ MyFollowing.prototype.getTopics = function (authorization, options, callback) {
     if (limit !== null && limit !== undefined && typeof limit !== 'number') {
       throw new Error('limit must be of type number.');
     }
-    if (appkey !== null && appkey !== undefined && typeof appkey.valueOf() !== 'string') {
-      throw new Error('appkey must be of type string.');
-    }
     if (authorization === null || authorization === undefined || typeof authorization.valueOf() !== 'string') {
       throw new Error('authorization cannot be null or undefined and it must be of type string.');
-    }
-    if (userHandle !== null && userHandle !== undefined && typeof userHandle.valueOf() !== 'string') {
-      throw new Error('userHandle must be of type string.');
     }
   } catch (error) {
     return callback(error);
@@ -758,7 +1214,7 @@ MyFollowing.prototype.getTopics = function (authorization, options, callback) {
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.4/users/me/following/topics';
+                   '//v0.5/users/me/following/combined';
   var queryParameters = [];
   if (cursor !== null && cursor !== undefined) {
     queryParameters.push('cursor=' + encodeURIComponent(cursor));
@@ -779,14 +1235,8 @@ MyFollowing.prototype.getTopics = function (authorization, options, callback) {
   httpRequest.headers = {};
   httpRequest.url = requestUrl;
   // Set Headers
-  if (appkey !== undefined && appkey !== null) {
-    httpRequest.headers['appkey'] = appkey;
-  }
   if (authorization !== undefined && authorization !== null) {
     httpRequest.headers['Authorization'] = authorization;
-  }
-  if (userHandle !== undefined && userHandle !== null) {
-    httpRequest.headers['UserHandle'] = userHandle;
   }
   if(options) {
     for(var headerName in options['customHeaders']) {
@@ -850,10 +1300,12 @@ MyFollowing.prototype.getTopics = function (authorization, options, callback) {
 };
 
 /**
- * @summary Get the feed of activities by users that I'm following.
+ * @summary Get the feed of activities by users that I'm following or on
+ * topics that I'm following.
  *
- * My following activity feed is a list of activities performed by users that
- * I am following.
+ * My following activity feed is a list of activities that are either
+ * (1) performed by users that I am following, or
+ * (2) performed on topics that I am following.
  * This feed is time ordered, with the most recent activity first.
  * An activity is added to this feed when a user I am following
  * does one of the following 4 actions:
@@ -865,27 +1317,38 @@ MyFollowing.prototype.getTopics = function (authorization, options, callback) {
  * that activity will no longer appear in this feed.
  * If a user has un-done an activity (e.g. unlike a previous
  * like), then that activity will no longer appear in this feed.
+ * Similarly, an activity is added to this feed when a user does
+ * one of the following 3 actions on a topic that I am following:
+ * (a) create a comment; (b) create a reply; (c) like the topic.
+ * If a topic that I am following is deleted, then past activities
+ * on that topic will no longer appear in this feed.
+ * If an activity that is performed is then deleted, that activity
+ * will no longer appear in this feed.
  * Ignore the unread status of each activity - it will always be
  * true.
  *
- * @param {string} authorization Authentication (must begin with string
- * "Bearer "). Possible values are:
+ * @param {string} authorization Format is: "Scheme CredentialsList". Possible
+ * values are:
  * 
- * -sessionToken for client auth
+ * - Anon AK=AppKey
  * 
- * -AAD token for service auth
+ * - SocialPlus TK=SessionToken
+ * 
+ * - Facebook AK=AppKey|TK=AccessToken
+ * 
+ * - Google AK=AppKey|TK=AccessToken
+ * 
+ * - Twitter AK=AppKey|RT=RequestToken|TK=AccessToken
+ * 
+ * - Microsoft AK=AppKey|TK=AccessToken
+ * 
+ * - AADS2S AK=AppKey|[UH=UserHandle]|TK=AADToken
  * 
  * @param {object} [options] Optional Parameters.
  * 
  * @param {string} [options.cursor] Current read cursor
  * 
  * @param {number} [options.limit] Number of items to return
- * 
- * @param {string} [options.appkey] App key must be filled in when using AAD
- * tokens for Authentication.
- * 
- * @param {string} [options.userHandle] This field is for internal use only.
- * Do not provide a value except under special circumstances.
  * 
  * @param {object} [options.customHeaders] Headers that will be added to the
  * request
@@ -915,8 +1378,6 @@ MyFollowing.prototype.getActivities = function (authorization, options, callback
   }
   var cursor = (options && options.cursor !== undefined) ? options.cursor : undefined;
   var limit = (options && options.limit !== undefined) ? options.limit : undefined;
-  var appkey = (options && options.appkey !== undefined) ? options.appkey : undefined;
-  var userHandle = (options && options.userHandle !== undefined) ? options.userHandle : undefined;
   // Validate
   try {
     if (cursor !== null && cursor !== undefined && typeof cursor.valueOf() !== 'string') {
@@ -925,14 +1386,8 @@ MyFollowing.prototype.getActivities = function (authorization, options, callback
     if (limit !== null && limit !== undefined && typeof limit !== 'number') {
       throw new Error('limit must be of type number.');
     }
-    if (appkey !== null && appkey !== undefined && typeof appkey.valueOf() !== 'string') {
-      throw new Error('appkey must be of type string.');
-    }
     if (authorization === null || authorization === undefined || typeof authorization.valueOf() !== 'string') {
       throw new Error('authorization cannot be null or undefined and it must be of type string.');
-    }
-    if (userHandle !== null && userHandle !== undefined && typeof userHandle.valueOf() !== 'string') {
-      throw new Error('userHandle must be of type string.');
     }
   } catch (error) {
     return callback(error);
@@ -940,7 +1395,7 @@ MyFollowing.prototype.getActivities = function (authorization, options, callback
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.4/users/me/following/activities';
+                   '//v0.5/users/me/following/activities';
   var queryParameters = [];
   if (cursor !== null && cursor !== undefined) {
     queryParameters.push('cursor=' + encodeURIComponent(cursor));
@@ -961,14 +1416,8 @@ MyFollowing.prototype.getActivities = function (authorization, options, callback
   httpRequest.headers = {};
   httpRequest.url = requestUrl;
   // Set Headers
-  if (appkey !== undefined && appkey !== null) {
-    httpRequest.headers['appkey'] = appkey;
-  }
   if (authorization !== undefined && authorization !== null) {
     httpRequest.headers['Authorization'] = authorization;
-  }
-  if (userHandle !== undefined && userHandle !== null) {
-    httpRequest.headers['UserHandle'] = userHandle;
   }
   if(options) {
     for(var headerName in options['customHeaders']) {

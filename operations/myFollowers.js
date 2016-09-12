@@ -27,24 +27,28 @@ function MyFollowers(client) {
 /**
  * @summary Get my followers
  *
- * @param {string} authorization Authentication (must begin with string
- * "Bearer "). Possible values are:
+ * @param {string} authorization Format is: "Scheme CredentialsList". Possible
+ * values are:
  * 
- * -sessionToken for client auth
+ * - Anon AK=AppKey
  * 
- * -AAD token for service auth
+ * - SocialPlus TK=SessionToken
+ * 
+ * - Facebook AK=AppKey|TK=AccessToken
+ * 
+ * - Google AK=AppKey|TK=AccessToken
+ * 
+ * - Twitter AK=AppKey|RT=RequestToken|TK=AccessToken
+ * 
+ * - Microsoft AK=AppKey|TK=AccessToken
+ * 
+ * - AADS2S AK=AppKey|[UH=UserHandle]|TK=AADToken
  * 
  * @param {object} [options] Optional Parameters.
  * 
  * @param {string} [options.cursor] Current read cursor
  * 
  * @param {number} [options.limit] Number of items to return
- * 
- * @param {string} [options.appkey] App key must be filled in when using AAD
- * tokens for Authentication.
- * 
- * @param {string} [options.userHandle] This field is for internal use only.
- * Do not provide a value except under special circumstances.
  * 
  * @param {object} [options.customHeaders] Headers that will be added to the
  * request
@@ -74,8 +78,6 @@ MyFollowers.prototype.getFollowers = function (authorization, options, callback)
   }
   var cursor = (options && options.cursor !== undefined) ? options.cursor : undefined;
   var limit = (options && options.limit !== undefined) ? options.limit : undefined;
-  var appkey = (options && options.appkey !== undefined) ? options.appkey : undefined;
-  var userHandle = (options && options.userHandle !== undefined) ? options.userHandle : undefined;
   // Validate
   try {
     if (cursor !== null && cursor !== undefined && typeof cursor.valueOf() !== 'string') {
@@ -84,14 +86,8 @@ MyFollowers.prototype.getFollowers = function (authorization, options, callback)
     if (limit !== null && limit !== undefined && typeof limit !== 'number') {
       throw new Error('limit must be of type number.');
     }
-    if (appkey !== null && appkey !== undefined && typeof appkey.valueOf() !== 'string') {
-      throw new Error('appkey must be of type string.');
-    }
     if (authorization === null || authorization === undefined || typeof authorization.valueOf() !== 'string') {
       throw new Error('authorization cannot be null or undefined and it must be of type string.');
-    }
-    if (userHandle !== null && userHandle !== undefined && typeof userHandle.valueOf() !== 'string') {
-      throw new Error('userHandle must be of type string.');
     }
   } catch (error) {
     return callback(error);
@@ -99,7 +95,7 @@ MyFollowers.prototype.getFollowers = function (authorization, options, callback)
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.4/users/me/followers';
+                   '//v0.5/users/me/followers';
   var queryParameters = [];
   if (cursor !== null && cursor !== undefined) {
     queryParameters.push('cursor=' + encodeURIComponent(cursor));
@@ -120,14 +116,8 @@ MyFollowers.prototype.getFollowers = function (authorization, options, callback)
   httpRequest.headers = {};
   httpRequest.url = requestUrl;
   // Set Headers
-  if (appkey !== undefined && appkey !== null) {
-    httpRequest.headers['appkey'] = appkey;
-  }
   if (authorization !== undefined && authorization !== null) {
     httpRequest.headers['Authorization'] = authorization;
-  }
-  if (userHandle !== undefined && userHandle !== null) {
-    httpRequest.headers['UserHandle'] = userHandle;
   }
   if(options) {
     for(var headerName in options['customHeaders']) {
@@ -197,20 +187,24 @@ MyFollowers.prototype.getFollowers = function (authorization, options, callback)
  * 
  * @param {string} [request.userHandle] Gets or sets user handle
  * 
- * @param {string} authorization Authentication (must begin with string
- * "Bearer "). Possible values are:
+ * @param {string} authorization Format is: "Scheme CredentialsList". Possible
+ * values are:
  * 
- * -sessionToken for client auth
+ * - Anon AK=AppKey
  * 
- * -AAD token for service auth
+ * - SocialPlus TK=SessionToken
+ * 
+ * - Facebook AK=AppKey|TK=AccessToken
+ * 
+ * - Google AK=AppKey|TK=AccessToken
+ * 
+ * - Twitter AK=AppKey|RT=RequestToken|TK=AccessToken
+ * 
+ * - Microsoft AK=AppKey|TK=AccessToken
+ * 
+ * - AADS2S AK=AppKey|[UH=UserHandle]|TK=AADToken
  * 
  * @param {object} [options] Optional Parameters.
- * 
- * @param {string} [options.appkey] App key must be filled in when using AAD
- * tokens for Authentication.
- * 
- * @param {string} [options.userHandle] This field is for internal use only.
- * Do not provide a value except under special circumstances.
  * 
  * @param {object} [options.customHeaders] Headers that will be added to the
  * request
@@ -236,21 +230,13 @@ MyFollowers.prototype.postFollower = function (request, authorization, options, 
   if (!callback) {
     throw new Error('callback cannot be null.');
   }
-  var appkey = (options && options.appkey !== undefined) ? options.appkey : undefined;
-  var userHandle = (options && options.userHandle !== undefined) ? options.userHandle : undefined;
   // Validate
   try {
     if (request === null || request === undefined) {
       throw new Error('request cannot be null or undefined.');
     }
-    if (appkey !== null && appkey !== undefined && typeof appkey.valueOf() !== 'string') {
-      throw new Error('appkey must be of type string.');
-    }
     if (authorization === null || authorization === undefined || typeof authorization.valueOf() !== 'string') {
       throw new Error('authorization cannot be null or undefined and it must be of type string.');
-    }
-    if (userHandle !== null && userHandle !== undefined && typeof userHandle.valueOf() !== 'string') {
-      throw new Error('userHandle must be of type string.');
     }
   } catch (error) {
     return callback(error);
@@ -258,7 +244,7 @@ MyFollowers.prototype.postFollower = function (request, authorization, options, 
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.4/users/me/followers';
+                   '//v0.5/users/me/followers';
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
   requestUrl = requestUrl.replace(regex, '$1');
@@ -269,14 +255,8 @@ MyFollowers.prototype.postFollower = function (request, authorization, options, 
   httpRequest.headers = {};
   httpRequest.url = requestUrl;
   // Set Headers
-  if (appkey !== undefined && appkey !== null) {
-    httpRequest.headers['appkey'] = appkey;
-  }
   if (authorization !== undefined && authorization !== null) {
     httpRequest.headers['Authorization'] = authorization;
-  }
-  if (userHandle !== undefined && userHandle !== null) {
-    httpRequest.headers['UserHandle'] = userHandle;
   }
   if(options) {
     for(var headerName in options['customHeaders']) {
@@ -364,20 +344,24 @@ MyFollowers.prototype.postFollower = function (request, authorization, options, 
  *
  * @param {string} userHandle User handle
  * 
- * @param {string} authorization Authentication (must begin with string
- * "Bearer "). Possible values are:
+ * @param {string} authorization Format is: "Scheme CredentialsList". Possible
+ * values are:
  * 
- * -sessionToken for client auth
+ * - Anon AK=AppKey
  * 
- * -AAD token for service auth
+ * - SocialPlus TK=SessionToken
+ * 
+ * - Facebook AK=AppKey|TK=AccessToken
+ * 
+ * - Google AK=AppKey|TK=AccessToken
+ * 
+ * - Twitter AK=AppKey|RT=RequestToken|TK=AccessToken
+ * 
+ * - Microsoft AK=AppKey|TK=AccessToken
+ * 
+ * - AADS2S AK=AppKey|[UH=UserHandle]|TK=AADToken
  * 
  * @param {object} [options] Optional Parameters.
- * 
- * @param {string} [options.appkey] App key must be filled in when using AAD
- * tokens for Authentication.
- * 
- * @param {string} [options.userHandle1] This field is for internal use only.
- * Do not provide a value except under special circumstances.
  * 
  * @param {object} [options.customHeaders] Headers that will be added to the
  * request
@@ -403,21 +387,13 @@ MyFollowers.prototype.deleteFollower = function (userHandle, authorization, opti
   if (!callback) {
     throw new Error('callback cannot be null.');
   }
-  var appkey = (options && options.appkey !== undefined) ? options.appkey : undefined;
-  var userHandle1 = (options && options.userHandle1 !== undefined) ? options.userHandle1 : undefined;
   // Validate
   try {
     if (userHandle === null || userHandle === undefined || typeof userHandle.valueOf() !== 'string') {
       throw new Error('userHandle cannot be null or undefined and it must be of type string.');
     }
-    if (appkey !== null && appkey !== undefined && typeof appkey.valueOf() !== 'string') {
-      throw new Error('appkey must be of type string.');
-    }
     if (authorization === null || authorization === undefined || typeof authorization.valueOf() !== 'string') {
       throw new Error('authorization cannot be null or undefined and it must be of type string.');
-    }
-    if (userHandle1 !== null && userHandle1 !== undefined && typeof userHandle1.valueOf() !== 'string') {
-      throw new Error('userHandle1 must be of type string.');
     }
   } catch (error) {
     return callback(error);
@@ -425,7 +401,7 @@ MyFollowers.prototype.deleteFollower = function (userHandle, authorization, opti
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.4/users/me/followers/{userHandle}';
+                   '//v0.5/users/me/followers/{userHandle}';
   requestUrl = requestUrl.replace('{userHandle}', encodeURIComponent(userHandle));
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
@@ -437,14 +413,8 @@ MyFollowers.prototype.deleteFollower = function (userHandle, authorization, opti
   httpRequest.headers = {};
   httpRequest.url = requestUrl;
   // Set Headers
-  if (appkey !== undefined && appkey !== null) {
-    httpRequest.headers['appkey'] = appkey;
-  }
   if (authorization !== undefined && authorization !== null) {
     httpRequest.headers['Authorization'] = authorization;
-  }
-  if (userHandle1 !== undefined && userHandle1 !== null) {
-    httpRequest.headers['UserHandle'] = userHandle1;
   }
   if(options) {
     for(var headerName in options['customHeaders']) {

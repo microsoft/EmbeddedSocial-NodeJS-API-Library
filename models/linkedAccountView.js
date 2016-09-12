@@ -13,7 +13,7 @@
  * Linked account view
  * @member {string} identityProvider Gets or sets identity provider type.
  * Possible values include: 'Facebook', 'Microsoft', 'Google', 'Twitter',
- * 'Beihai'
+ * 'AADS2S', 'SocialPlus'
  * 
  * @member {string} accountId Gets or sets third party account id -- Unique
  * user id provided by the third-party identity provider
@@ -41,7 +41,7 @@ LinkedAccountView.prototype.mapper = function () {
           serializedName: 'identityProvider',
           type: {
             name: 'Enum',
-            allowedValues: [ 'Facebook', 'Microsoft', 'Google', 'Twitter', 'Beihai' ]
+            allowedValues: [ 'Facebook', 'Microsoft', 'Google', 'Twitter', 'AADS2S', 'SocialPlus' ]
           }
         },
         accountId: {
