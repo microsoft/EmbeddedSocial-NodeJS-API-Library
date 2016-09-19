@@ -13,8 +13,6 @@
  * User profile view
  * @member {string} userHandle Gets or sets user handle
  * 
- * @member {string} appHandle Gets or sets app handle
- * 
  * @member {string} firstName Gets or sets first name of the user
  * 
  * @member {string} lastName Gets or sets last name of the user
@@ -66,13 +64,6 @@ UserProfileView.prototype.mapper = function () {
         userHandle: {
           required: true,
           serializedName: 'userHandle',
-          type: {
-            name: 'String'
-          }
-        },
-        appHandle: {
-          required: true,
-          serializedName: 'appHandle',
           type: {
             name: 'String'
           }

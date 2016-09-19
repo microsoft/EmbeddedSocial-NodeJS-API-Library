@@ -315,8 +315,6 @@ export interface FeedResponseActivityView {
  * 
  * @member {object} [app] Gets or sets the containing app
  * 
- * @member {string} [app.appHandle] Gets or sets app handle
- * 
  * @member {string} [app.name] Gets or sets app name
  * 
  * @member {string} [app.iconHandle] Gets or sets app icon handle
@@ -383,8 +381,6 @@ export interface ContentCompactView {
  * Initializes a new instance of the AppCompactView class.
  * @constructor
  * App compact view
- * @member {string} appHandle Gets or sets app handle
- * 
  * @member {string} name Gets or sets app name
  * 
  * @member {string} [iconHandle] Gets or sets app icon handle
@@ -400,7 +396,6 @@ export interface ContentCompactView {
  * 
  */
 export interface AppCompactView {
-    appHandle: string;
     name: string;
     iconHandle?: string;
     iconUrl?: string;
@@ -516,8 +511,6 @@ export interface FeedResponseTopicView {
  * values include: 'Active', 'Banned', 'Mature', 'Clean'
  * 
  * @member {object} [app] Gets or sets the containing app
- * 
- * @member {string} [app.appHandle] Gets or sets app handle
  * 
  * @member {string} [app.name] Gets or sets app name
  * 
@@ -998,8 +991,6 @@ export interface PostUserResponse {
  * User profile view
  * @member {string} userHandle Gets or sets user handle
  * 
- * @member {string} appHandle Gets or sets app handle
- * 
  * @member {string} firstName Gets or sets first name of the user
  * 
  * @member {string} lastName Gets or sets last name of the user
@@ -1033,7 +1024,6 @@ export interface PostUserResponse {
  */
 export interface UserProfileView {
     userHandle: string;
-    appHandle: string;
     firstName: string;
     lastName: string;
     bio: string;
