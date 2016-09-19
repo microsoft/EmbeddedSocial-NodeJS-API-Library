@@ -11,8 +11,6 @@
  * Initializes a new instance of the AppCompactView class.
  * @constructor
  * App compact view
- * @member {string} appHandle Gets or sets app handle
- * 
  * @member {string} name Gets or sets app name
  * 
  * @member {string} [iconHandle] Gets or sets app icon handle
@@ -44,13 +42,6 @@ AppCompactView.prototype.mapper = function () {
       name: 'Composite',
       className: 'AppCompactView',
       modelProperties: {
-        appHandle: {
-          required: true,
-          serializedName: 'appHandle',
-          type: {
-            name: 'String'
-          }
-        },
         name: {
           required: true,
           serializedName: 'name',

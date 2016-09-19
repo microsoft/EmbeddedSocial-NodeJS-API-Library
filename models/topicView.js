@@ -77,8 +77,6 @@ var models = require('./index');
  * 
  * @member {object} [app] Gets or sets the containing app
  * 
- * @member {string} [app.appHandle] Gets or sets app handle
- * 
  * @member {string} [app.name] Gets or sets app name
  * 
  * @member {string} [app.iconHandle] Gets or sets app icon handle
