@@ -94,7 +94,7 @@ Topics.prototype.getTopics = function (authorization, options, callback) {
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/topics';
+                   '//v0.7/topics';
   var queryParameters = [];
   if (cursor !== null && cursor !== undefined) {
     queryParameters.push('cursor=' + encodeURIComponent(cursor));
@@ -264,7 +264,7 @@ Topics.prototype.postTopic = function (request, authorization, options, callback
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/topics';
+                   '//v0.7/topics';
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
   requestUrl = requestUrl.replace(regex, '$1');
@@ -416,7 +416,7 @@ Topics.prototype.getTopic = function (topicHandle, authorization, options, callb
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/topics/{topicHandle}';
+                   '//v0.7/topics/{topicHandle}';
   requestUrl = requestUrl.replace('{topicHandle}', encodeURIComponent(topicHandle));
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
@@ -565,7 +565,7 @@ Topics.prototype.putTopic = function (topicHandle, request, authorization, optio
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/topics/{topicHandle}';
+                   '//v0.7/topics/{topicHandle}';
   requestUrl = requestUrl.replace('{topicHandle}', encodeURIComponent(topicHandle));
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
@@ -723,7 +723,7 @@ Topics.prototype.deleteTopic = function (topicHandle, authorization, options, ca
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/topics/{topicHandle}';
+                   '//v0.7/topics/{topicHandle}';
   requestUrl = requestUrl.replace('{topicHandle}', encodeURIComponent(topicHandle));
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
@@ -806,7 +806,7 @@ Topics.prototype.deleteTopic = function (topicHandle, authorization, options, ca
 };
 
 /**
- * @summary Get popular topics today
+ * @summary Get popular topics for a time range
  *
  * @param {string} timeRange Time range. Possible values include: 'Today',
  * 'ThisWeek', 'ThisMonth', 'AllTime'
@@ -886,7 +886,7 @@ Topics.prototype.getPopularTopics = function (timeRange, authorization, options,
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/topics/popular/{timeRange}';
+                   '//v0.7/topics/popular/{timeRange}';
   requestUrl = requestUrl.replace('{timeRange}', encodeURIComponent(timeRange));
   var queryParameters = [];
   if (cursor !== null && cursor !== undefined) {
@@ -1042,7 +1042,7 @@ Topics.prototype.getFeaturedTopics = function (authorization, options, callback)
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/topics/featured';
+                   '//v0.7/topics/featured';
   var queryParameters = [];
   if (cursor !== null && cursor !== undefined) {
     queryParameters.push('cursor=' + encodeURIComponent(cursor));
@@ -1196,7 +1196,7 @@ Topics.prototype.postTopicName = function (request, authorization, options, call
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/topics/names';
+                   '//v0.7/topics/names';
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
   requestUrl = requestUrl.replace(regex, '$1');
@@ -1292,7 +1292,7 @@ Topics.prototype.postTopicName = function (request, authorization, options, call
 };
 
 /**
- * @summary Get a topic name
+ * @summary Get a topic by topic name
  *
  * @param {string} topicName Topic name
  * 
@@ -1328,13 +1328,14 @@ Topics.prototype.postTopicName = function (request, authorization, options, call
  *                      {Error}  err        - The Error object if an error occurred, null otherwise.
  *
  *                      {object} [result]   - The deserialized result object.
- *                      See {@link GetTopicNameResponse} for more information.
+ *                      See {@link GetTopicByNameResponse} for more
+ *                      information.
  *
  *                      {object} [request]  - The HTTP Request object if an error did not occur.
  *
  *                      {stream} [response] - The HTTP Response stream if an error did not occur.
  */
-Topics.prototype.getTopicName = function (topicName, publisherType, authorization, options, callback) {
+Topics.prototype.getTopicByName = function (topicName, publisherType, authorization, options, callback) {
   var client = this.client;
   if(!callback && typeof options === 'function') {
     callback = options;
@@ -1365,7 +1366,7 @@ Topics.prototype.getTopicName = function (topicName, publisherType, authorizatio
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/topics/names/{topicName}';
+                   '//v0.7/topics/names/{topicName}';
   requestUrl = requestUrl.replace('{topicName}', encodeURIComponent(topicName));
   var queryParameters = [];
   queryParameters.push('publisherType=' + encodeURIComponent(publisherType));
@@ -1431,7 +1432,7 @@ Topics.prototype.getTopicName = function (topicName, publisherType, authorizatio
         parsedResponse = JSON.parse(responseBody);
         result = JSON.parse(responseBody);
         if (parsedResponse !== null && parsedResponse !== undefined) {
-          var resultMapper = new client.models['GetTopicNameResponse']().mapper();
+          var resultMapper = new client.models['GetTopicByNameResponse']().mapper();
           result = client.deserialize(resultMapper, parsedResponse, 'result');
         }
       } catch (error) {
@@ -1518,7 +1519,7 @@ Topics.prototype.putTopicName = function (topicName, request, authorization, opt
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/topics/names/{topicName}';
+                   '//v0.7/topics/names/{topicName}';
   requestUrl = requestUrl.replace('{topicName}', encodeURIComponent(topicName));
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
@@ -1684,7 +1685,7 @@ Topics.prototype.deleteTopicName = function (topicName, request, authorization, 
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/topics/names/{topicName}';
+                   '//v0.7/topics/names/{topicName}';
   requestUrl = requestUrl.replace('{topicName}', encodeURIComponent(topicName));
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;

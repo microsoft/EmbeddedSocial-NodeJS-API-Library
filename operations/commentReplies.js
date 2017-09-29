@@ -99,7 +99,7 @@ CommentReplies.prototype.getReplies = function (commentHandle, authorization, op
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/comments/{commentHandle}/replies';
+                   '//v0.7/comments/{commentHandle}/replies';
   requestUrl = requestUrl.replace('{commentHandle}', encodeURIComponent(commentHandle));
   var queryParameters = [];
   if (cursor !== null && cursor !== undefined) {
@@ -257,7 +257,7 @@ CommentReplies.prototype.postReply = function (commentHandle, request, authoriza
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/comments/{commentHandle}/replies';
+                   '//v0.7/comments/{commentHandle}/replies';
   requestUrl = requestUrl.replace('{commentHandle}', encodeURIComponent(commentHandle));
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;

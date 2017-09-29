@@ -1018,7 +1018,7 @@ export interface MyPins {
     /**
      * @summary Unpin a topic
      *
-     * @param {string} topicHandle Topic handle
+     * @param {string} topicHandle Handle of pinned topic
      * 
      * @param {string} authorization Format is: "Scheme CredentialsList". Possible
      * values are:
@@ -1065,6 +1065,15 @@ export interface MyPushRegistrations {
      * If multiple devices register for push notifications, then all
      * those devices
      * will get push notifications.
+     * Each push notification will have three components: (1) a human
+     * readable string
+     * that the mobile OS should display to the user, (2) a
+     * "publisher" string with
+     * value "EmbeddedSocial" to identify that the push notification
+     * came from
+     * this service, and (3) an "activityHandle" that identifies which
+     * activity
+     * in the notification feed this push notification is for.
      *
      * @param {string} platform Platform type. Possible values include: 'Windows',
      * 'Android', 'IOS'
@@ -1072,14 +1081,14 @@ export interface MyPushRegistrations {
      * @param {string} registrationId Unique registration ID provided by the
      * mobile OS.
      * You must URL encode the registration ID.
-     * For Android, this is the GCM registration ID.
+     * For Android, this is the GCM or FCM registration ID.
      * For Windows, this is the PushNotificationChannel URI.
      * For iOS, this is the device token.
      * 
      * @param {object} request Put push registration request
      * 
-     * @param {date} [request.lastUpdatedTime] Gets or sets last updated time from
-     * the OS
+     * @param {string} [request.lastUpdatedTime] Gets or sets last updated time
+     * from the OS in ISO 8601 format.
      * This is used to expire out registrations that have not been
      * updated every 30 days.
      * 
@@ -1768,7 +1777,7 @@ export interface UserFollowers {
     /**
      * @summary Get followers of a user
      *
-     * @param {string} userHandle User handle
+     * @param {string} userHandle Handle of queried user
      * 
      * @param {string} authorization Format is: "Scheme CredentialsList". Possible
      * values are:
@@ -1814,7 +1823,7 @@ export interface MyPendingUsers {
     /**
      * @summary Reject follower request
      *
-     * @param {string} userHandle User handle
+     * @param {string} userHandle Handle of pending user
      * 
      * @param {string} authorization Format is: "Scheme CredentialsList". Possible
      * values are:
@@ -1992,7 +2001,7 @@ export interface MyFollowers {
     /**
      * @summary Remove follower
      *
-     * @param {string} userHandle User handle
+     * @param {string} userHandle Handle of follower user
      * 
      * @param {string} authorization Format is: "Scheme CredentialsList". Possible
      * values are:
@@ -2206,7 +2215,7 @@ export interface MyFollowing {
      * Their past and future activities will no longer appear in my
      * following activities feed.
      *
-     * @param {string} userHandle User handle
+     * @param {string} userHandle Handle of following user
      * 
      * @param {string} authorization Format is: "Scheme CredentialsList". Possible
      * values are:
@@ -2244,7 +2253,7 @@ export interface MyFollowing {
      * The past and future activities on that topic will no longer
      * appear in my following activities feed.
      *
-     * @param {string} topicHandle Topic handle
+     * @param {string} topicHandle Handle of following topic
      * 
      * @param {string} authorization Format is: "Scheme CredentialsList". Possible
      * values are:
@@ -2282,7 +2291,7 @@ export interface MyFollowing {
      * that I am following.  This call will remove the specified topic
      * from that feed.
      *
-     * @param {string} topicHandle Topic handle
+     * @param {string} topicHandle Handle of following topic
      * 
      * @param {string} authorization Format is: "Scheme CredentialsList". Possible
      * values are:
@@ -2423,6 +2432,57 @@ export interface MyFollowing {
      */
     getActivities(authorization: string, options: { cursor? : string, limit? : number, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.FeedResponseActivityView>): void;
     getActivities(authorization: string, callback: ServiceCallback<models.FeedResponseActivityView>): void;
+
+    /**
+     * @summary Get my suggestions of users to follow.
+     *
+     * This call uses the token from the Authorization header to determine the
+     * type of suggestions to provide.
+     * In particular, the token determines which third-party to
+     * contact to obtain a list of suggested users,
+     * such as friends (for Facebook), following users (for Twitter),
+     * and contacts (for Google and Microsoft).
+     * We check each retrieved user to see whether they are registered
+     * with Embedded Social (this is done by checking
+     * whether the user appears as a linked account in any Embedded
+     * Social profile).
+     * Note that passing a token without the appropiate scopes will
+     * prevent Embedded Social from obtaining a list
+     * of suggested users.
+     * Support for input parameters 'cursor' and 'limit' is not
+     * implemented in the current API release.
+     *
+     * @param {string} authorization Format is: "Scheme CredentialsList". Possible
+     * values are:
+     * 
+     * - Anon AK=AppKey
+     * 
+     * - SocialPlus TK=SessionToken
+     * 
+     * - Facebook AK=AppKey|TK=AccessToken
+     * 
+     * - Google AK=AppKey|TK=AccessToken
+     * 
+     * - Twitter AK=AppKey|RT=RequestToken|TK=AccessToken
+     * 
+     * - Microsoft AK=AppKey|TK=AccessToken
+     * 
+     * - AADS2S AK=AppKey|[UH=UserHandle]|TK=AADToken
+     * 
+     * @param {object} [options] Optional Parameters.
+     * 
+     * @param {string} [options.cursor] Current read cursor
+     * 
+     * @param {number} [options.limit] Number of users compact views to return
+     * 
+     * @param {object} [options.customHeaders] Headers that will be added to the
+     * request
+     * 
+     * @param {ServiceCallback} [callback] callback function; see ServiceCallback
+     * doc in ms-rest index.d.ts for details
+     */
+    getSuggestionsUsers(authorization: string, options: { cursor? : string, limit? : number, customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.UserCompactView[]>): void;
+    getSuggestionsUsers(authorization: string, callback: ServiceCallback<models.UserCompactView[]>): void;
 }
 
 /**
@@ -2540,7 +2600,7 @@ export interface MyBlockedUsers {
     /**
      * @summary Unblock a user
      *
-     * @param {string} userHandle User handle
+     * @param {string} userHandle Handle of blocked user
      * 
      * @param {string} authorization Format is: "Scheme CredentialsList". Possible
      * values are:
@@ -2582,7 +2642,7 @@ export interface UserFollowing {
     /**
      * @summary Get following users of a user
      *
-     * @param {string} userHandle User handle
+     * @param {string} userHandle Handle of queried user
      * 
      * @param {string} authorization Format is: "Scheme CredentialsList". Possible
      * values are:
@@ -2823,7 +2883,7 @@ export interface Topics {
     deleteTopic(topicHandle: string, authorization: string, callback: ServiceCallback<any>): void;
 
     /**
-     * @summary Get popular topics today
+     * @summary Get popular topics for a time range
      *
      * @param {string} timeRange Time range. Possible values include: 'Today',
      * 'ThisWeek', 'ThisMonth', 'AllTime'
@@ -2936,7 +2996,7 @@ export interface Topics {
     postTopicName(request: models.PostTopicNameRequest, authorization: string, callback: ServiceCallback<any>): void;
 
     /**
-     * @summary Get a topic name
+     * @summary Get a topic by topic name
      *
      * @param {string} topicName Topic name
      * 
@@ -2968,8 +3028,8 @@ export interface Topics {
      * @param {ServiceCallback} [callback] callback function; see ServiceCallback
      * doc in ms-rest index.d.ts for details
      */
-    getTopicName(topicName: string, publisherType: string, authorization: string, options: { customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.GetTopicNameResponse>): void;
-    getTopicName(topicName: string, publisherType: string, authorization: string, callback: ServiceCallback<models.GetTopicNameResponse>): void;
+    getTopicByName(topicName: string, publisherType: string, authorization: string, options: { customHeaders? : { [headerName: string]: string; } }, callback: ServiceCallback<models.GetTopicByNameResponse>): void;
+    getTopicByName(topicName: string, publisherType: string, authorization: string, callback: ServiceCallback<models.GetTopicByNameResponse>): void;
 
     /**
      * @summary Update a topic name
@@ -3604,7 +3664,7 @@ export interface Users {
     /**
      * @summary Get user profile
      *
-     * @param {string} userHandle User handle
+     * @param {string} userHandle Handle of queried user
      * 
      * @param {string} authorization Format is: "Scheme CredentialsList". Possible
      * values are:
@@ -3681,7 +3741,7 @@ export interface UserTopics {
     /**
      * @summary Get user topics sorted by creation time
      *
-     * @param {string} userHandle User handle
+     * @param {string} userHandle Handle of queried user
      * 
      * @param {string} authorization Format is: "Scheme CredentialsList". Possible
      * values are:
@@ -3718,7 +3778,7 @@ export interface UserTopics {
     /**
      * @summary Get user topics sorted by popularity
      *
-     * @param {string} userHandle User handle
+     * @param {string} userHandle Handle of queried user
      * 
      * @param {string} authorization Format is: "Scheme CredentialsList". Possible
      * values are:

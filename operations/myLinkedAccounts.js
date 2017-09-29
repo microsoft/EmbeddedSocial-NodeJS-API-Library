@@ -82,7 +82,7 @@ MyLinkedAccounts.prototype.getLinkedAccounts = function (authorization, options,
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/users/me/linked_accounts';
+                   '//v0.7/users/me/linked_accounts';
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
   requestUrl = requestUrl.replace(regex, '$1');
@@ -239,7 +239,7 @@ MyLinkedAccounts.prototype.postLinkedAccount = function (request, authorization,
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/users/me/linked_accounts';
+                   '//v0.7/users/me/linked_accounts';
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
   requestUrl = requestUrl.replace(regex, '$1');
@@ -403,7 +403,7 @@ MyLinkedAccounts.prototype.deleteLinkedAccount = function (identityProvider, aut
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/users/me/linked_accounts/{identityProvider}';
+                   '//v0.7/users/me/linked_accounts/{identityProvider}';
   requestUrl = requestUrl.replace('{identityProvider}', encodeURIComponent(identityProvider));
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;

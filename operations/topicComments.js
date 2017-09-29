@@ -100,7 +100,7 @@ TopicComments.prototype.getTopicComments = function (topicHandle, authorization,
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/topics/{topicHandle}/comments';
+                   '//v0.7/topics/{topicHandle}/comments';
   requestUrl = requestUrl.replace('{topicHandle}', encodeURIComponent(topicHandle));
   var queryParameters = [];
   if (cursor !== null && cursor !== undefined) {
@@ -263,7 +263,7 @@ TopicComments.prototype.postComment = function (topicHandle, request, authorizat
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/topics/{topicHandle}/comments';
+                   '//v0.7/topics/{topicHandle}/comments';
   requestUrl = requestUrl.replace('{topicHandle}', encodeURIComponent(topicHandle));
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;

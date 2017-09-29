@@ -100,7 +100,7 @@ ReplyLikes.prototype.getLikes = function (replyHandle, authorization, options, c
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/replies/{replyHandle}/likes';
+                   '//v0.7/replies/{replyHandle}/likes';
   requestUrl = requestUrl.replace('{replyHandle}', encodeURIComponent(replyHandle));
   var queryParameters = [];
   if (cursor !== null && cursor !== undefined) {
@@ -248,7 +248,7 @@ ReplyLikes.prototype.postLike = function (replyHandle, authorization, options, c
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/replies/{replyHandle}/likes';
+                   '//v0.7/replies/{replyHandle}/likes';
   requestUrl = requestUrl.replace('{replyHandle}', encodeURIComponent(replyHandle));
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
@@ -392,7 +392,7 @@ ReplyLikes.prototype.deleteLike = function (replyHandle, authorization, options,
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/replies/{replyHandle}/likes/me';
+                   '//v0.7/replies/{replyHandle}/likes/me';
   requestUrl = requestUrl.replace('{replyHandle}', encodeURIComponent(replyHandle));
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;

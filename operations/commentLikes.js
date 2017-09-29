@@ -100,7 +100,7 @@ CommentLikes.prototype.getLikes = function (commentHandle, authorization, option
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/comments/{commentHandle}/likes';
+                   '//v0.7/comments/{commentHandle}/likes';
   requestUrl = requestUrl.replace('{commentHandle}', encodeURIComponent(commentHandle));
   var queryParameters = [];
   if (cursor !== null && cursor !== undefined) {
@@ -248,7 +248,7 @@ CommentLikes.prototype.postLike = function (commentHandle, authorization, option
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/comments/{commentHandle}/likes';
+                   '//v0.7/comments/{commentHandle}/likes';
   requestUrl = requestUrl.replace('{commentHandle}', encodeURIComponent(commentHandle));
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
@@ -392,7 +392,7 @@ CommentLikes.prototype.deleteLike = function (commentHandle, authorization, opti
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/comments/{commentHandle}/likes/me';
+                   '//v0.7/comments/{commentHandle}/likes/me';
   requestUrl = requestUrl.replace('{commentHandle}', encodeURIComponent(commentHandle));
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;

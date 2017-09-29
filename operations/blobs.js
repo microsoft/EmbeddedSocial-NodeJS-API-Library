@@ -90,7 +90,7 @@ Blobs.prototype.postBlob = function (authorization, blob, options, callback) {
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/blobs';
+                   '//v0.7/blobs';
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
   requestUrl = requestUrl.replace(regex, '$1');
@@ -229,7 +229,7 @@ Blobs.prototype.getBlob = function (blobHandle, authorization, options, callback
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/blobs/{blobHandle}';
+                   '//v0.7/blobs/{blobHandle}';
   requestUrl = requestUrl.replace('{blobHandle}', encodeURIComponent(blobHandle));
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;

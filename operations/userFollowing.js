@@ -27,7 +27,7 @@ function UserFollowing(client) {
 /**
  * @summary Get following users of a user
  *
- * @param {string} userHandle User handle
+ * @param {string} userHandle Handle of queried user
  * 
  * @param {string} authorization Format is: "Scheme CredentialsList". Possible
  * values are:
@@ -100,7 +100,7 @@ UserFollowing.prototype.getFollowing = function (userHandle, authorization, opti
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/users/{userHandle}/following';
+                   '//v0.7/users/{userHandle}/following';
   requestUrl = requestUrl.replace('{userHandle}', encodeURIComponent(userHandle));
   var queryParameters = [];
   if (cursor !== null && cursor !== undefined) {

@@ -120,7 +120,7 @@ Search.prototype.getTopics = function (query, authorization, options, callback) 
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/search/topics';
+                   '//v0.7/search/topics';
   var queryParameters = [];
   queryParameters.push('query=' + encodeURIComponent(query));
   if (cursor !== null && cursor !== undefined) {
@@ -298,7 +298,7 @@ Search.prototype.getUsers = function (query, authorization, options, callback) {
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/search/users';
+                   '//v0.7/search/users';
   var queryParameters = [];
   queryParameters.push('query=' + encodeURIComponent(query));
   if (cursor !== null && cursor !== undefined) {

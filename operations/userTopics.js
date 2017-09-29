@@ -27,7 +27,7 @@ function UserTopics(client) {
 /**
  * @summary Get user topics sorted by creation time
  *
- * @param {string} userHandle User handle
+ * @param {string} userHandle Handle of queried user
  * 
  * @param {string} authorization Format is: "Scheme CredentialsList". Possible
  * values are:
@@ -99,7 +99,7 @@ UserTopics.prototype.getTopics = function (userHandle, authorization, options, c
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/users/{userHandle}/topics';
+                   '//v0.7/users/{userHandle}/topics';
   requestUrl = requestUrl.replace('{userHandle}', encodeURIComponent(userHandle));
   var queryParameters = [];
   if (cursor !== null && cursor !== undefined) {
@@ -188,7 +188,7 @@ UserTopics.prototype.getTopics = function (userHandle, authorization, options, c
 /**
  * @summary Get user topics sorted by popularity
  *
- * @param {string} userHandle User handle
+ * @param {string} userHandle Handle of queried user
  * 
  * @param {string} authorization Format is: "Scheme CredentialsList". Possible
  * values are:
@@ -260,7 +260,7 @@ UserTopics.prototype.getPopularTopics = function (userHandle, authorization, opt
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/users/{userHandle}/topics/popular';
+                   '//v0.7/users/{userHandle}/topics/popular';
   requestUrl = requestUrl.replace('{userHandle}', encodeURIComponent(userHandle));
   var queryParameters = [];
   if (cursor !== null && cursor !== undefined) {

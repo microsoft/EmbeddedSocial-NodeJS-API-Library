@@ -94,7 +94,7 @@ MyTopics.prototype.getTopics = function (authorization, options, callback) {
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/users/me/topics';
+                   '//v0.7/users/me/topics';
   var queryParameters = [];
   if (cursor !== null && cursor !== undefined) {
     queryParameters.push('cursor=' + encodeURIComponent(cursor));
@@ -249,7 +249,7 @@ MyTopics.prototype.getPopularTopics = function (authorization, options, callback
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/users/me/topics/popular';
+                   '//v0.7/users/me/topics/popular';
   var queryParameters = [];
   if (cursor !== null && cursor !== undefined) {
     queryParameters.push('cursor=' + encodeURIComponent(cursor.toString()));

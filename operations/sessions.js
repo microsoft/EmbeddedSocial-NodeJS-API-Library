@@ -92,7 +92,7 @@ Sessions.prototype.postSession = function (request, authorization, options, call
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/sessions';
+                   '//v0.7/sessions';
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
   requestUrl = requestUrl.replace(regex, '$1');
@@ -238,7 +238,7 @@ Sessions.prototype.deleteSession = function (authorization, options, callback) {
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/sessions/current';
+                   '//v0.7/sessions/current';
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
   requestUrl = requestUrl.replace(regex, '$1');

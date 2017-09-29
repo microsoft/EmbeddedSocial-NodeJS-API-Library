@@ -95,7 +95,7 @@ MyFollowers.prototype.getFollowers = function (authorization, options, callback)
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/users/me/followers';
+                   '//v0.7/users/me/followers';
   var queryParameters = [];
   if (cursor !== null && cursor !== undefined) {
     queryParameters.push('cursor=' + encodeURIComponent(cursor));
@@ -244,7 +244,7 @@ MyFollowers.prototype.postFollower = function (request, authorization, options, 
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/users/me/followers';
+                   '//v0.7/users/me/followers';
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
   requestUrl = requestUrl.replace(regex, '$1');
@@ -342,7 +342,7 @@ MyFollowers.prototype.postFollower = function (request, authorization, options, 
 /**
  * @summary Remove follower
  *
- * @param {string} userHandle User handle
+ * @param {string} userHandle Handle of follower user
  * 
  * @param {string} authorization Format is: "Scheme CredentialsList". Possible
  * values are:
@@ -401,7 +401,7 @@ MyFollowers.prototype.deleteFollower = function (userHandle, authorization, opti
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/users/me/followers/{userHandle}';
+                   '//v0.7/users/me/followers/{userHandle}';
   requestUrl = requestUrl.replace('{userHandle}', encodeURIComponent(userHandle));
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;

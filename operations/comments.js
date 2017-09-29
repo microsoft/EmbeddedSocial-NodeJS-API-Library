@@ -87,7 +87,7 @@ Comments.prototype.getComment = function (commentHandle, authorization, options,
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/comments/{commentHandle}';
+                   '//v0.7/comments/{commentHandle}';
   requestUrl = requestUrl.replace('{commentHandle}', encodeURIComponent(commentHandle));
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
@@ -225,7 +225,7 @@ Comments.prototype.deleteComment = function (commentHandle, authorization, optio
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/comments/{commentHandle}';
+                   '//v0.7/comments/{commentHandle}';
   requestUrl = requestUrl.replace('{commentHandle}', encodeURIComponent(commentHandle));
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
