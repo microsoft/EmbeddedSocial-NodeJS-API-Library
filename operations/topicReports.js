@@ -96,7 +96,7 @@ TopicReports.prototype.postReport = function (topicHandle, postReportRequest, au
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/topics/{topicHandle}/reports';
+                   '//v0.7/topics/{topicHandle}/reports';
   requestUrl = requestUrl.replace('{topicHandle}', encodeURIComponent(topicHandle));
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;

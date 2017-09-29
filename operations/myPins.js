@@ -94,7 +94,7 @@ MyPins.prototype.getPins = function (authorization, options, callback) {
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/users/me/pins';
+                   '//v0.7/users/me/pins';
   var queryParameters = [];
   if (cursor !== null && cursor !== undefined) {
     queryParameters.push('cursor=' + encodeURIComponent(cursor));
@@ -243,7 +243,7 @@ MyPins.prototype.postPin = function (request, authorization, options, callback) 
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/users/me/pins';
+                   '//v0.7/users/me/pins';
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
   requestUrl = requestUrl.replace(regex, '$1');
@@ -341,7 +341,7 @@ MyPins.prototype.postPin = function (request, authorization, options, callback) 
 /**
  * @summary Unpin a topic
  *
- * @param {string} topicHandle Topic handle
+ * @param {string} topicHandle Handle of pinned topic
  * 
  * @param {string} authorization Format is: "Scheme CredentialsList". Possible
  * values are:
@@ -400,7 +400,7 @@ MyPins.prototype.deletePin = function (topicHandle, authorization, options, call
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/users/me/pins/{topicHandle}';
+                   '//v0.7/users/me/pins/{topicHandle}';
   requestUrl = requestUrl.replace('{topicHandle}', encodeURIComponent(topicHandle));
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;

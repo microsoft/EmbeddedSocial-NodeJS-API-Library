@@ -96,7 +96,7 @@ MyLikes.prototype.getLikedTopics = function (authorization, options, callback) {
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/users/me/likes/topics';
+                   '//v0.7/users/me/likes/topics';
   var queryParameters = [];
   if (cursor !== null && cursor !== undefined) {
     queryParameters.push('cursor=' + encodeURIComponent(cursor));

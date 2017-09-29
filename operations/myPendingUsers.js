@@ -27,7 +27,7 @@ function MyPendingUsers(client) {
 /**
  * @summary Reject follower request
  *
- * @param {string} userHandle User handle
+ * @param {string} userHandle Handle of pending user
  * 
  * @param {string} authorization Format is: "Scheme CredentialsList". Possible
  * values are:
@@ -86,7 +86,7 @@ MyPendingUsers.prototype.deletePendingUser = function (userHandle, authorization
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/users/me/pending_users/{userHandle}';
+                   '//v0.7/users/me/pending_users/{userHandle}';
   requestUrl = requestUrl.replace('{userHandle}', encodeURIComponent(userHandle));
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
@@ -239,7 +239,7 @@ MyPendingUsers.prototype.getPendingUsers = function (authorization, options, cal
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/users/me/pending_users';
+                   '//v0.7/users/me/pending_users';
   var queryParameters = [];
   if (cursor !== null && cursor !== undefined) {
     queryParameters.push('cursor=' + encodeURIComponent(cursor));
@@ -382,7 +382,7 @@ MyPendingUsers.prototype.getPendingUsersCount = function (authorization, options
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/users/me/pending_users/count';
+                   '//v0.7/users/me/pending_users/count';
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
   requestUrl = requestUrl.replace(regex, '$1');

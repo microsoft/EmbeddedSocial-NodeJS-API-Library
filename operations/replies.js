@@ -87,7 +87,7 @@ Replies.prototype.getReply = function (replyHandle, authorization, options, call
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/replies/{replyHandle}';
+                   '//v0.7/replies/{replyHandle}';
   requestUrl = requestUrl.replace('{replyHandle}', encodeURIComponent(replyHandle));
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
@@ -225,7 +225,7 @@ Replies.prototype.deleteReply = function (replyHandle, authorization, options, c
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/replies/{replyHandle}';
+                   '//v0.7/replies/{replyHandle}';
   requestUrl = requestUrl.replace('{replyHandle}', encodeURIComponent(replyHandle));
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;

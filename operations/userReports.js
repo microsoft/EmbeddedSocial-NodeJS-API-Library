@@ -99,7 +99,7 @@ UserReports.prototype.postReport = function (userHandle, postReportRequest, auth
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/users/{userHandle}/reports';
+                   '//v0.7/users/{userHandle}/reports';
   requestUrl = requestUrl.replace('{userHandle}', encodeURIComponent(userHandle));
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;

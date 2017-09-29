@@ -100,7 +100,7 @@ Users.prototype.postUser = function (request, authorization, options, callback) 
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/users';
+                   '//v0.7/users';
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
   requestUrl = requestUrl.replace(regex, '$1');
@@ -247,7 +247,7 @@ Users.prototype.getMyProfile = function (authorization, options, callback) {
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/users/me';
+                   '//v0.7/users/me';
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
   requestUrl = requestUrl.replace(regex, '$1');
@@ -379,7 +379,7 @@ Users.prototype.deleteUser = function (authorization, options, callback) {
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/users/me';
+                   '//v0.7/users/me';
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
   requestUrl = requestUrl.replace(regex, '$1');
@@ -528,7 +528,7 @@ Users.prototype.putUserInfo = function (request, authorization, options, callbac
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/users/me/info';
+                   '//v0.7/users/me/info';
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
   requestUrl = requestUrl.replace(regex, '$1');
@@ -687,7 +687,7 @@ Users.prototype.putUserPhoto = function (request, authorization, options, callba
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/users/me/photo';
+                   '//v0.7/users/me/photo';
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
   requestUrl = requestUrl.replace(regex, '$1');
@@ -847,7 +847,7 @@ Users.prototype.putUserVisibility = function (request, authorization, options, c
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/users/me/visibility';
+                   '//v0.7/users/me/visibility';
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
   requestUrl = requestUrl.replace(regex, '$1');
@@ -945,7 +945,7 @@ Users.prototype.putUserVisibility = function (request, authorization, options, c
 /**
  * @summary Get user profile
  *
- * @param {string} userHandle User handle
+ * @param {string} userHandle Handle of queried user
  * 
  * @param {string} authorization Format is: "Scheme CredentialsList". Possible
  * values are:
@@ -1005,7 +1005,7 @@ Users.prototype.getUser = function (userHandle, authorization, options, callback
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/users/{userHandle}';
+                   '//v0.7/users/{userHandle}';
   requestUrl = requestUrl.replace('{userHandle}', encodeURIComponent(userHandle));
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
@@ -1152,7 +1152,7 @@ Users.prototype.getPopularUsers = function (authorization, options, callback) {
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/users/popular';
+                   '//v0.7/users/popular';
   var queryParameters = [];
   if (cursor !== null && cursor !== undefined) {
     queryParameters.push('cursor=' + encodeURIComponent(cursor.toString()));

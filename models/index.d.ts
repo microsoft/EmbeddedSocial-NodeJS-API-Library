@@ -555,7 +555,8 @@ export interface TopicView {
  * Initializes a new instance of the PutPushRegistrationRequest class.
  * @constructor
  * Request to put push registration (register or update)
- * @member {date} lastUpdatedTime Gets or sets last updated time from the OS
+ * @member {string} lastUpdatedTime Gets or sets last updated time from the OS
+ * in ISO 8601 format.
  * This is used to expire out registrations that have not been
  * updated every 30 days.
  * 
@@ -563,7 +564,7 @@ export interface TopicView {
  * 
  */
 export interface PutPushRegistrationRequest {
-    lastUpdatedTime: Date;
+    lastUpdatedTime: string;
     language: string;
 }
 
@@ -901,13 +902,13 @@ export interface DeleteTopicNameRequest {
 
 /**
  * @class
- * Initializes a new instance of the GetTopicNameResponse class.
+ * Initializes a new instance of the GetTopicByNameResponse class.
  * @constructor
- * Response from get topic name
+ * Response from get topic by name
  * @member {string} topicHandle Gets or sets topic handle of the response
  * 
  */
-export interface GetTopicNameResponse {
+export interface GetTopicByNameResponse {
     topicHandle: string;
 }
 

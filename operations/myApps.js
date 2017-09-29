@@ -81,7 +81,7 @@ MyApps.prototype.getApps = function (authorization, options, callback) {
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/users/me/apps';
+                   '//v0.7/users/me/apps';
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
   requestUrl = requestUrl.replace(regex, '$1');

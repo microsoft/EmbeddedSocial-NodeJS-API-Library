@@ -99,7 +99,7 @@ MyFollowing.prototype.getFollowingUsers = function (authorization, options, call
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/users/me/following/users';
+                   '//v0.7/users/me/following/users';
   var queryParameters = [];
   if (cursor !== null && cursor !== undefined) {
     queryParameters.push('cursor=' + encodeURIComponent(cursor));
@@ -262,7 +262,7 @@ MyFollowing.prototype.postFollowingUser = function (request, authorization, opti
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/users/me/following/users';
+                   '//v0.7/users/me/following/users';
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
   requestUrl = requestUrl.replace(regex, '$1');
@@ -427,7 +427,7 @@ MyFollowing.prototype.getFollowingTopics = function (authorization, options, cal
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/users/me/following/topics';
+                   '//v0.7/users/me/following/topics';
   var queryParameters = [];
   if (cursor !== null && cursor !== undefined) {
     queryParameters.push('cursor=' + encodeURIComponent(cursor));
@@ -582,7 +582,7 @@ MyFollowing.prototype.postFollowingTopic = function (request, authorization, opt
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/users/me/following/topics';
+                   '//v0.7/users/me/following/topics';
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
   requestUrl = requestUrl.replace(regex, '$1');
@@ -688,7 +688,7 @@ MyFollowing.prototype.postFollowingTopic = function (request, authorization, opt
  * Their past and future activities will no longer appear in my
  * following activities feed.
  *
- * @param {string} userHandle User handle
+ * @param {string} userHandle Handle of following user
  * 
  * @param {string} authorization Format is: "Scheme CredentialsList". Possible
  * values are:
@@ -747,7 +747,7 @@ MyFollowing.prototype.deleteFollowingUser = function (userHandle, authorization,
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/users/me/following/users/{userHandle}';
+                   '//v0.7/users/me/following/users/{userHandle}';
   requestUrl = requestUrl.replace('{userHandle}', encodeURIComponent(userHandle));
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
@@ -837,7 +837,7 @@ MyFollowing.prototype.deleteFollowingUser = function (userHandle, authorization,
  * The past and future activities on that topic will no longer
  * appear in my following activities feed.
  *
- * @param {string} topicHandle Topic handle
+ * @param {string} topicHandle Handle of following topic
  * 
  * @param {string} authorization Format is: "Scheme CredentialsList". Possible
  * values are:
@@ -896,7 +896,7 @@ MyFollowing.prototype.deleteFollowingTopic = function (topicHandle, authorizatio
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/users/me/following/topics/{topicHandle}';
+                   '//v0.7/users/me/following/topics/{topicHandle}';
   requestUrl = requestUrl.replace('{topicHandle}', encodeURIComponent(topicHandle));
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
@@ -986,7 +986,7 @@ MyFollowing.prototype.deleteFollowingTopic = function (topicHandle, authorizatio
  * that I am following.  This call will remove the specified topic
  * from that feed.
  *
- * @param {string} topicHandle Topic handle
+ * @param {string} topicHandle Handle of following topic
  * 
  * @param {string} authorization Format is: "Scheme CredentialsList". Possible
  * values are:
@@ -1045,7 +1045,7 @@ MyFollowing.prototype.deleteTopicFromCombinedFollowingFeed = function (topicHand
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/users/me/following/combined/{topicHandle}';
+                   '//v0.7/users/me/following/combined/{topicHandle}';
   requestUrl = requestUrl.replace('{topicHandle}', encodeURIComponent(topicHandle));
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
@@ -1214,7 +1214,7 @@ MyFollowing.prototype.getTopics = function (authorization, options, callback) {
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/users/me/following/combined';
+                   '//v0.7/users/me/following/combined';
   var queryParameters = [];
   if (cursor !== null && cursor !== undefined) {
     queryParameters.push('cursor=' + encodeURIComponent(cursor));
@@ -1395,7 +1395,7 @@ MyFollowing.prototype.getActivities = function (authorization, options, callback
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/users/me/following/activities';
+                   '//v0.7/users/me/following/activities';
   var queryParameters = [];
   if (cursor !== null && cursor !== undefined) {
     queryParameters.push('cursor=' + encodeURIComponent(cursor));
@@ -1466,6 +1466,190 @@ MyFollowing.prototype.getActivities = function (authorization, options, callback
         result = JSON.parse(responseBody);
         if (parsedResponse !== null && parsedResponse !== undefined) {
           var resultMapper = new client.models['FeedResponseActivityView']().mapper();
+          result = client.deserialize(resultMapper, parsedResponse, 'result');
+        }
+      } catch (error) {
+        var deserializationError = new Error(util.format('Error "%s" occurred in deserializing the responseBody - "%s"', error, responseBody));
+        deserializationError.request = msRest.stripRequest(httpRequest);
+        deserializationError.response = msRest.stripResponse(response);
+        return callback(deserializationError);
+      }
+    }
+
+    return callback(null, result, httpRequest, response);
+  });
+};
+
+/**
+ * @summary Get my suggestions of users to follow.
+ *
+ * This call uses the token from the Authorization header to determine the
+ * type of suggestions to provide.
+ * In particular, the token determines which third-party to
+ * contact to obtain a list of suggested users,
+ * such as friends (for Facebook), following users (for Twitter),
+ * and contacts (for Google and Microsoft).
+ * We check each retrieved user to see whether they are registered
+ * with Embedded Social (this is done by checking
+ * whether the user appears as a linked account in any Embedded
+ * Social profile).
+ * Note that passing a token without the appropiate scopes will
+ * prevent Embedded Social from obtaining a list
+ * of suggested users.
+ * Support for input parameters 'cursor' and 'limit' is not
+ * implemented in the current API release.
+ *
+ * @param {string} authorization Format is: "Scheme CredentialsList". Possible
+ * values are:
+ * 
+ * - Anon AK=AppKey
+ * 
+ * - SocialPlus TK=SessionToken
+ * 
+ * - Facebook AK=AppKey|TK=AccessToken
+ * 
+ * - Google AK=AppKey|TK=AccessToken
+ * 
+ * - Twitter AK=AppKey|RT=RequestToken|TK=AccessToken
+ * 
+ * - Microsoft AK=AppKey|TK=AccessToken
+ * 
+ * - AADS2S AK=AppKey|[UH=UserHandle]|TK=AADToken
+ * 
+ * @param {object} [options] Optional Parameters.
+ * 
+ * @param {string} [options.cursor] Current read cursor
+ * 
+ * @param {number} [options.limit] Number of users compact views to return
+ * 
+ * @param {object} [options.customHeaders] Headers that will be added to the
+ * request
+ * 
+ * @param {function} callback
+ *
+ * @returns {function} callback(err, result, request, response)
+ *
+ *                      {Error}  err        - The Error object if an error occurred, null otherwise.
+ *
+ *                      {array} [result]   - The deserialized result object.
+ *
+ *                      {object} [request]  - The HTTP Request object if an error did not occur.
+ *
+ *                      {stream} [response] - The HTTP Response stream if an error did not occur.
+ */
+MyFollowing.prototype.getSuggestionsUsers = function (authorization, options, callback) {
+  var client = this.client;
+  if(!callback && typeof options === 'function') {
+    callback = options;
+    options = null;
+  }
+  if (!callback) {
+    throw new Error('callback cannot be null.');
+  }
+  var cursor = (options && options.cursor !== undefined) ? options.cursor : undefined;
+  var limit = (options && options.limit !== undefined) ? options.limit : undefined;
+  // Validate
+  try {
+    if (cursor !== null && cursor !== undefined && typeof cursor.valueOf() !== 'string') {
+      throw new Error('cursor must be of type string.');
+    }
+    if (limit !== null && limit !== undefined && typeof limit !== 'number') {
+      throw new Error('limit must be of type number.');
+    }
+    if (authorization === null || authorization === undefined || typeof authorization.valueOf() !== 'string') {
+      throw new Error('authorization cannot be null or undefined and it must be of type string.');
+    }
+  } catch (error) {
+    return callback(error);
+  }
+
+  // Construct URL
+  var requestUrl = this.client.baseUri +
+                   '//v0.7/users/me/following/suggestions/users';
+  var queryParameters = [];
+  if (cursor !== null && cursor !== undefined) {
+    queryParameters.push('cursor=' + encodeURIComponent(cursor));
+  }
+  if (limit !== null && limit !== undefined) {
+    queryParameters.push('limit=' + encodeURIComponent(limit.toString()));
+  }
+  if (queryParameters.length > 0) {
+    requestUrl += '?' + queryParameters.join('&');
+  }
+  // trim all duplicate forward slashes in the url
+  var regex = /([^:]\/)\/+/gi;
+  requestUrl = requestUrl.replace(regex, '$1');
+
+  // Create HTTP transport objects
+  var httpRequest = new WebResource();
+  httpRequest.method = 'GET';
+  httpRequest.headers = {};
+  httpRequest.url = requestUrl;
+  // Set Headers
+  if (authorization !== undefined && authorization !== null) {
+    httpRequest.headers['Authorization'] = authorization;
+  }
+  if(options) {
+    for(var headerName in options['customHeaders']) {
+      if (options['customHeaders'].hasOwnProperty(headerName)) {
+        httpRequest.headers[headerName] = options['customHeaders'][headerName];
+      }
+    }
+  }
+  httpRequest.headers['Content-Type'] = 'application/json; charset=utf-8';
+  httpRequest.body = null;
+  // Send Request
+  return client.pipeline(httpRequest, function (err, response, responseBody) {
+    if (err) {
+      return callback(err);
+    }
+    var statusCode = response.statusCode;
+    if (statusCode !== 200 && statusCode !== 400 && statusCode !== 500 && statusCode !== 501) {
+      var error = new Error(responseBody);
+      error.statusCode = response.statusCode;
+      error.request = msRest.stripRequest(httpRequest);
+      error.response = msRest.stripResponse(response);
+      if (responseBody === '') responseBody = null;
+      var parsedErrorResponse;
+      try {
+        parsedErrorResponse = JSON.parse(responseBody);
+        if (parsedErrorResponse) {
+          if (parsedErrorResponse.error) parsedErrorResponse = parsedErrorResponse.error;
+          if (parsedErrorResponse.code) error.code = parsedErrorResponse.code;
+          if (parsedErrorResponse.message) error.message = parsedErrorResponse.message;
+        }
+      } catch (defaultError) {
+        error.message = util.format('Error "%s" occurred in deserializing the responseBody ' + 
+                         '- "%s" for the default response.', defaultError.message, responseBody);
+        return callback(error);
+      }
+      return callback(error);
+    }
+    // Create Result
+    var result = null;
+    if (responseBody === '') responseBody = null;
+    // Deserialize Response
+    if (statusCode === 200) {
+      var parsedResponse = null;
+      try {
+        parsedResponse = JSON.parse(responseBody);
+        result = JSON.parse(responseBody);
+        if (parsedResponse !== null && parsedResponse !== undefined) {
+          var resultMapper = {
+            required: false,
+            serializedName: 'parsedResponse',
+            type: {
+              name: 'Sequence',
+              element: {
+                  required: false,
+                  serializedName: 'UserCompactViewElementType',
+                  type: {
+                    name: 'Composite',
+                    className: 'UserCompactView'
+                  }
+              }
+            }
+          };
           result = client.deserialize(resultMapper, parsedResponse, 'result');
         }
       } catch (error) {

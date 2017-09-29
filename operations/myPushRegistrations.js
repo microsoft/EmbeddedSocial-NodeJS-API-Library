@@ -32,6 +32,15 @@ function MyPushRegistrations(client) {
  * If multiple devices register for push notifications, then all
  * those devices
  * will get push notifications.
+ * Each push notification will have three components: (1) a human
+ * readable string
+ * that the mobile OS should display to the user, (2) a
+ * "publisher" string with
+ * value "EmbeddedSocial" to identify that the push notification
+ * came from
+ * this service, and (3) an "activityHandle" that identifies which
+ * activity
+ * in the notification feed this push notification is for.
  *
  * @param {string} platform Platform type. Possible values include: 'Windows',
  * 'Android', 'IOS'
@@ -39,14 +48,14 @@ function MyPushRegistrations(client) {
  * @param {string} registrationId Unique registration ID provided by the
  * mobile OS.
  * You must URL encode the registration ID.
- * For Android, this is the GCM registration ID.
+ * For Android, this is the GCM or FCM registration ID.
  * For Windows, this is the PushNotificationChannel URI.
  * For iOS, this is the device token.
  * 
  * @param {object} request Put push registration request
  * 
- * @param {date} [request.lastUpdatedTime] Gets or sets last updated time from
- * the OS
+ * @param {string} [request.lastUpdatedTime] Gets or sets last updated time
+ * from the OS in ISO 8601 format.
  * This is used to expire out registrations that have not been
  * updated every 30 days.
  * 
@@ -120,7 +129,7 @@ MyPushRegistrations.prototype.putPushRegistration = function (platform, registra
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/users/me/push_registrations/{platform}/{registrationId}';
+                   '//v0.7/users/me/push_registrations/{platform}/{registrationId}';
   requestUrl = requestUrl.replace('{platform}', encodeURIComponent(platform));
   requestUrl = requestUrl.replace('{registrationId}', encodeURIComponent(registrationId));
   // trim all duplicate forward slashes in the url
@@ -165,7 +174,7 @@ MyPushRegistrations.prototype.putPushRegistration = function (platform, registra
       return callback(err);
     }
     var statusCode = response.statusCode;
-    if (statusCode !== 204 && statusCode !== 401 && statusCode !== 409 && statusCode !== 500) {
+    if (statusCode !== 204 && statusCode !== 400 && statusCode !== 401 && statusCode !== 500) {
       var error = new Error(responseBody);
       error.statusCode = response.statusCode;
       error.request = msRest.stripRequest(httpRequest);
@@ -295,7 +304,7 @@ MyPushRegistrations.prototype.deletePushRegistration = function (platform, regis
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/users/me/push_registrations/{platform}/{registrationId}';
+                   '//v0.7/users/me/push_registrations/{platform}/{registrationId}';
   requestUrl = requestUrl.replace('{platform}', encodeURIComponent(platform));
   requestUrl = requestUrl.replace('{registrationId}', encodeURIComponent(registrationId));
   // trim all duplicate forward slashes in the url

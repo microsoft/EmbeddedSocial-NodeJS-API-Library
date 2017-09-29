@@ -113,7 +113,7 @@ MyBlockedUsers.prototype.getBlockedUsers = function (authorization, options, cal
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/users/me/blocked_users';
+                   '//v0.7/users/me/blocked_users';
   var queryParameters = [];
   if (cursor !== null && cursor !== undefined) {
     queryParameters.push('cursor=' + encodeURIComponent(cursor));
@@ -278,7 +278,7 @@ MyBlockedUsers.prototype.postBlockedUser = function (request, authorization, opt
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/users/me/blocked_users';
+                   '//v0.7/users/me/blocked_users';
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
   requestUrl = requestUrl.replace(regex, '$1');
@@ -376,7 +376,7 @@ MyBlockedUsers.prototype.postBlockedUser = function (request, authorization, opt
 /**
  * @summary Unblock a user
  *
- * @param {string} userHandle User handle
+ * @param {string} userHandle Handle of blocked user
  * 
  * @param {string} authorization Format is: "Scheme CredentialsList". Possible
  * values are:
@@ -435,7 +435,7 @@ MyBlockedUsers.prototype.deleteBlockedUser = function (userHandle, authorization
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/users/me/blocked_users/{userHandle}';
+                   '//v0.7/users/me/blocked_users/{userHandle}';
   requestUrl = requestUrl.replace('{userHandle}', encodeURIComponent(userHandle));
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;

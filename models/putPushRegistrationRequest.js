@@ -11,7 +11,8 @@
  * Initializes a new instance of the PutPushRegistrationRequest class.
  * @constructor
  * Request to put push registration (register or update)
- * @member {date} lastUpdatedTime Gets or sets last updated time from the OS
+ * @member {string} lastUpdatedTime Gets or sets last updated time from the OS
+ * in ISO 8601 format.
  * This is used to expire out registrations that have not been
  * updated every 30 days.
  * 
@@ -39,7 +40,7 @@ PutPushRegistrationRequest.prototype.mapper = function () {
           required: true,
           serializedName: 'lastUpdatedTime',
           type: {
-            name: 'DateTime'
+            name: 'String'
           }
         },
         language: {

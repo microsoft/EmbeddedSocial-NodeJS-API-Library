@@ -95,7 +95,7 @@ MyAppFollowing.prototype.getUsers = function (appHandle, authorization, options,
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/users/me/apps/{appHandle}/following/difference';
+                   '//v0.7/users/me/apps/{appHandle}/following/difference';
   requestUrl = requestUrl.replace('{appHandle}', encodeURIComponent(appHandle));
   var queryParameters = [];
   if (cursor !== null && cursor !== undefined) {

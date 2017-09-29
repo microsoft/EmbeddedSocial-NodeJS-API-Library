@@ -81,7 +81,7 @@ Hashtags.prototype.getTrendingHashtags = function (authorization, options, callb
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/hashtags/trending';
+                   '//v0.7/hashtags/trending';
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
   requestUrl = requestUrl.replace(regex, '$1');
@@ -234,7 +234,7 @@ Hashtags.prototype.getAutocompletedHashtags = function (query, authorization, op
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/hashtags/autocomplete';
+                   '//v0.7/hashtags/autocomplete';
   var queryParameters = [];
   queryParameters.push('query=' + encodeURIComponent(query));
   if (queryParameters.length > 0) {

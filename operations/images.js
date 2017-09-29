@@ -115,7 +115,7 @@ Images.prototype.postImage = function (imageType, authorization, image, options,
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/images/{imageType}';
+                   '//v0.7/images/{imageType}';
   requestUrl = requestUrl.replace('{imageType}', encodeURIComponent(imageType));
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
@@ -255,7 +255,7 @@ Images.prototype.getImage = function (blobHandle, authorization, options, callba
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/images/{blobHandle}';
+                   '//v0.7/images/{blobHandle}';
   requestUrl = requestUrl.replace('{blobHandle}', encodeURIComponent(blobHandle));
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;

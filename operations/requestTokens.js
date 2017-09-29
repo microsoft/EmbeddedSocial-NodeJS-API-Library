@@ -95,7 +95,7 @@ RequestTokens.prototype.getRequestToken = function (identityProvider, authorizat
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/request_tokens/{identityProvider}';
+                   '//v0.7/request_tokens/{identityProvider}';
   requestUrl = requestUrl.replace('{identityProvider}', encodeURIComponent(identityProvider));
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;

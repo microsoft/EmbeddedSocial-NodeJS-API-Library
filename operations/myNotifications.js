@@ -100,7 +100,7 @@ MyNotifications.prototype.putNotificationsStatus = function (request, authorizat
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/users/me/notifications/status';
+                   '//v0.7/users/me/notifications/status';
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
   requestUrl = requestUrl.replace(regex, '$1');
@@ -294,7 +294,7 @@ MyNotifications.prototype.getNotifications = function (authorization, options, c
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/users/me/notifications';
+                   '//v0.7/users/me/notifications';
   var queryParameters = [];
   if (cursor !== null && cursor !== undefined) {
     queryParameters.push('cursor=' + encodeURIComponent(cursor));
@@ -440,7 +440,7 @@ MyNotifications.prototype.getNotificationsCount = function (authorization, optio
 
   // Construct URL
   var requestUrl = this.client.baseUri +
-                   '//v0.5/users/me/notifications/count';
+                   '//v0.7/users/me/notifications/count';
   // trim all duplicate forward slashes in the url
   var regex = /([^:]\/)\/+/gi;
   requestUrl = requestUrl.replace(regex, '$1');
